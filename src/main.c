@@ -149,7 +149,7 @@ void draw_line(vec2_t a, vec2_t b, uint32_t color) {
 
 #pragma mark - Init & Clean Up
 
-bool initialize_windowing_system(void) {
+bool initialize_windowing_system(int width, int height, int scale) {
 	//fprintf(stdout, "initialize_windowing_system().\n");
 
 	// Set up SDL
@@ -160,26 +160,22 @@ bool initialize_windowing_system(void) {
 
  	// Window & Renderer
  	window_rect.x = window_rect.y = 0;
-	window_rect.w = PIXELS_WIDTH * PIXELS_SCALE;
-	window_rect.h = PIXELS_HEIGHT * PIXELS_SCALE;
+	window_rect.w = width * scale;
+	window_rect.h = height * scale;
 	if (SDL_CreateWindowAndRenderer(window_rect.w, window_rect.h, 0, &sdl_window, &sdl_renderer) != 0) {
 		fprintf(stderr, "SDL_CreateWindowAndRenderer() failed!\n");
 		return false;
 	}
 
-	// Texture
-	pixels_w = PIXELS_WIDTH;
-	pixels_h = PIXELS_HEIGHT;
-	sdl_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ABGR8888,
-		SDL_TEXTUREACCESS_STREAMING, pixels_w, pixels_h);
-		// Using ABGR pixel format is slightly faster (~10%) than using RGBA.
+	// Texture: Using ABGR pixel format is slightly faster (~10%) than using RGBA.
+	sdl_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, width, height);
 	if (!sdl_texture) {
 		fprintf(stderr, "SDL_CreateTexture() failed!\n");
 		return false;
 	}
 
 	// Allocate frame buffer
-	pixels = (uint32_t*)malloc(pixels_w * pixels_h * sizeof(uint32_t));
+	pixels = (uint32_t*)malloc(width * height * sizeof(uint32_t));
 	if (!pixels) {
 		fprintf(stderr, "malloc() failed!\n");
 		return false;
@@ -327,7 +323,9 @@ void game_loop() {
 }
 
 int main(int argc, const char * argv[]) {
-	if (!initialize_windowing_system()) return 0;
+	pixels_w = PIXELS_WIDTH;
+	pixels_h = PIXELS_HEIGHT;
+	if (!initialize_windowing_system(pixels_w, pixels_h, PIXELS_SCALE)) return 0;
 
 	fprintf(stdout, "Use WASD & QE to rotate the cube.\n");
 
