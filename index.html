@@ -1,0 +1,35 @@
+<!doctypehtml>
+<html lang=en-us>
+	<head>
+		<meta charset=utf-8>
+		<meta content="text/html; charset=utf-8"http-equiv=Content-Type>
+		<title>Toma Boxing</title>
+		<link rel="stylesheet" href="css/emscripten.css">
+		<link rel="stylesheet" href="css/main.css">
+	</head>
+	<body>
+		<div class="center-block">
+			<figure id="spinner" style=overflow:visible>
+				<div class="spinner"></div>
+				<center style=margin-top:.5em><strong>emscripten</strong></center>
+			</figure>
+			<div class="center-text" id="status">Loading...</div>
+			<div class="center-text"><progress hidden id=progress max=100 value=0></progress></div>
+		</div>
+		
+		<canvas class="center-block" id="canvas" oncontextmenu=event.preventDefault() tabindex=-1></canvas>
+		
+		<div class="center-block center-text">
+			<input type="checkbox" id="resize">
+				<label for="resize">Resize canvas</label>
+			<input type="checkbox" id="pointerLock" checked>
+				<label for="resize">Lock/hide mouse pointer</label>
+			<input type="button" onclick='Module.requestFullscreen(document.getElementById("pointerLock").checked,document.getElementById("resize").checked)'value=Fullscreen>
+		
+			<textarea class="center-text" id="output" rows=8></textarea>
+		</div>
+		
+		<script src="js/emscripten.js"></script>
+		<script async src="main.js"></script>
+	</body>
+</html>
