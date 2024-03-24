@@ -329,6 +329,8 @@ void game_loop() {
 int main(int argc, const char * argv[]) {
 	if (!initialize_windowing_system()) return 0;
 
+	fprintf(stdout, "Use WASD & QE to rotate the cube.\n");
+
 	// Init geometry & transforms
     mat3_get_identity(transform_2d);
     mat4_get_identity(transform_3d);
