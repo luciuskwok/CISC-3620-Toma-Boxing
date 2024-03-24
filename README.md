@@ -12,5 +12,9 @@
 
 ## Building with SDL2
 - `emcc -c main.c -o main.o -s USE_SDL=2`
-- `emcc main.o -o main.js -s USE_SDL=2`
-- `emcc main.c -o main.js -s USE_SDL=2`
+- `emcc main.o -o ../main.js -s USE_SDL=2`
+- `emcc main.c -o ../main.js -s USE_SDL=2`
+
+## Building multiple files
+- `emcc color.c matrix.c mesh.c vector.c main.c -o ../main.js -s USE_SDL=2`
+
