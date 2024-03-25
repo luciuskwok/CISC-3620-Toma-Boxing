@@ -15,36 +15,37 @@
 		E00F80202BB132A000D78335 /* drawing.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F801F2BB132A000D78335 /* drawing.c */; };
 		E00F80222BB1CC6A00D78335 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */; };
 		E00F80242BB1CC7000D78335 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80232BB1CC7000D78335 /* ogg.framework */; };
-		E00F80252BB1CC7E00D78335 /* SDL2_mixer.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */; };
-		E00F80262BB1CC7E00D78335 /* ogg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F80232BB1CC7000D78335 /* ogg.framework */; };
-		E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */; };
+		E00F80252BB1CC7E00D78335 /* SDL2_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */; };
+		E00F80262BB1CC7E00D78335 /* ogg.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80232BB1CC7000D78335 /* ogg.framework */; };
+		E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in Copy Assets */ = {isa = PBXBuildFile; fileRef = E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */; };
 		E00F802C2BB1CDE500D78335 /* audio_player.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F802B2BB1CDE500D78335 /* audio_player.c */; };
 		E04CAC892BACB5570015EC5E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
-		E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
+		E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E04CAC7A2BACB4F10015EC5E /* CopyFiles */ = {
+		E00F802F2BB1DC2400D78335 /* Copy Assets */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = assets;
+			dstSubfolderSpec = 16;
+			files = (
+				E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in Copy Assets */,
+			);
+			name = "Copy Assets";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E04CAC7A2BACB4F10015EC5E /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
 			dstPath = "";
 			dstSubfolderSpec = 16;
 			files = (
-				E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in CopyFiles */,
-				E00F80252BB1CC7E00D78335 /* SDL2_mixer.framework in CopyFiles */,
-				E00F80262BB1CC7E00D78335 /* ogg.framework in CopyFiles */,
-				E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in CopyFiles */,
+				E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in Copy Frameworks */,
+				E00F80252BB1CC7E00D78335 /* SDL2_mixer.framework in Copy Frameworks */,
+				E00F80262BB1CC7E00D78335 /* ogg.framework in Copy Frameworks */,
 			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E04CAC8B2BACB5570015EC5E /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -153,8 +154,8 @@
 			buildPhases = (
 				E04CAC782BACB4F10015EC5E /* Sources */,
 				E04CAC792BACB4F10015EC5E /* Frameworks */,
-				E04CAC7A2BACB4F10015EC5E /* CopyFiles */,
-				E04CAC8B2BACB5570015EC5E /* Embed Frameworks */,
+				E04CAC7A2BACB4F10015EC5E /* Copy Frameworks */,
+				E00F802F2BB1DC2400D78335 /* Copy Assets */,
 			);
 			buildRules = (
 			);

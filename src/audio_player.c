@@ -8,8 +8,14 @@
 #include "audio_player.h"
 
 #include <SDL2/SDL.h>
-#include <SDL2_mixer/SDL_mixer.h>
 #include <stdio.h>
+
+// Slightly different locations of header files
+#ifdef __EMSCRIPTEN__
+#include <SDL2/SDL_mixer.h>
+#else
+#include <SDL2_mixer/SDL_mixer.h>
+#endif
 
 // Constants
 #define DEFAULT_CHUNK_SIZE (512)
@@ -36,7 +42,7 @@ bool init_audio(void) {
 	}
 	
 	// Load the audio file
-	song = Mix_LoadMUS("Toma - All Night Radio.ogg");
+	song = Mix_LoadMUS("assets/Toma - All Night Radio.ogg");
 	if (song == NULL) {
 		fprintf(stderr, "Mix_LoadMUS() failed: %s\n", SDL_GetError());
 		return false;
