@@ -132,8 +132,11 @@ int main(int argc, const char * argv[]) {
 	init_cube();
 
 	// Instructions
-	fprintf(stdout, "Use WASD & QE to rotate the cube.\n");
-
+	fprintf(stdout, "Controls:\n"
+			"Rotation: Q, W, E, A, S, D\n"
+			"Audio: P = start; O = pause; I = stop\n"
+			);
+	
 #ifdef __EMSCRIPTEN__
 	// WebAssembly version
 	emscripten_set_main_loop(run_game_loop, 0, 1);
