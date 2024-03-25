@@ -48,6 +48,9 @@ bool init_audio(void) {
 		return false;
 	}
 	
+	// Set volume to 75%
+	set_audio_volume(0.75f);
+	
 	return true;
 }
 
@@ -79,4 +82,9 @@ bool is_audio_playing(void) {
 
 bool is_audio_paused(void) {
 	return audio_paused;
+}
+
+void set_audio_volume(float vol) {
+	int x = vol * 128.0f;
+	Mix_VolumeMusic(x);
 }

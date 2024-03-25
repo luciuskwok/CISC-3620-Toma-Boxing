@@ -17,6 +17,7 @@ void stop_audio(void);
 
 bool is_audio_playing(void);
 bool is_audio_paused(void);
+void set_audio_volume(float vol);
 
 
 #endif /* audio_player_h */
