@@ -1,6 +1,6 @@
 //
 //  main.c
-//  CISC -3620-Midterm
+//  Toma Boxing
 //
 //  Created by Lucius Kwok on 3/21/24.
 //
@@ -18,6 +18,7 @@
 #include "vector.h"
 
 #include <SDL2/SDL.h>
+//#include <SDL2/SDL_mixer.h>
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif

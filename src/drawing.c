@@ -1,6 +1,6 @@
 //
 //  drawing.c
-//  CISC-3620-Midterm
+//  Toma Boxing
 //
 //  Created by Lucius Kwok on 3/24/24.
 //

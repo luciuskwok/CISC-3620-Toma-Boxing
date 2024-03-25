@@ -1,6 +1,6 @@
 //
 //  color.h
-//  SDL_Xcode
+//  Toma Boxing
 //
 //  Created by Lucius Kwok on 3/14/24.
 //

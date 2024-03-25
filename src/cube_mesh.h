@@ -1,6 +1,6 @@
 //
 //  cube_mesh.h
-//  SDL_Xcode
+//  Toma Boxing
 //
 //  Created by Lucius Kwok on 3/10/24.
 //

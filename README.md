@@ -17,5 +17,5 @@
 
 ## Building multiple files
 - `cd src`
-- `emcc *.c -o ../main.js -s USE_SDL=2`
+- `emcc *.c -o ../main.js -sUSE_SDL=2 -sUSE_SDL_MIXER=2`
 
