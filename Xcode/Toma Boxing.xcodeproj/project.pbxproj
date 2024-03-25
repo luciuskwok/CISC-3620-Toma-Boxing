@@ -13,6 +13,13 @@
 		E00F80192BB1302100D78335 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F80122BB1302100D78335 /* vector.c */; };
 		E00F801D2BB1329800D78335 /* cube_mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F801C2BB1329800D78335 /* cube_mesh.c */; };
 		E00F80202BB132A000D78335 /* drawing.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F801F2BB132A000D78335 /* drawing.c */; };
+		E00F80222BB1CC6A00D78335 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */; };
+		E00F80242BB1CC7000D78335 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80232BB1CC7000D78335 /* ogg.framework */; };
+		E00F80252BB1CC7E00D78335 /* SDL2_mixer.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */; };
+		E00F80262BB1CC7E00D78335 /* ogg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F80232BB1CC7000D78335 /* ogg.framework */; };
+		E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */; };
+		E00F802C2BB1CDE500D78335 /* audio_player.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F802B2BB1CDE500D78335 /* audio_player.c */; };
+		E00F802E2BB1D35500D78335 /* Toma - All Night Radio.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F802D2BB1D34D00D78335 /* Toma - All Night Radio.wav */; };
 		E04CAC892BACB5570015EC5E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 		E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 /* End PBXBuildFile section */
@@ -25,6 +32,10 @@
 			dstSubfolderSpec = 16;
 			files = (
 				E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in CopyFiles */,
+				E00F80252BB1CC7E00D78335 /* SDL2_mixer.framework in CopyFiles */,
+				E00F80262BB1CC7E00D78335 /* ogg.framework in CopyFiles */,
+				E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in CopyFiles */,
+				E00F802E2BB1D35500D78335 /* Toma - All Night Radio.wav in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,6 +64,12 @@
 		E00F801C2BB1329800D78335 /* cube_mesh.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cube_mesh.c; sourceTree = "<group>"; };
 		E00F801E2BB132A000D78335 /* drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawing.h; sourceTree = "<group>"; };
 		E00F801F2BB132A000D78335 /* drawing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = drawing.c; sourceTree = "<group>"; };
+		E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = "<group>"; };
+		E00F80232BB1CC7000D78335 /* ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ogg.framework; sourceTree = "<group>"; };
+		E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Toma - All Night Radio.ogg"; sourceTree = "<group>"; };
+		E00F802A2BB1CDE500D78335 /* audio_player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_player.h; sourceTree = "<group>"; };
+		E00F802B2BB1CDE500D78335 /* audio_player.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = audio_player.c; sourceTree = "<group>"; };
+		E00F802D2BB1D34D00D78335 /* Toma - All Night Radio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Toma - All Night Radio.wav"; sourceTree = "<group>"; };
 		E04CAC7C2BACB4F10015EC5E /* Toma Boxing */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Toma Boxing"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E04CAC872BACB5480015EC5E /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -63,6 +80,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E04CAC892BACB5570015EC5E /* SDL2.framework in Frameworks */,
+				E00F80222BB1CC6A00D78335 /* SDL2_mixer.framework in Frameworks */,
+				E00F80242BB1CC7000D78335 /* ogg.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,19 +92,31 @@
 			isa = PBXGroup;
 			children = (
 				E00F800D2BB1302100D78335 /* main.c */,
-				E00F800B2BB1302100D78335 /* color.c */,
+				E00F802A2BB1CDE500D78335 /* audio_player.h */,
+				E00F802B2BB1CDE500D78335 /* audio_player.c */,
 				E00F800C2BB1302100D78335 /* color.h */,
-				E00F801C2BB1329800D78335 /* cube_mesh.c */,
+				E00F800B2BB1302100D78335 /* color.c */,
 				E00F801B2BB1329800D78335 /* cube_mesh.h */,
-				E00F801F2BB132A000D78335 /* drawing.c */,
+				E00F801C2BB1329800D78335 /* cube_mesh.c */,
 				E00F801E2BB132A000D78335 /* drawing.h */,
-				E00F800E2BB1302100D78335 /* matrix.c */,
+				E00F801F2BB132A000D78335 /* drawing.c */,
 				E00F800F2BB1302100D78335 /* matrix.h */,
-				E00F80122BB1302100D78335 /* vector.c */,
+				E00F800E2BB1302100D78335 /* matrix.c */,
 				E00F80132BB1302100D78335 /* vector.h */,
+				E00F80122BB1302100D78335 /* vector.c */,
 			);
 			name = src;
 			path = ../src;
+			sourceTree = "<group>";
+		};
+		E00F80282BB1CD2E00D78335 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */,
+				E00F802D2BB1D34D00D78335 /* Toma - All Night Radio.wav */,
+			);
+			name = assets;
+			path = ../assets;
 			sourceTree = "<group>";
 		};
 		E04CAC732BACB4F10015EC5E = {
@@ -93,6 +124,7 @@
 			children = (
 				E00F801A2BB1302F00D78335 /* Toma Boxing.entitlements */,
 				E00F80142BB1302100D78335 /* src */,
+				E00F80282BB1CD2E00D78335 /* assets */,
 				E04CAC862BACB5230015EC5E /* Frameworks */,
 				E04CAC7D2BACB4F10015EC5E /* Products */,
 			);
@@ -110,6 +142,8 @@
 			isa = PBXGroup;
 			children = (
 				E04CAC872BACB5480015EC5E /* SDL2.framework */,
+				E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */,
+				E00F80232BB1CC7000D78335 /* ogg.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -172,6 +206,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E00F802C2BB1CDE500D78335 /* audio_player.c in Sources */,
 				E00F80192BB1302100D78335 /* vector.c in Sources */,
 				E00F80162BB1302100D78335 /* main.c in Sources */,
 				E00F801D2BB1329800D78335 /* cube_mesh.c in Sources */,

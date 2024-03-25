@@ -40,7 +40,7 @@ bool init_window(int width, int height, int scale) {
 	
 	// Set up SDL
 	if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-		fprintf(stderr, "SDL_Init() failed!\n");
+		fprintf(stderr, "SDL_Init(SDL_INIT_VIDEO) failed: %s\n", SDL_GetError());
 		return false;
 	}
 	
@@ -53,14 +53,14 @@ bool init_window(int width, int height, int scale) {
 
 	// Window & Renderer
 	if (SDL_CreateWindowAndRenderer(window_rect.w, window_rect.h, 0, &sdl_window, &sdl_renderer) != 0) {
-		fprintf(stderr, "SDL_CreateWindowAndRenderer() failed!\n");
+		fprintf(stderr, "SDL_CreateWindowAndRenderer() failed: %s\n", SDL_GetError());
 		return false;
 	}
 
 	// Texture: Using ABGR pixel format is slightly faster (~10%) than using RGBA.
 	sdl_texture = SDL_CreateTexture(sdl_renderer, SDL_PIXELFORMAT_ABGR8888, SDL_TEXTUREACCESS_STREAMING, width, height);
 	if (!sdl_texture) {
-		fprintf(stderr, "SDL_CreateTexture() failed!\n");
+		fprintf(stderr, "SDL_CreateTexture() failed: %s\n", SDL_GetError());
 		return false;
 	}
 

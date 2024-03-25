@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <math.h>
 
+#include "audio_player.h"
 #include "color.h"
 #include "drawing.h"
 #include "matrix.h"
@@ -18,7 +19,6 @@
 #include "vector.h"
 
 #include <SDL2/SDL.h>
-//#include <SDL2/SDL_mixer.h>
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
 #endif
@@ -30,8 +30,8 @@
 #define PIXELS_SCALE (2)
 
 // Globals
-bool is_running;
-uint64_t frame_index;
+bool is_running = true;
+uint64_t frame_index = 0;
 
 
 
@@ -51,6 +51,7 @@ void process_keyboard_input(void) {
 		switch (event.key.keysym.sym) {
 			case SDLK_ESCAPE:
 				// Exit program
+				fprintf(stdout, "Escape key pressed.\n");
 				is_running = false;
 				break;
 			case SDLK_0:
@@ -84,6 +85,14 @@ void process_keyboard_input(void) {
 				// Stop movement
 				cube_reset_momentum();
 				break;
+			case SDLK_p:
+				// Start audio player
+				start_audio();
+				break;
+			case SDLK_o:
+				// Pause/Unpause audio player
+				pause_audio(!is_audio_paused());
+				break;
 		}
 		break;
 	}
@@ -113,14 +122,13 @@ void run_game_loop(void) {
 
 int main(int argc, const char * argv[]) {
 	if (!init_window(PIXELS_WIDTH, PIXELS_HEIGHT, PIXELS_SCALE)) return 0;
+	if (!init_audio()) return 0;
+	
 	init_projection();
 	init_cube();
 
 	// Instructions
 	fprintf(stdout, "Use WASD & QE to rotate the cube.\n");
-
-	is_running = true;
-	frame_index = 0;
 
 #ifdef __EMSCRIPTEN__
 	// WebAssembly version
