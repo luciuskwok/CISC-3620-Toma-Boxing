@@ -5,3 +5,5 @@
 *.xcuserstate
 xcuserdata/
 
+# Files or folder that begin with parenthesis. -Lucius Kwok
+\(*
