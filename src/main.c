@@ -93,6 +93,10 @@ void process_keyboard_input(void) {
 				// Pause/Unpause audio player
 				pause_audio(!is_audio_paused());
 				break;
+			case SDLK_i:
+				// Stop audio player
+				stop_audio();
+				break;
 		}
 		break;
 	}

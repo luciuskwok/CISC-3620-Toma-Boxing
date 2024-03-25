@@ -13,11 +13,11 @@
 
 // Constants
 #define DEFAULT_CHUNK_SIZE (512)
-#define DEFAULT_CHANNEL_INDEX (0)
+#define SFX_CHANNEL (0)
 
 // Globals
 //SDL_AudioSpec audio_spec;
-Mix_Chunk *mix_chunk = NULL;
+Mix_Music *song = NULL;
 bool audio_paused = false;
 
 // Functions
@@ -36,9 +36,9 @@ bool init_audio(void) {
 	}
 	
 	// Load the audio file
-	mix_chunk = Mix_LoadWAV("Toma - All Night Radio.wav");
-	if (mix_chunk == NULL) {
-		fprintf(stderr, "Mix_LoadWAV() failed: %s\n", SDL_GetError());
+	song = Mix_LoadMUS("Toma - All Night Radio.ogg");
+	if (song == NULL) {
+		fprintf(stderr, "Mix_LoadMUS() failed: %s\n", SDL_GetError());
 		return false;
 	}
 	
@@ -47,28 +47,28 @@ bool init_audio(void) {
 
 void start_audio(void) {
 	fprintf(stdout, "Start audio playback.\n");
-	Mix_PlayChannel(DEFAULT_CHANNEL_INDEX, mix_chunk, false);
+	Mix_PlayMusic(song, 0);
 	audio_paused = false;
 }
 
 void pause_audio(bool state) {
 	fprintf(stdout, "Pause audio playback.\n");
 	if (state) {
-		Mix_Pause(DEFAULT_CHANNEL_INDEX);
+		Mix_PauseMusic();
 		audio_paused = true;
 	} else {
-		Mix_Resume(DEFAULT_CHANNEL_INDEX);
+		Mix_ResumeMusic();
 		audio_paused = false;
 	}
 }
 
 void stop_audio(void) {
 	fprintf(stdout, "Stop audio playback.\n");
-	Mix_HaltChannel(DEFAULT_CHANNEL_INDEX);
+	Mix_HaltMusic();
 }
 
 bool is_audio_playing(void) {
-	return Mix_Playing(DEFAULT_CHANNEL_INDEX) != 0;
+	return Mix_PlayingMusic() != 0;
 }
 
 bool is_audio_paused(void) {

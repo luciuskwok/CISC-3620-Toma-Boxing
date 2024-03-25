@@ -19,7 +19,6 @@
 		E00F80262BB1CC7E00D78335 /* ogg.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F80232BB1CC7000D78335 /* ogg.framework */; };
 		E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */; };
 		E00F802C2BB1CDE500D78335 /* audio_player.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F802B2BB1CDE500D78335 /* audio_player.c */; };
-		E00F802E2BB1D35500D78335 /* Toma - All Night Radio.wav in CopyFiles */ = {isa = PBXBuildFile; fileRef = E00F802D2BB1D34D00D78335 /* Toma - All Night Radio.wav */; };
 		E04CAC892BACB5570015EC5E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 		E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 /* End PBXBuildFile section */
@@ -35,7 +34,6 @@
 				E00F80252BB1CC7E00D78335 /* SDL2_mixer.framework in CopyFiles */,
 				E00F80262BB1CC7E00D78335 /* ogg.framework in CopyFiles */,
 				E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in CopyFiles */,
-				E00F802E2BB1D35500D78335 /* Toma - All Night Radio.wav in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,7 +67,6 @@
 		E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Toma - All Night Radio.ogg"; sourceTree = "<group>"; };
 		E00F802A2BB1CDE500D78335 /* audio_player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_player.h; sourceTree = "<group>"; };
 		E00F802B2BB1CDE500D78335 /* audio_player.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = audio_player.c; sourceTree = "<group>"; };
-		E00F802D2BB1D34D00D78335 /* Toma - All Night Radio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Toma - All Night Radio.wav"; sourceTree = "<group>"; };
 		E04CAC7C2BACB4F10015EC5E /* Toma Boxing */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Toma Boxing"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E04CAC872BACB5480015EC5E /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,7 +110,6 @@
 			isa = PBXGroup;
 			children = (
 				E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */,
-				E00F802D2BB1D34D00D78335 /* Toma - All Night Radio.wav */,
 			);
 			name = assets;
 			path = ../assets;
