@@ -7,8 +7,8 @@
 
 ## Building "Hello world"
 - Basic build: `emcc main.c -o index.html`
-- Custom HTML: `emcc main.c -o index.html -O3 --shell-file _templates/shell_minimal.html`
-- Build JS without changing HTML: `emcc main.c -o index.js -O3`
+- Custom HTML: `emcc main.c -o index.html -O3 --shell-file templates/shell_minimal.html`
+- Build JS without changing HTML: `emcc main.c -o main.js -O3`
 
 ## Building with SDL2
 - `emcc -c main.c -o main.o -s USE_SDL=2`
@@ -16,5 +16,6 @@
 - `emcc main.c -o ../main.js -s USE_SDL=2`
 
 ## Building multiple files
-- `emcc color.c matrix.c mesh.c vector.c main.c -o ../main.js -s USE_SDL=2`
+- `cd src`
+- `emcc *.c -o ../main.js -s USE_SDL=2`
 
