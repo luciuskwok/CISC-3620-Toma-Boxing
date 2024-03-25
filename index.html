@@ -19,15 +19,16 @@
 		
 		<canvas class="center-block" id="canvas" oncontextmenu=event.preventDefault() tabindex=-1></canvas>
 		
+		<!-- Full screen seems broken, so commenting this out
 		<div class="center-block center-text">
 			<input type="checkbox" id="resize">
 				<label for="resize">Resize canvas</label>
 			<input type="checkbox" id="pointerLock" checked>
-				<label for="resize">Lock/hide mouse pointer</label>
+				<label for="pointerLock">Lock/hide mouse pointer</label>
 			<input type="button" onclick='Module.requestFullscreen(document.getElementById("pointerLock").checked,document.getElementById("resize").checked)'value=Fullscreen>
 		
 			<textarea class="center-block" id="output" rows=8></textarea>
-		</div>
+		</div> -->
 		
 		<script src="js/emscripten.js"></script>
 		<script async src="main.js"></script>
