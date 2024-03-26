@@ -9,9 +9,9 @@
 bool atari_renderer_init(void);
 void atari_renderer_dispose(void);
 
-void atari_draw_text(const char* s);
-void atari_draw_centered_text(const char* s, int x, int y);
-void atari_draw_char(char c, int x, int y, uint32_t color);
+void atari_draw_text(const char* s, int scale);
+void atari_draw_centered_text(const char* s, int scale);
+void atari_draw_char(char c, int x, int y, int scale);
 
 #endif
 

@@ -119,7 +119,9 @@ void run_render_pipeline(void) {
 
 	// Draw text
 	set_fill_color(WHITE_COLOR);
-	atari_draw_centered_text("Press Space to Start", PIXELS_WIDTH/2, PIXELS_HEIGHT-16);
+	vec2_t p = { PIXELS_WIDTH/2, PIXELS_HEIGHT-32 };
+	move_to(p);
+	atari_draw_centered_text("Press Space to Start", 2);
 	
 	render_to_screen();
 }
