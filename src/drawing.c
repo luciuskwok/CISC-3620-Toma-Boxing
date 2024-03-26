@@ -161,6 +161,11 @@ void set_pixel(int x, int y, uint32_t color) {
 	pixels[i] = color;
 }
 
+#pragma mark - Getters
+
+vec2_t get_cursor(void) { return cursor; }
+uint32_t get_line_color(void) { return line_color; }
+uint32_t get_fill_color(void) { return fill_color; }
 
 #pragma mark - Projection 3D
 

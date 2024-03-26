@@ -11,6 +11,7 @@
 #include <stdint.h>
 #include <math.h>
 
+#include "atari_text.h"
 #include "audio_player.h"
 #include "color.h"
 #include "drawing.h"
@@ -113,7 +114,13 @@ void run_render_pipeline(void) {
 	set_fill_color(BLACK_COLOR);
 	fill_screen();
 	
+	// Draw cube
 	render_cube();
+
+	// Draw text
+	set_fill_color(WHITE_COLOR);
+	atari_draw_centered_text("Press Space to Start", PIXELS_WIDTH/2, PIXELS_HEIGHT-16);
+	
 	render_to_screen();
 }
 

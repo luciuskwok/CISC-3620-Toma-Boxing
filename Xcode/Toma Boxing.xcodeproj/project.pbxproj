@@ -19,6 +19,8 @@
 		E00F80262BB1CC7E00D78335 /* ogg.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80232BB1CC7000D78335 /* ogg.framework */; };
 		E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in Copy Assets */ = {isa = PBXBuildFile; fileRef = E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */; };
 		E00F802C2BB1CDE500D78335 /* audio_player.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F802B2BB1CDE500D78335 /* audio_player.c */; };
+		E040D2872BB3494900FDBF10 /* atari_text.c in Sources */ = {isa = PBXBuildFile; fileRef = E040D2832BB3494900FDBF10 /* atari_text.c */; };
+		E040D2882BB3494900FDBF10 /* atari_font_data.c in Sources */ = {isa = PBXBuildFile; fileRef = E040D2852BB3494900FDBF10 /* atari_font_data.c */; };
 		E04CAC892BACB5570015EC5E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 		E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,10 @@
 		E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Toma - All Night Radio.ogg"; sourceTree = "<group>"; };
 		E00F802A2BB1CDE500D78335 /* audio_player.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = audio_player.h; sourceTree = "<group>"; };
 		E00F802B2BB1CDE500D78335 /* audio_player.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = audio_player.c; sourceTree = "<group>"; };
+		E040D2832BB3494900FDBF10 /* atari_text.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = atari_text.c; sourceTree = "<group>"; };
+		E040D2842BB3494900FDBF10 /* atari_font_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atari_font_data.h; sourceTree = "<group>"; };
+		E040D2852BB3494900FDBF10 /* atari_font_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = atari_font_data.c; sourceTree = "<group>"; };
+		E040D2862BB3494900FDBF10 /* atari_text.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atari_text.h; sourceTree = "<group>"; };
 		E04CAC7C2BACB4F10015EC5E /* Toma Boxing */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Toma Boxing"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E04CAC872BACB5480015EC5E /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -90,6 +96,10 @@
 			isa = PBXGroup;
 			children = (
 				E00F800D2BB1302100D78335 /* main.c */,
+				E040D2842BB3494900FDBF10 /* atari_font_data.h */,
+				E040D2852BB3494900FDBF10 /* atari_font_data.c */,
+				E040D2862BB3494900FDBF10 /* atari_text.h */,
+				E040D2832BB3494900FDBF10 /* atari_text.c */,
 				E00F802A2BB1CDE500D78335 /* audio_player.h */,
 				E00F802B2BB1CDE500D78335 /* audio_player.c */,
 				E00F800C2BB1302100D78335 /* color.h */,
@@ -205,10 +215,12 @@
 			files = (
 				E00F802C2BB1CDE500D78335 /* audio_player.c in Sources */,
 				E00F80192BB1302100D78335 /* vector.c in Sources */,
+				E040D2872BB3494900FDBF10 /* atari_text.c in Sources */,
 				E00F80162BB1302100D78335 /* main.c in Sources */,
 				E00F801D2BB1329800D78335 /* cube_mesh.c in Sources */,
 				E00F80172BB1302100D78335 /* matrix.c in Sources */,
 				E00F80202BB132A000D78335 /* drawing.c in Sources */,
+				E040D2882BB3494900FDBF10 /* atari_font_data.c in Sources */,
 				E00F80152BB1302100D78335 /* color.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
