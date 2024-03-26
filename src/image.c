@@ -19,7 +19,6 @@
 #include <SDL2_image/SDL_image.h>
 #endif
 
-
 uint32_t swap_red_blue(uint32_t x) {
 	uint32_t r = (x & 0x00FF0000) >> 16;
 	uint32_t b = (x & 0x000000FF);
@@ -32,12 +31,6 @@ image_t *load_image(const char *file) {
 		fprintf(stderr, "IMG_Load() failed: %s\n", SDL_GetError());
 		return NULL;
 	}
-		
-	// Testing: print out image specs
-	fprintf(stdout, "Surface parameters:\n");
-	fprintf(stdout, "  Format: 0x%08x\n", surface->format->format);
-	fprintf(stdout, "  WxH: %dx%d\n", surface->w, surface->h);
-	fprintf(stdout, "  Pitch: %d\n", surface->pitch);
 
 	uint32_t fmt = surface->format->format;
 	if (fmt != SDL_PIXELFORMAT_ARGB8888 && fmt != SDL_PIXELFORMAT_ABGR8888) {
