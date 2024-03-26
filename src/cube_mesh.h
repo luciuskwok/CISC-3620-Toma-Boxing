@@ -11,15 +11,6 @@
 #include <stdint.h>
 #include "vector.h"
 
-// Face (triangle)
-typedef struct {
-    int a, b, c;
-} face_t;
-
-typedef struct {
-    vec2_t a, b, c;
-} triangle_t;
-
 
 // Functions
 void init_cube(void);
