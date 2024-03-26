@@ -55,13 +55,13 @@ bool init_audio(void) {
 }
 
 void start_audio(void) {
-	fprintf(stdout, "Start audio playback.\n");
+	// fprintf(stdout, "Start audio playback.\n");
 	Mix_PlayMusic(song, 0);
 	audio_paused = false;
 }
 
 void pause_audio(bool state) {
-	fprintf(stdout, "Pause audio playback.\n");
+	// fprintf(stdout, "Pause audio playback.\n");
 	if (state) {
 		Mix_PauseMusic();
 		audio_paused = true;
@@ -72,7 +72,7 @@ void pause_audio(bool state) {
 }
 
 void stop_audio(void) {
-	fprintf(stdout, "Stop audio playback.\n");
+	// fprintf(stdout, "Stop audio playback.\n");
 	Mix_HaltMusic();
 }
 
