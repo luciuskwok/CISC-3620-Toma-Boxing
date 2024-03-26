@@ -24,7 +24,7 @@ typedef struct {
 // Functions
 void init_cube(void);
 void update_cube(uint64_t frame_index);
-void render_cube(void);
+void draw_cube(void);
 
 void cube_reset_transform(void);
 void cube_reset_momentum(void);

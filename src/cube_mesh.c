@@ -112,7 +112,7 @@ void project_model(void) {
 	}
 }
 
-void render_cube(void) {
+void draw_cube(void) {
 	// Draw each triangle as lines for a wireframe
 	triangle_t *tri;
 	project_model();

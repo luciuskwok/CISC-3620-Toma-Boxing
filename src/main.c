@@ -15,6 +15,7 @@
 #include "audio_player.h"
 #include "color.h"
 #include "drawing.h"
+#include "image.h"
 #include "matrix.h"
 #include "cube_mesh.h"
 #include "vector.h"
@@ -33,7 +34,7 @@
 // Globals
 bool is_running = true;
 uint64_t frame_index = 0;
-
+image_t *title_image = NULL;
 
 
 #pragma mark - Game Loop
@@ -111,15 +112,24 @@ void update_state(void) {
 }
 
 void run_render_pipeline(void) {
+	vec2_t p;
+	
 	set_fill_color(BLACK_COLOR);
 	fill_screen();
 	
+	// Draw image
+	p.x = PIXELS_WIDTH/2 - title_image->w/2;
+	p.y = PIXELS_HEIGHT/2 - title_image->h/2;
+	move_to(p);
+	draw_image(title_image);
+	
 	// Draw cube
-	render_cube();
+	draw_cube();
 
 	// Draw text
 	set_fill_color(WHITE_COLOR);
-	vec2_t p = { PIXELS_WIDTH/2, PIXELS_HEIGHT-32 };
+	p.x = PIXELS_WIDTH/2;
+	p.y = PIXELS_HEIGHT-32;
 	move_to(p);
 	atari_draw_centered_text("Press Space to Start", 2);
 	
@@ -139,6 +149,9 @@ int main(int argc, const char * argv[]) {
 	
 	init_projection();
 	init_cube();
+	
+	// Image
+	title_image = load_image("assets/riverside_1x.png");
 
 	// Instructions
 	fprintf(stdout, "Controls:\n"
