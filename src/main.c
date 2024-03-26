@@ -112,14 +112,16 @@ void update_state(void) {
 }
 
 void run_render_pipeline(void) {
-	vec2_t p;
+	vec2_t p, scr;
+	scr.x = get_screen_width();
+	scr.y = get_screen_height();
 	
 	set_fill_color(BLACK_COLOR);
 	fill_screen();
 	
 	// Draw image
-	p.x = PIXELS_WIDTH/2 - title_image->w/2;
-	p.y = PIXELS_HEIGHT/2 - title_image->h/2;
+	p.x = scr.x/2 - title_image->w/2;
+	p.y = scr.y/2 - title_image->h/2;
 	move_to(p);
 	draw_image(title_image);
 	
@@ -128,8 +130,8 @@ void run_render_pipeline(void) {
 
 	// Draw text
 	set_fill_color(WHITE_COLOR);
-	p.x = PIXELS_WIDTH/2;
-	p.y = PIXELS_HEIGHT-32;
+	p.x = scr.x/2;
+	p.y = scr.y-32;
 	move_to(p);
 	atari_draw_centered_text("Press Space to Start", 2);
 	
@@ -144,7 +146,7 @@ void run_game_loop(void) {
 }
 
 int main(int argc, const char * argv[]) {
-	if (!init_window(PIXELS_WIDTH, PIXELS_HEIGHT, PIXELS_SCALE)) return 0;
+	if (!init_screen(PIXELS_WIDTH, PIXELS_HEIGHT, PIXELS_SCALE)) return 0;
 	if (!init_audio()) return 0;
 	
 	init_projection();
@@ -178,7 +180,7 @@ int main(int argc, const char * argv[]) {
 			SDL_Delay(FRAME_TARGET_TIME - ticks);
 		}
 	}
-	destroy_window();
+	destroy_screen();
 #endif
 
 	return 0;

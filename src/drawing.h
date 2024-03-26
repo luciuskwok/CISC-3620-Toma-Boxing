@@ -13,8 +13,8 @@
 #include "vector.h"
 
 // SDL Interface
-bool init_window(int width, int height, int scale);
-void destroy_window(void);
+bool init_screen(int width, int height, int scale);
+void destroy_screen(void);
 void render_to_screen(void);
 
 // Drawing 2D
@@ -33,6 +33,8 @@ void set_pixel(int x, int y, uint32_t color);
 vec2_t get_cursor(void);
 uint32_t get_line_color(void);
 uint32_t get_fill_color(void);
+uint32_t get_screen_width(void);
+uint32_t get_screen_height(void);
 
 // Projection 3D
 void init_projection(void);

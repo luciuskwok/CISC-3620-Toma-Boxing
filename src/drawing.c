@@ -19,8 +19,9 @@ SDL_Window* sdl_window;
 SDL_Rect window_rect;
 SDL_Renderer* sdl_renderer;
 SDL_Texture* sdl_texture;
-uint32_t* pixels;
-int pixels_w, pixels_h;
+uint32_t* screen_pixels;
+uint32_t screen_w;
+uint32_t screen_h;
 
 // Drawing context
 uint32_t line_color;
@@ -35,7 +36,7 @@ mat4_t camera_transform_3d;
 
 #pragma mark - SDL Interface
 
-bool init_window(int width, int height, int scale) {
+bool init_screen(int width, int height, int scale) {
 	//fprintf(stdout, "initialize_windowing_system().\n");
 	
 	// Set up SDL
@@ -45,8 +46,8 @@ bool init_window(int width, int height, int scale) {
 	}
 	
 	// Store dimensions in globals
-	pixels_w = width;
-	pixels_h = height;
+	screen_w = width;
+	screen_h = height;
 	window_rect.x = window_rect.y = 0;
 	window_rect.w = width * scale;
 	window_rect.h = height * scale;
@@ -65,8 +66,8 @@ bool init_window(int width, int height, int scale) {
 	}
 
 	// Allocate frame buffer
-	pixels = (uint32_t*)malloc(width * height * sizeof(uint32_t));
-	if (!pixels) {
+	screen_pixels = (uint32_t*)malloc(width * height * sizeof(uint32_t));
+	if (!screen_pixels) {
 		fprintf(stderr, "malloc() failed!\n");
 		return false;
 	}
@@ -81,13 +82,13 @@ bool init_window(int width, int height, int scale) {
 	SDL_RenderPresent(sdl_renderer);
 
 	// Debug logging: window * texture size
-	fprintf(stdout, "Created window (%dx%d) and texture (%dx%d).\n", window_rect.w, window_rect.h, pixels_w, pixels_h);
+	fprintf(stdout, "Created window (%dx%d) and texture (%dx%d).\n", window_rect.w, window_rect.h, screen_w, screen_h);
 
 	return true;
 }
 
-void destroy_window(void) {
-	free(pixels);
+void destroy_screen(void) {
+	free(screen_pixels);
 	SDL_DestroyTexture(sdl_texture);
 	SDL_DestroyRenderer(sdl_renderer);
 	SDL_DestroyWindow(sdl_window);
@@ -96,7 +97,7 @@ void destroy_window(void) {
 
 void render_to_screen(void) {
 	// Render frame buffer
-	SDL_UpdateTexture(sdl_texture, NULL, pixels, pixels_w * sizeof(uint32_t));
+	SDL_UpdateTexture(sdl_texture, NULL, screen_pixels, screen_w * sizeof(uint32_t));
 	SDL_RenderCopy(sdl_renderer, sdl_texture, NULL, &window_rect);
 	SDL_RenderPresent(sdl_renderer);
 }
@@ -104,8 +105,8 @@ void render_to_screen(void) {
 #pragma mark - Drawing 2D
 
 void fill_screen(void) {
-	for (int i = 0; i < pixels_w * pixels_h; i++) {
-		pixels[i] = fill_color;
+	for (int i = 0; i < screen_w * screen_h; i++) {
+		screen_pixels[i] = fill_color;
 	}
 }
 
@@ -150,15 +151,15 @@ void fill_centered_rect(int x, int y, int w, int h) {
 }
 
 void set_pixel(int x, int y, uint32_t color) {
-	if (x < 0 || x >= pixels_w) return;
-	if (y < 0 || y >= pixels_h) return;
+	if (x < 0 || x >= screen_w) return;
+	if (y < 0 || y >= screen_h) return;
 	
 	// Apply blending if color's alpha < 255
-	int i = x + y * pixels_w;
+	int i = x + y * screen_w;
 	if ((color & 0xFF000000) != 0xFF000000) {
-		color = blend_color(pixels[i], color);
+		color = blend_color(screen_pixels[i], color);
 	}
-	pixels[i] = color;
+	screen_pixels[i] = color;
 }
 
 #pragma mark - Getters
@@ -166,14 +167,17 @@ void set_pixel(int x, int y, uint32_t color) {
 vec2_t get_cursor(void) { return cursor; }
 uint32_t get_line_color(void) { return line_color; }
 uint32_t get_fill_color(void) { return fill_color; }
+uint32_t get_screen_width(void) { return screen_w; }
+uint32_t get_screen_height(void) { return screen_h; }
 
 #pragma mark - Projection 3D
 
 void init_projection(void) {
 	// Set default view transform to center on and scale to screen
 	mat3_get_identity(view_transform_2d);
-	mat3_translate(view_transform_2d, pixels_w / 2, pixels_h / 2);
-	mat3_scale(view_transform_2d, pixels_h, pixels_h);
+	mat3_translate(view_transform_2d, screen_w / 2, screen_h / 2);
+	float scale2d = screen_h;
+	mat3_scale(view_transform_2d, scale2d, scale2d);
 	
 	// Set default camera transform to -5 units
 	mat4_get_identity(camera_transform_3d);
