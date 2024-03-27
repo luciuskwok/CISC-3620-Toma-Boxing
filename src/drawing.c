@@ -204,3 +204,9 @@ vec2_t perspective_project_point(vec3_t pt3d) {
 
 	return pt2d;
 }
+
+vec3_t get_camera_position(void) {
+	vec3_t a = { 0, 0, 0 };
+	vec3_t b = vec3_mat4_multiply(a, camera_transform_3d);
+	return vec3_sub(a, b);
+}
