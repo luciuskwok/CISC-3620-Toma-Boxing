@@ -12,6 +12,7 @@
 		E07E0A422BB5E5BD00BD3D4E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E07E0A402BB5E5BD00BD3D4E /* SDL2.framework */; };
 		E07E0A472BB5EB7900BD3D4E /* SDL2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E07E0A402BB5E5BD00BD3D4E /* SDL2.framework */; };
 		E07E0A482BB5EB7900BD3D4E /* SDL2_image.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E07E0A3F2BB5E5BD00BD3D4E /* SDL2_image.framework */; };
+		E07E0A4D2BB5FE3500BD3D4E /* image_convert.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A4C2BB5FE3500BD3D4E /* image_convert.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		E07E0A3F2BB5E5BD00BD3D4E /* SDL2_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2_image.framework; path = ../../../Frameworks/SDL2_image.framework; sourceTree = "<group>"; };
 		E07E0A402BB5E5BD00BD3D4E /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		E07E0A452BB5E66100BD3D4E /* toma-boxing-tools.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "toma-boxing-tools.entitlements"; sourceTree = "<group>"; };
+		E07E0A4B2BB5FE3500BD3D4E /* image_convert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = image_convert.h; sourceTree = "<group>"; };
+		E07E0A4C2BB5FE3500BD3D4E /* image_convert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = image_convert.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +57,8 @@
 			children = (
 				E07E0A452BB5E66100BD3D4E /* toma-boxing-tools.entitlements */,
 				E07E0A3C2BB5E59000BD3D4E /* main.c */,
+				E07E0A4B2BB5FE3500BD3D4E /* image_convert.h */,
+				E07E0A4C2BB5FE3500BD3D4E /* image_convert.c */,
 				E07E0A3E2BB5E5A700BD3D4E /* Frameworks */,
 				E07E0A332BB5E57300BD3D4E /* Products */,
 			);
@@ -134,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E07E0A3D2BB5E59000BD3D4E /* main.c in Sources */,
+				E07E0A4D2BB5FE3500BD3D4E /* image_convert.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

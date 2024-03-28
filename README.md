@@ -6,7 +6,7 @@
 - `source ./emsdk_env.sh` to add the paths
 
 ## Building and embedding assets
-- `emcc src/*.c -o main.js -sUSE_SDL=2 -sUSE_SDL_MIXER=2 --embed-file assets --use-port=sdl2_image:formats=png`
+- `emcc src/*.c -o main.js -sUSE_SDL=2 -sUSE_SDL_MIXER=2 --embed-file assets`
 - To include SDL_image: `--use-port=sdl2_image:formats=bmp,png,xpm,jpg`
 
 ## Historical build commands
