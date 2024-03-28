@@ -22,9 +22,9 @@ image_t *load_indexed_image(const char *file) {
 	
 	// Header: sig, width, height, and number of palette entries
 	uint32_t sig = read_int(in);
-	uint32_t w =read_int(in);
-	uint32_t h =read_int(in);
-	uint32_t palette_len =read_int(in);
+	uint32_t w = read_int(in);
+	uint32_t h = read_int(in);
+	uint32_t palette_len = read_int(in);
 	uint32_t n = w * h;
 	
 	if (sig != FILE_SIGNATURE) {
