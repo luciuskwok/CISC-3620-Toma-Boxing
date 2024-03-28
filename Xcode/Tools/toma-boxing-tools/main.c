@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include "image_convert.h"
+#include "font_convert.h"
 
 
 void convert_png_to_indexed(void) {
@@ -18,7 +19,9 @@ void convert_png_to_indexed(void) {
 
 int main(int argc, const char * argv[]) {
 	
-	printf("Size of char: %ld\n", sizeof(char));
+	write_atari_font_to_png("/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/assets/atari_font.png");
+	
+	//printf("Size of char: %ld\n", sizeof(char));
 	
 	return 0;
 }

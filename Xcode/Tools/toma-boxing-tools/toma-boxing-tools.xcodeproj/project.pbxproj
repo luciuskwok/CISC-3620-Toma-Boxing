@@ -13,6 +13,8 @@
 		E07E0A472BB5EB7900BD3D4E /* SDL2.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E07E0A402BB5E5BD00BD3D4E /* SDL2.framework */; };
 		E07E0A482BB5EB7900BD3D4E /* SDL2_image.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = E07E0A3F2BB5E5BD00BD3D4E /* SDL2_image.framework */; };
 		E07E0A4D2BB5FE3500BD3D4E /* image_convert.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A4C2BB5FE3500BD3D4E /* image_convert.c */; };
+		E07E0A502BB5FF8800BD3D4E /* atari_font_data.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A4E2BB5FF8800BD3D4E /* atari_font_data.c */; };
+		E07E0A532BB5FF9200BD3D4E /* font_convert.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A522BB5FF9200BD3D4E /* font_convert.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +39,10 @@
 		E07E0A452BB5E66100BD3D4E /* toma-boxing-tools.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "toma-boxing-tools.entitlements"; sourceTree = "<group>"; };
 		E07E0A4B2BB5FE3500BD3D4E /* image_convert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = image_convert.h; sourceTree = "<group>"; };
 		E07E0A4C2BB5FE3500BD3D4E /* image_convert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = image_convert.c; sourceTree = "<group>"; };
+		E07E0A4E2BB5FF8800BD3D4E /* atari_font_data.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = atari_font_data.c; sourceTree = "<group>"; };
+		E07E0A4F2BB5FF8800BD3D4E /* atari_font_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atari_font_data.h; sourceTree = "<group>"; };
+		E07E0A512BB5FF9200BD3D4E /* font_convert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = font_convert.h; sourceTree = "<group>"; };
+		E07E0A522BB5FF9200BD3D4E /* font_convert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = font_convert.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +63,10 @@
 			children = (
 				E07E0A452BB5E66100BD3D4E /* toma-boxing-tools.entitlements */,
 				E07E0A3C2BB5E59000BD3D4E /* main.c */,
+				E07E0A4F2BB5FF8800BD3D4E /* atari_font_data.h */,
+				E07E0A4E2BB5FF8800BD3D4E /* atari_font_data.c */,
+				E07E0A512BB5FF9200BD3D4E /* font_convert.h */,
+				E07E0A522BB5FF9200BD3D4E /* font_convert.c */,
 				E07E0A4B2BB5FE3500BD3D4E /* image_convert.h */,
 				E07E0A4C2BB5FE3500BD3D4E /* image_convert.c */,
 				E07E0A3E2BB5E5A700BD3D4E /* Frameworks */,
@@ -139,6 +149,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E07E0A3D2BB5E59000BD3D4E /* main.c in Sources */,
+				E07E0A502BB5FF8800BD3D4E /* atari_font_data.c in Sources */,
+				E07E0A532BB5FF9200BD3D4E /* font_convert.c in Sources */,
 				E07E0A4D2BB5FE3500BD3D4E /* image_convert.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
