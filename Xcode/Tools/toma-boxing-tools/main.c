@@ -13,8 +13,8 @@
 
 
 void convert_png_to_indexed(void) {
-	const char input[] = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/(Artwork)/riverside_1x.png";
-	const char output[] = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/(Artwork)/riverside_1x.indexed_image";
+	const char input[] = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/(Artwork)/title.png";
+	const char output[] = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/(Artwork)/title.indexed_image";
 	convert_png(input, output);
 }
 

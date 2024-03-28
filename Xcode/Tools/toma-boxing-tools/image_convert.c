@@ -31,6 +31,10 @@ int color_exists_in_palette(uint32_t color, uint32_t *palette, int palette_len) 
 	return -1;
 }
 
+uint32_t rgba_to_abgr_pixel(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+	return (a << 24) | (b << 16) | (g << 8) | r;
+}
+
 int convert_rgb_to_indexed(SDL_Surface *surface, uint8_t *indexes, uint32_t *palette) {
 	// Returns number of palette entries
 	int palette_len = 0;
@@ -67,6 +71,29 @@ int convert_rgb_to_indexed(SDL_Surface *surface, uint8_t *indexes, uint32_t *pal
 	return palette_len;
 }
 
+int convert_indexed(SDL_Surface *surface, uint8_t *indexes, uint32_t *palette) {
+	// Returns number of palette entries
+	//SDL_Palette *pal = surface->format->palette;
+	int palette_len = surface->format->palette->ncolors;
+	if (palette_len > MAX_PALETTE_LEN) {
+		fprintf(stderr, "Too many color palette entries!\n");
+		return -1;
+	}
+	
+	// Convert palette
+	for (int i = 0; i < palette_len; i++) {
+		SDL_Color a = surface->format->palette->colors[i];
+		palette[i] = rgba_to_abgr_pixel(a.r, a.g, a.b, a.a);
+	}
+	
+	// Copy indexes
+	uint8_t *src = surface->pixels;
+	int n = surface->w * surface->h;
+	memcpy(indexes, src, n);
+	
+	return palette_len;
+}
+
 void convert_png(const char *input, const char *output) {
 	SDL_Surface *surface = IMG_Load(input);
 	if (!surface) {
@@ -90,23 +117,26 @@ void convert_png(const char *input, const char *output) {
 		fprintf(stderr, "Unable to allocate palette!\n");
 		return;
 	}
-	int palette_len = 0;
+	int palette_len = -1;
 
+	printf("SDL_PIXELFORMAT_INDEX8 = %08x\n", SDL_PIXELFORMAT_INDEX8);
+	
 	if (fmt == SDL_PIXELFORMAT_ARGB8888 || fmt == SDL_PIXELFORMAT_ABGR8888) {
 		// RGB format
 		palette_len = convert_rgb_to_indexed(surface, indexes, palette);
-	} else if (fmt == SDL_PIXELTYPE_INDEX8) {
+	} else if (fmt == SDL_PIXELFORMAT_INDEX8) {
 		// Indexed format that Aseprite produces
-		fprintf(stderr, "Unsupported image surface format: 0x%08x\n", fmt);
-		SDL_FreeSurface(surface);
-		return;
+		palette_len = convert_indexed(surface, indexes, palette);
 	} else {
 		fprintf(stderr, "Unsupported image surface format: 0x%08x\n", fmt);
-		SDL_FreeSurface(surface);
+	}
+	SDL_FreeSurface(surface);
+
+	if (palette_len < 0) {
+		free(indexes);
+		free(palette);
 		return;
 	}
-
-	SDL_FreeSurface(surface);
 	
 	// Write out file
 	int total_written = 0;
@@ -127,6 +157,7 @@ void convert_png(const char *input, const char *output) {
 	// Clean up
 	fclose(out);
 	free(indexes);
+	free(palette);
 	
 	printf("File written with %d bytes\n", total_written);
 }

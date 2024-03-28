@@ -155,7 +155,7 @@ int main(int argc, const char * argv[]) {
 	init_cube();
 	
 	// Image
-	title_image = load_indexed_image("assets/riverside_1x.indexed_image");
+	title_image = load_indexed_image("assets/title.indexed_image");
 
 	// Instructions
 	fprintf(stdout, "Controls:\n"

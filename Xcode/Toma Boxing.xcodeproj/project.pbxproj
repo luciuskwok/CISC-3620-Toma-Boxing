@@ -26,6 +26,7 @@
 		E07E0A4A2BB5F81D00BD3D4E /* riverside_1x.indexed_image in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A492BB5F81300BD3D4E /* riverside_1x.indexed_image */; };
 		E07E0A592BB60BF800BD3D4E /* file_io.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A582BB60BF800BD3D4E /* file_io.c */; };
 		E07E0A5D2BB60DB200BD3D4E /* font.data in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A5C2BB60DAE00BD3D4E /* font.data */; };
+		E07E0A5F2BB62CDF00BD3D4E /* title.indexed_image in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A5E2BB62CD900BD3D4E /* title.indexed_image */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,6 +38,7 @@
 			files = (
 				E07E0A5D2BB60DB200BD3D4E /* font.data in Copy Assets */,
 				E07E0A4A2BB5F81D00BD3D4E /* riverside_1x.indexed_image in Copy Assets */,
+				E07E0A5F2BB62CDF00BD3D4E /* title.indexed_image in Copy Assets */,
 				E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in Copy Assets */,
 			);
 			name = "Copy Assets";
@@ -85,6 +87,7 @@
 		E07E0A572BB60BF800BD3D4E /* file_io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file_io.h; sourceTree = "<group>"; };
 		E07E0A582BB60BF800BD3D4E /* file_io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = file_io.c; sourceTree = "<group>"; };
 		E07E0A5C2BB60DAE00BD3D4E /* font.data */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.data; sourceTree = "<group>"; };
+		E07E0A5E2BB62CD900BD3D4E /* title.indexed_image */ = {isa = PBXFileReference; lastKnownFileType = file; path = title.indexed_image; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,6 +136,7 @@
 			children = (
 				E07E0A5C2BB60DAE00BD3D4E /* font.data */,
 				E07E0A492BB5F81300BD3D4E /* riverside_1x.indexed_image */,
+				E07E0A5E2BB62CD900BD3D4E /* title.indexed_image */,
 				E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */,
 			);
 			name = assets;
