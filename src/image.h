@@ -18,7 +18,9 @@ typedef struct {
 	uint32_t h;
 } image_t;
 
-image_t *load_image(const char *file);
+image_t *load_png_image(const char *file);
+image_t *load_indexed_image(const char *file);
+
 void free_image(image_t *image);
 void draw_image(image_t *image);
 

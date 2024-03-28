@@ -19,13 +19,17 @@
 #include <SDL2_image/SDL_image.h>
 #endif
 
+// Constants
+#define FILE_SIGNATURE (0x494E4458) /* Spells out 'INDX' */
+
+
 uint32_t swap_red_blue(uint32_t x) {
 	uint32_t r = (x & 0x00FF0000) >> 16;
 	uint32_t b = (x & 0x000000FF);
 	return (x & 0xFF00FF00) | (b << 16) | (r);
 }
 
-image_t *load_image(const char *file) {
+image_t *load_png_image(const char *file) {
 	SDL_Surface *surface = IMG_Load(file);
 	if (!surface) {
 		fprintf(stderr, "IMG_Load() failed: %s\n", SDL_GetError());
@@ -67,6 +71,82 @@ image_t *load_image(const char *file) {
 	}
 
 	SDL_FreeSurface(surface);
+	
+	return img;
+}
+
+uint32_t read_int(FILE *file) {
+	uint32_t x = 0;
+	fread(&x, sizeof(x), 1, file);
+	return x;
+}
+
+bool read_buffer(FILE *file, void *buf, size_t buf_len) {
+	return fread(buf, buf_len, 1, file) > 0;
+}
+
+image_t *load_indexed_image(const char *file) {
+	FILE *in = fopen(file, "rb");
+	
+	// Header: sig, width, height, and number of palette entries
+	uint32_t sig = read_int(in);
+	uint32_t w =read_int(in);
+	uint32_t h =read_int(in);
+	uint32_t palette_len =read_int(in);
+	uint32_t n = w * h;
+	
+	if (sig != FILE_SIGNATURE) {
+		fprintf(stderr, "Invalid file!\n");
+		return NULL;
+	}
+	
+	// Read color palette
+	uint32_t *palette = malloc(palette_len * sizeof(uint32_t));
+	if (!palette) {
+		fprintf(stderr, "Unable to allocate palette!\n");
+		return NULL;
+	}
+	if (!read_buffer(in, palette, palette_len * sizeof(uint32_t))) {
+		fprintf(stderr, "Unable to read palette!\n");
+		return NULL;
+	}
+	
+	// Read indexed pixels
+	uint8_t *indexes = malloc(n * sizeof(uint8_t));
+	if (!indexes) {
+		fprintf(stderr, "Unable to allocate indexes!\n");
+		return NULL;
+	}
+	if (!read_buffer(in, indexes, n * sizeof(uint8_t))) {
+		fprintf(stderr, "Unable to read indexes!\n");
+		return NULL;
+	}
+	
+	// Create image_t
+	image_t *img = (image_t *)malloc(sizeof(image_t));
+	if (!img) {
+		fprintf(stderr, "Unable to allocate image_t.\n");
+		return NULL;
+	}
+	img->w = w;
+	img->h = h;
+	uint32_t *pixels = (uint32_t *)malloc(n * sizeof(uint32_t));
+	if (!pixels) {
+		fprintf(stderr, "Unable to allocate memory for pixels.\n");
+		return NULL;
+	}
+	img->pixels = pixels;
+	
+	// Convert from indexed to ARGB
+	for (int i = 0; i < n; i++) {
+		int j = indexes[i];
+		pixels[i] = palette[j];
+	}
+
+	// Clean up
+	fclose(in);
+	free(palette);
+	free(indexes);
 	
 	return img;
 }
