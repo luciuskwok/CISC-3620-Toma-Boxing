@@ -1,19 +1,42 @@
 // atari_text.c
 
 #include "atari_text.h"
-#include "atari_font_data.h"
 #include "drawing.h"
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 
+// Globals
+uint8_t *atari_font = NULL;
+size_t atari_font_len = 0;
+
+
 bool atari_renderer_init(void) {
-	// Allocate memory
+	// Load Atari font from file
+	FILE *file = fopen("assets/font.data", "rb");
+	
+	fseek(file, 0L, SEEK_END);
+	atari_font_len = ftell(file);
+	fseek(file, 0L, SEEK_SET);
+	
+	atari_font = malloc(atari_font_len);
+	if (!atari_font) {
+		fprintf(stderr, "Unable to allocate font!\n");
+		return false;
+	}
+	
+	if (fread(atari_font, atari_font_len, 1, file) != 1) {
+		fprintf(stderr, "Unable to load font!\n");
+		return false;
+	}
 
 	return true;
 }
 
 void atari_renderer_dispose(void) {
+	free(atari_font);
 }
 
 void atari_draw_text(const char* s, int scale) {
@@ -38,11 +61,11 @@ void atari_draw_centered_text(const char* s, int scale) {
 }
 
 void atari_draw_char(char c, int x, int y, int scale) {
-	const int num_chars = atari_font_data_len / 8;
+	const int num_chars = (int)atari_font_len / 8;
 
 	c = c % num_chars;
 	for (int y1 = 0; y1 < 8; y1++) {
-		uint8_t acc = atari_font_data[c * 8 + y1];
+		uint8_t acc = atari_font[c * 8 + y1];
 		for (int x1 = 7; x1 >= 0; x1--) {
 			if (acc & 1) {
 				fill_rect(x + x1 * scale, y + y1 * scale, scale, scale);
@@ -51,3 +74,15 @@ void atari_draw_char(char c, int x, int y, int scale) {
 		}
 	}
 }
+
+void atari_draw_test_text(void) {
+	int i = 0;
+	set_fill_color(0xFFFFFFFF);
+	for (int y = 0; y < 8; y++) {
+		for (int x = 0; x < 16; x++) {
+			atari_draw_char(i, x * 8, y * 8, 1);
+			i++;
+		}
+	}
+}
+

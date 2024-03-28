@@ -6,6 +6,7 @@
 //
 
 #include "image_convert.h"
+#include "file_io.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
@@ -81,16 +82,6 @@ int color_exists_in_palette(uint32_t color, uint32_t *palette, int palette_len) 
 	return -1;
 }
 
-size_t write_int32(FILE *file, uint32_t x) {
-	size_t num_members_written = fwrite(&x, sizeof(x), 1, file);
-	return sizeof(x) * num_members_written;
-}
-
-size_t write_buffer(FILE *file, void *buf, size_t buf_len) {
-	size_t num_members_written = fwrite(buf, buf_len, 1, file);
-	return buf_len * num_members_written;
-}
-
 void convert_png(const char *input, const char *output) {
 	image_t *img = load_image(input);
 	if (!img) {
@@ -147,10 +138,10 @@ void convert_png(const char *input, const char *output) {
 	FILE *out = fopen(output, "wb");
 	
 	// Header: sig, width, height, and number of palette entries
-	total_written += write_int32(out, FILE_SIGNATURE);
-	total_written += write_int32(out, img->w);
-	total_written += write_int32(out, img->h);
-	total_written += write_int32(out, palette_len);
+	total_written += write_uint32(out, FILE_SIGNATURE);
+	total_written += write_uint32(out, img->w);
+	total_written += write_uint32(out, img->h);
+	total_written += write_uint32(out, palette_len);
 	
 	// Color Palette
 	total_written += write_buffer(out, palette, palette_len * sizeof(uint32_t));

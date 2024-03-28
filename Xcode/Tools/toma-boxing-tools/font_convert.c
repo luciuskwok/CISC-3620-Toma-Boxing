@@ -7,6 +7,7 @@
 
 #include "font_convert.h"
 #include "atari_font_data.h"
+#include "file_io.h"
 
 #include <SDL2/SDL.h>
 #include <SDL2_image/SDL_image.h>
@@ -57,6 +58,22 @@ void write_atari_font_to_png(const char *output) {
 	write_font_to_png(atari_font_data, atari_font_data_len, output);
 }
 
+uint8_t scan_byte_from_surface(SDL_Surface *surface, int x, int y) {
+	// Treat white pixels as 0, otherwise 1
+	int pitch = surface->pitch / 4;
+	uint32_t *pixels = (uint32_t *)(surface->pixels);
+	uint8_t c = 0;
+	
+	for (int i = 0; i < 8; i++) {
+		c = c << 1;
+		if (pixels[x + i + y * pitch] != 0xFFFFFFFF) {
+			c = c | 0x01;
+		}
+	}
+	
+	return c;
+}
+
 void convert_png_to_font_data(const char *input, const char *output) {
 	SDL_Surface *surface = IMG_Load(input);
 	if (!surface) {
@@ -71,16 +88,28 @@ void convert_png_to_font_data(const char *input, const char *output) {
 		return;
 	}
 	
+	// Open output file
+	int total_written = 0;
+	FILE *out = fopen(output, "wb");
+	
 	// Get parameters
-	int w = surface->w;
-	int h = surface->h;
-	int pitch = surface->pitch;
-	uint32_t *pixels = (uint32_t *)(surface->pixels);
-
-	// Treat non-white pixels as a 1, otherwise 0
+	int columns = surface->w / 8;
+	int rows = surface->h / 8;
+	uint8_t b;
+	
+	for (int row = 0; row < rows; row++) {
+		for (int col = 0; col < columns; col++) {
+			int x = col * 8;
+			for (int y = 0; y < 8; y++) {
+				b = scan_byte_from_surface(surface, x, y + row * 8);
+				total_written += write_uint8(out, b);
+			}
+		}
+	}
 	
 	// Clean up
+	fclose(out);
 	SDL_FreeSurface(surface);
 	
-	fprintf(stdout, "Saved font data to %s\n", output);
+	fprintf(stdout, "Saved %d bytes of font data to %s\n", total_written, output);
 }

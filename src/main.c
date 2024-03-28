@@ -123,7 +123,7 @@ void run_render_pipeline(void) {
 	p.x = scr.x/2 - title_image->w/2;
 	p.y = scr.y/2 - title_image->h/2;
 	move_to(p);
-	draw_image(title_image);
+	//draw_image(title_image);
 	
 	// Draw cube
 	draw_cube();
@@ -134,6 +134,7 @@ void run_render_pipeline(void) {
 	p.y = scr.y-32;
 	move_to(p);
 	atari_draw_centered_text("Press Space to Start", 2);
+	//atari_draw_test_text();
 	
 	render_to_screen();
 }
@@ -149,6 +150,7 @@ int main(int argc, const char * argv[]) {
 	if (!init_screen(PIXELS_WIDTH, PIXELS_HEIGHT, PIXELS_SCALE)) return 0;
 	if (!init_audio()) return 0;
 	
+	atari_renderer_init();
 	init_projection();
 	init_cube();
 	

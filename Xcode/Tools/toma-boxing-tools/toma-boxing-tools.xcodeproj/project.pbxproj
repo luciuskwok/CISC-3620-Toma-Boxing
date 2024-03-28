@@ -15,6 +15,7 @@
 		E07E0A4D2BB5FE3500BD3D4E /* image_convert.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A4C2BB5FE3500BD3D4E /* image_convert.c */; };
 		E07E0A502BB5FF8800BD3D4E /* atari_font_data.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A4E2BB5FF8800BD3D4E /* atari_font_data.c */; };
 		E07E0A532BB5FF9200BD3D4E /* font_convert.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A522BB5FF9200BD3D4E /* font_convert.c */; };
+		E07E0A562BB6082F00BD3D4E /* file_io.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A552BB6082F00BD3D4E /* file_io.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -43,6 +44,8 @@
 		E07E0A4F2BB5FF8800BD3D4E /* atari_font_data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atari_font_data.h; sourceTree = "<group>"; };
 		E07E0A512BB5FF9200BD3D4E /* font_convert.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = font_convert.h; sourceTree = "<group>"; };
 		E07E0A522BB5FF9200BD3D4E /* font_convert.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = font_convert.c; sourceTree = "<group>"; };
+		E07E0A542BB6082F00BD3D4E /* file_io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file_io.h; sourceTree = "<group>"; };
+		E07E0A552BB6082F00BD3D4E /* file_io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = file_io.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +72,8 @@
 				E07E0A522BB5FF9200BD3D4E /* font_convert.c */,
 				E07E0A4B2BB5FE3500BD3D4E /* image_convert.h */,
 				E07E0A4C2BB5FE3500BD3D4E /* image_convert.c */,
+				E07E0A542BB6082F00BD3D4E /* file_io.h */,
+				E07E0A552BB6082F00BD3D4E /* file_io.c */,
 				E07E0A3E2BB5E5A700BD3D4E /* Frameworks */,
 				E07E0A332BB5E57300BD3D4E /* Products */,
 			);
@@ -152,6 +157,7 @@
 				E07E0A502BB5FF8800BD3D4E /* atari_font_data.c in Sources */,
 				E07E0A532BB5FF9200BD3D4E /* font_convert.c in Sources */,
 				E07E0A4D2BB5FE3500BD3D4E /* image_convert.c in Sources */,
+				E07E0A562BB6082F00BD3D4E /* file_io.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

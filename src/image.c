@@ -7,6 +7,7 @@
 
 #include "image.h"
 #include "drawing.h"
+#include "file_io.h"
 #include "vector.h"
 
 #include <SDL2/SDL.h>
@@ -15,22 +16,6 @@
 // Constants
 #define FILE_SIGNATURE (0x494E4458) /* Spells out 'INDX' */
 
-
-uint32_t swap_red_blue(uint32_t x) {
-	uint32_t r = (x & 0x00FF0000) >> 16;
-	uint32_t b = (x & 0x000000FF);
-	return (x & 0xFF00FF00) | (b << 16) | (r);
-}
-
-uint32_t read_int(FILE *file) {
-	uint32_t x = 0;
-	fread(&x, sizeof(x), 1, file);
-	return x;
-}
-
-bool read_buffer(FILE *file, void *buf, size_t buf_len) {
-	return fread(buf, buf_len, 1, file) > 0;
-}
 
 image_t *load_indexed_image(const char *file) {
 	FILE *in = fopen(file, "rb");
