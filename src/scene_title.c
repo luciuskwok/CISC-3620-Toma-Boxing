@@ -59,6 +59,9 @@ void title_render(void) {
 	p.y = scr.y - 32;
 	move_to(p);
 	atari_draw_centered_text("Press Space to Start", 2);
-
+	
+	// Test font
+	// set_fill_color(0xFFCCFFCC);
+	// atari_draw_test_text();
 }
 

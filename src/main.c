@@ -18,10 +18,6 @@
 #include "matrix.h"
 #include "vector.h"
 
-#include "scene_title.h"
-#include "scene_instructions.h"
-#include "scene_gameplay.h"
-#include "scene_results.h"
 #include "scene_manager.h"
 
 #include <SDL2/SDL.h>
@@ -80,15 +76,15 @@ void process_keyboard_input(void) {
 				break;
 			case SDLK_p:
 				// Start audio player
-				start_audio();
+				start_music();
 				break;
 			case SDLK_o:
 				// Pause/Unpause audio player
-				pause_audio(!is_audio_paused());
+				pause_music(!is_music_paused());
 				break;
 			case SDLK_i:
 				// Stop audio player
-				stop_audio();
+				stop_music();
 				break;
 		}
 		break;
@@ -115,7 +111,27 @@ void update_state(void) {
 	frame_index++;
 }
 
+void render_volume_overlay(void) {
+	// Draw volume overlay in bottom left of screen
+	vec2_t p, scr;
+	scr.x = get_screen_width();
+	scr.y = get_screen_height();
+	
+	// Use 50% opaque black as overlay background
+	set_fill_color(0x88000000);
+	fill_rect(0, scr.y - 12, 4 * 8 + 4, 12);
+
+	// Draw text
+	set_fill_color(0xEEFFFFFF);
+	p.x = 2;
+	p.y = scr.y - 10;
+	move_to(p);
+	atari_draw_text("\06\01\02\07", 1);
+
+}
+
 void run_render_pipeline(void) {
+	// Render scene
 	switch (get_scene_index()) {
 		case SCENE_TITLE:
 			title_render();
@@ -130,6 +146,9 @@ void run_render_pipeline(void) {
 			results_render();
 			break;
 	}
+	// Render overlays
+	render_volume_overlay();
+	
 	render_to_screen();
 }
 

@@ -55,15 +55,15 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 				return true;
 			case SDLK_p:
 				// Start audio player
-				start_audio();
+				start_music();
 				return true;
 			case SDLK_o:
 				// Pause/Unpause audio player
-				pause_audio(!is_audio_paused());
+				pause_music(!is_music_paused());
 				return true;
 			case SDLK_i:
 				// Stop audio player
-				stop_audio();
+				stop_music();
 				return true;
 			case SDLK_l:
 				// Go to results scene

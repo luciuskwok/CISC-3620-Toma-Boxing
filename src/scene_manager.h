@@ -8,6 +8,11 @@
 #ifndef scene_manager_h
 #define scene_manager_h
 
+#include "scene_title.h"
+#include "scene_instructions.h"
+#include "scene_gameplay.h"
+#include "scene_results.h"
+
 // Game Scenes
 typedef enum {
 	SCENE_TITLE,		/**< Title scene */

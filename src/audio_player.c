@@ -49,18 +49,18 @@ bool init_audio(void) {
 	}
 	
 	// Set volume to 75%
-	set_audio_volume(0.75f);
+	set_music_volume(0.75f);
 	
 	return true;
 }
 
-void start_audio(void) {
+void start_music(void) {
 	// fprintf(stdout, "Start audio playback.\n");
 	Mix_PlayMusic(song, 0);
 	audio_paused = false;
 }
 
-void pause_audio(bool state) {
+void pause_music(bool state) {
 	// fprintf(stdout, "Pause audio playback.\n");
 	if (state) {
 		Mix_PauseMusic();
@@ -71,20 +71,20 @@ void pause_audio(bool state) {
 	}
 }
 
-void stop_audio(void) {
+void stop_music(void) {
 	// fprintf(stdout, "Stop audio playback.\n");
 	Mix_HaltMusic();
 }
 
-bool is_audio_playing(void) {
+bool is_music_playing(void) {
 	return Mix_PlayingMusic() != 0;
 }
 
-bool is_audio_paused(void) {
+bool is_music_paused(void) {
 	return audio_paused;
 }
 
-void set_audio_volume(float vol) {
+void set_music_volume(float vol) {
 	int x = vol * 128.0f;
 	Mix_VolumeMusic(x);
 }

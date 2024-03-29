@@ -77,7 +77,6 @@ void atari_draw_char(char c, int x, int y, int scale) {
 
 void atari_draw_test_text(void) {
 	int i = 0;
-	set_fill_color(0xFFFFFFFF);
 	for (int y = 0; y < 8; y++) {
 		for (int x = 0; x < 16; x++) {
 			atari_draw_char(i, x * 8, y * 8, 1);

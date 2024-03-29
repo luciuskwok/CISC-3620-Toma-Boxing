@@ -11,13 +11,13 @@
 #include <stdbool.h>
 
 bool init_audio(void);
-void start_audio(void);
-void pause_audio(bool state);
-void stop_audio(void);
+void start_music(void);
+void pause_music(bool state);
+void stop_music(void);
 
-bool is_audio_playing(void);
-bool is_audio_paused(void);
-void set_audio_volume(float vol);
+bool is_music_playing(void);
+bool is_music_paused(void);
+void set_music_volume(float vol);
 
 
 #endif /* audio_player_h */
