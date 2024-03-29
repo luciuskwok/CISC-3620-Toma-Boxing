@@ -76,6 +76,11 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 }
 
 void gameplay_update(uint64_t frame_index) {
+	update_cube(frame_index);
+
+}
+
+void gameplay_render(void) {
 	vec2_t p, scr;
 	scr.x = get_screen_width();
 	scr.y = get_screen_height();
@@ -83,17 +88,19 @@ void gameplay_update(uint64_t frame_index) {
 	set_fill_color(BLACK_COLOR);
 	fill_screen();
 
-	update_cube(frame_index);
-
+	// Draw cube
+	draw_cube();
+	
 	// Draw text
 	set_fill_color(WHITE_COLOR);
+
+	p.x = scr.x / 2;
+	p.y = 8;
+	move_to(p);
+	atari_draw_centered_text("Cube", 2);
+
 	p.x = scr.x / 2;
 	p.y = scr.y - 32;
 	move_to(p);
 	atari_draw_centered_text("Controls: QWE/ASD/IOP/L", 1);
-}
-
-void gameplay_render(void) {
-	// Draw cube
-	draw_cube();
 }

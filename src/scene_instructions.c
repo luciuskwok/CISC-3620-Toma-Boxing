@@ -44,9 +44,15 @@ void instructions_render(void) {
 
 	// Draw text
 	set_fill_color(WHITE_COLOR);
+
+	p.x = scr.x / 2;
+	p.y = scr.y * 3 / 8;
+	move_to(p);
+	atari_draw_centered_text("Instructions", 2);
+
 	p.x = scr.x / 2;
 	p.y = scr.y - 32;
 	move_to(p);
-	atari_draw_centered_text("Press Space to Play", 2);
+	atari_draw_centered_text("Press Space to Play", 1);
 }
 
