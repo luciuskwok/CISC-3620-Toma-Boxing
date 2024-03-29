@@ -118,8 +118,6 @@ void convert_png(const char *input, const char *output) {
 		return;
 	}
 	int palette_len = -1;
-
-	printf("SDL_PIXELFORMAT_INDEX8 = %08x\n", SDL_PIXELFORMAT_INDEX8);
 	
 	if (fmt == SDL_PIXELFORMAT_ARGB8888 || fmt == SDL_PIXELFORMAT_ABGR8888) {
 		// RGB format

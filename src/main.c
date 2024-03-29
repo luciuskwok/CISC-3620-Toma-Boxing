@@ -15,10 +15,14 @@
 #include "audio_player.h"
 #include "color.h"
 #include "drawing.h"
-#include "image.h"
 #include "matrix.h"
-#include "cube_mesh.h"
 #include "vector.h"
+
+#include "scene_title.h"
+#include "scene_instructions.h"
+#include "scene_gameplay.h"
+#include "scene_results.h"
+#include "scene_manager.h"
 
 #include <SDL2/SDL.h>
 #ifdef __EMSCRIPTEN__
@@ -31,10 +35,11 @@
 #define PIXELS_HEIGHT (200)
 #define PIXELS_SCALE (2)
 
+
+
 // Globals
 bool is_running = true;
 uint64_t frame_index = 0;
-image_t *title_image = NULL;
 
 
 #pragma mark - Game Loop
@@ -42,6 +47,23 @@ image_t *title_image = NULL;
 void process_keyboard_input(void) {
 	SDL_Event event;
 	SDL_PollEvent(&event);
+	bool handled = false;
+	
+	switch (get_scene_index()) {
+		case SCENE_TITLE:
+			handled = title_handle_keyboard(event);
+			break;
+		case SCENE_INSTRUCTIONS:
+			handled = instructions_handle_keyboard(event);
+			break;
+		case SCENE_GAMEPLAY:
+			handled = gameplay_handle_keyboard(event);
+			break;
+		case SCENE_RESULTS:
+			handled = results_handle_keyboard(event);
+			break;
+	}
+	if (handled) return;
 
 	// Keyboard interaction
 	switch (event.type) {
@@ -55,37 +77,6 @@ void process_keyboard_input(void) {
 				// Exit program
 				fprintf(stdout, "Escape key pressed.\n");
 				is_running = false;
-				break;
-			case SDLK_0:
-				cube_reset_transform();
-				break;
-			case SDLK_e:
-				// Roll right
-				cube_add_roll(1.0f);
-				break;
-			case SDLK_q:
-				// Roll left
-				cube_add_roll(-1.0f);
-				break;
-			case SDLK_w:
-				// Pitch down
-				cube_add_pitch(1.0f);
-				break;
-			case SDLK_s:
-				// Pitch up
-				cube_add_pitch(-1.0f);
-				break;
-			case SDLK_a:
-				// Yaw left
-				cube_add_yaw(1.0f);
-				break;
-			case SDLK_d:
-				// Yaw right
-				cube_add_yaw(-1.0f);
-				break;
-			case SDLK_SPACE:
-				// Stop movement
-				cube_reset_momentum();
 				break;
 			case SDLK_p:
 				// Start audio player
@@ -105,37 +96,40 @@ void process_keyboard_input(void) {
 }
 
 void update_state(void) {
-	update_cube(frame_index);
+	switch (get_scene_index()) {
+		case SCENE_TITLE:
+			title_update(frame_index);
+			break;
+		case SCENE_INSTRUCTIONS:
+			instructions_update(frame_index);
+			break;
+		case SCENE_GAMEPLAY:
+			gameplay_update(frame_index);
+			break;
+		case SCENE_RESULTS:
+			results_update(frame_index);
+			break;
+	}
 	
 	// Update frame index
 	frame_index++;
 }
 
 void run_render_pipeline(void) {
-	vec2_t p, scr;
-	scr.x = get_screen_width();
-	scr.y = get_screen_height();
-	
-	set_fill_color(BLACK_COLOR);
-	fill_screen();
-	
-	// Draw image
-	p.x = scr.x/2 - title_image->w/2;
-	p.y = scr.y/2 - title_image->h/2;
-	move_to(p);
-	draw_image(title_image);
-	
-	// Draw cube
-	draw_cube();
-
-	// Draw text
-	set_fill_color(WHITE_COLOR);
-	p.x = scr.x/2;
-	p.y = scr.y-32;
-	move_to(p);
-	atari_draw_centered_text("Press Space to Start", 2);
-	//atari_draw_test_text();
-	
+	switch (get_scene_index()) {
+		case SCENE_TITLE:
+			title_render();
+			break;
+		case SCENE_INSTRUCTIONS:
+			instructions_render();
+			break;
+		case SCENE_GAMEPLAY:
+			gameplay_render();
+			break;
+		case SCENE_RESULTS:
+			results_render();
+			break;
+	}
 	render_to_screen();
 }
 
@@ -150,12 +144,16 @@ int main(int argc, const char * argv[]) {
 	if (!init_screen(PIXELS_WIDTH, PIXELS_HEIGHT, PIXELS_SCALE)) return 0;
 	if (!init_audio()) return 0;
 	
+	// Init all scenes
+	title_init();
+	instructions_init();
+	gameplay_init();
+	results_init();
+
 	atari_renderer_init();
 	init_projection();
-	init_cube();
 	
-	// Image
-	title_image = load_indexed_image("assets/title.indexed_image");
+	set_scene_index(SCENE_TITLE);
 
 	// Instructions
 	fprintf(stdout, "Controls:\n"
