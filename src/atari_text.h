@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 
-bool atari_renderer_init(void);
+bool atari_text_init(void);
 void atari_renderer_dispose(void);
 
 void atari_draw_text(const char* s, int scale);

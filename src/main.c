@@ -37,6 +37,13 @@
 bool is_running = true;
 uint64_t frame_index = 0;
 
+#pragma mark - Audio Volume
+
+void adjust_music_volume(int delta) {
+	int vol = get_music_volume();
+	set_music_volume(vol + delta);
+}
+
 
 #pragma mark - Game Loop
 
@@ -71,7 +78,6 @@ void process_keyboard_input(void) {
 		switch (event.key.keysym.sym) {
 			case SDLK_ESCAPE:
 				// Exit program
-				fprintf(stdout, "Escape key pressed.\n");
 				is_running = false;
 				break;
 			case SDLK_p:
@@ -85,6 +91,18 @@ void process_keyboard_input(void) {
 			case SDLK_i:
 				// Stop audio player
 				stop_music();
+				break;
+			case SDLK_m:
+				// Mute toggle
+				set_music_muted(!is_music_muted());
+				break;
+			case SDLK_COMMA:
+				// Decrease volume
+				adjust_music_volume(-1);
+				break;
+			case SDLK_PERIOD:
+				// Increase volume
+				adjust_music_volume(1);
 				break;
 		}
 		break;
@@ -122,12 +140,18 @@ void render_volume_overlay(void) {
 	fill_rect(0, scr.y - 12, 4 * 8 + 4, 12);
 
 	// Draw text
-	set_fill_color(0xEEFFFFFF);
+	set_fill_color(0xeeFFaaAA);
 	p.x = 2;
 	p.y = scr.y - 10;
 	move_to(p);
-	atari_draw_text("\06\01\02\07", 1);
-
+	
+	char s[4];
+	if (is_music_muted()) {
+		sprintf(s, "\x02");
+	} else {
+		sprintf(s, "\x01%d", get_music_volume());
+	}
+	atari_draw_text(s, 1);
 }
 
 void run_render_pipeline(void) {
@@ -162,23 +186,16 @@ void run_game_loop(void) {
 int main(int argc, const char * argv[]) {
 	if (!init_screen(PIXELS_WIDTH, PIXELS_HEIGHT, PIXELS_SCALE)) return 0;
 	if (!init_audio()) return 0;
-	
+	if (!atari_text_init()) return 0;
+
 	// Init all scenes
 	title_init();
 	instructions_init();
 	gameplay_init();
 	results_init();
 
-	atari_renderer_init();
-	init_projection();
 	
 	set_scene_index(SCENE_TITLE);
-
-	// Instructions
-	fprintf(stdout, "Controls:\n"
-			"Rotation: Q, W, E, A, S, D\n"
-			"Audio: P = start; O = pause; I = stop\n"
-			);
 	
 #ifdef __EMSCRIPTEN__
 	// WebAssembly version

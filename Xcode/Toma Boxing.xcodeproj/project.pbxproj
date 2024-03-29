@@ -23,15 +23,15 @@
 		E040D28B2BB356EF00FDBF10 /* image.c in Sources */ = {isa = PBXBuildFile; fileRef = E040D28A2BB356EF00FDBF10 /* image.c */; };
 		E04CAC892BACB5570015EC5E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 		E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
-		E07E0A4A2BB5F81D00BD3D4E /* riverside_1x.indexed_image in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A492BB5F81300BD3D4E /* riverside_1x.indexed_image */; };
 		E07E0A592BB60BF800BD3D4E /* file_io.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A582BB60BF800BD3D4E /* file_io.c */; };
 		E07E0A5D2BB60DB200BD3D4E /* font.data in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A5C2BB60DAE00BD3D4E /* font.data */; };
-		E07E0A5F2BB62CDF00BD3D4E /* title.indexed_image in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A5E2BB62CD900BD3D4E /* title.indexed_image */; };
 		E07E0A622BB6340F00BD3D4E /* scene_title.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A612BB6340F00BD3D4E /* scene_title.c */; };
 		E07E0A652BB6370700BD3D4E /* scene_instructions.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A642BB6370700BD3D4E /* scene_instructions.c */; };
 		E07E0A682BB6371B00BD3D4E /* scene_gameplay.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A672BB6371B00BD3D4E /* scene_gameplay.c */; };
 		E07E0A6B2BB637B700BD3D4E /* scene_results.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A6A2BB637B700BD3D4E /* scene_results.c */; };
 		E07E0A6E2BB63CD500BD3D4E /* scene_manager.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A6D2BB63CD500BD3D4E /* scene_manager.c */; };
+		E07E0A712BB67C3100BD3D4E /* ui_progress_bar.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A702BB67C3100BD3D4E /* ui_progress_bar.c */; };
+		E07E0A732BB68AEF00BD3D4E /* title.bmp in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A722BB68AE000BD3D4E /* title.bmp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,8 +42,7 @@
 			dstSubfolderSpec = 16;
 			files = (
 				E07E0A5D2BB60DB200BD3D4E /* font.data in Copy Assets */,
-				E07E0A4A2BB5F81D00BD3D4E /* riverside_1x.indexed_image in Copy Assets */,
-				E07E0A5F2BB62CDF00BD3D4E /* title.indexed_image in Copy Assets */,
+				E07E0A732BB68AEF00BD3D4E /* title.bmp in Copy Assets */,
 				E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in Copy Assets */,
 			);
 			name = "Copy Assets";
@@ -88,11 +87,9 @@
 		E040D28A2BB356EF00FDBF10 /* image.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = image.c; sourceTree = "<group>"; };
 		E04CAC7C2BACB4F10015EC5E /* Toma Boxing */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Toma Boxing"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E04CAC872BACB5480015EC5E /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
-		E07E0A492BB5F81300BD3D4E /* riverside_1x.indexed_image */ = {isa = PBXFileReference; lastKnownFileType = file; path = riverside_1x.indexed_image; sourceTree = "<group>"; };
 		E07E0A572BB60BF800BD3D4E /* file_io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file_io.h; sourceTree = "<group>"; };
 		E07E0A582BB60BF800BD3D4E /* file_io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = file_io.c; sourceTree = "<group>"; };
 		E07E0A5C2BB60DAE00BD3D4E /* font.data */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.data; sourceTree = "<group>"; };
-		E07E0A5E2BB62CD900BD3D4E /* title.indexed_image */ = {isa = PBXFileReference; lastKnownFileType = file; path = title.indexed_image; sourceTree = "<group>"; };
 		E07E0A602BB6340F00BD3D4E /* scene_title.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scene_title.h; sourceTree = "<group>"; };
 		E07E0A612BB6340F00BD3D4E /* scene_title.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scene_title.c; sourceTree = "<group>"; };
 		E07E0A632BB6370700BD3D4E /* scene_instructions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scene_instructions.h; sourceTree = "<group>"; };
@@ -103,6 +100,9 @@
 		E07E0A6A2BB637B700BD3D4E /* scene_results.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scene_results.c; sourceTree = "<group>"; };
 		E07E0A6C2BB63CD500BD3D4E /* scene_manager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scene_manager.h; sourceTree = "<group>"; };
 		E07E0A6D2BB63CD500BD3D4E /* scene_manager.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scene_manager.c; sourceTree = "<group>"; };
+		E07E0A6F2BB67C3100BD3D4E /* ui_progress_bar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ui_progress_bar.h; sourceTree = "<group>"; };
+		E07E0A702BB67C3100BD3D4E /* ui_progress_bar.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ui_progress_bar.c; sourceTree = "<group>"; };
+		E07E0A722BB68AE000BD3D4E /* title.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = title.bmp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +149,8 @@
 				E07E0A6A2BB637B700BD3D4E /* scene_results.c */,
 				E07E0A6C2BB63CD500BD3D4E /* scene_manager.h */,
 				E07E0A6D2BB63CD500BD3D4E /* scene_manager.c */,
+				E07E0A6F2BB67C3100BD3D4E /* ui_progress_bar.h */,
+				E07E0A702BB67C3100BD3D4E /* ui_progress_bar.c */,
 				E00F80132BB1302100D78335 /* vector.h */,
 				E00F80122BB1302100D78335 /* vector.c */,
 			);
@@ -160,8 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				E07E0A5C2BB60DAE00BD3D4E /* font.data */,
-				E07E0A492BB5F81300BD3D4E /* riverside_1x.indexed_image */,
-				E07E0A5E2BB62CD900BD3D4E /* title.indexed_image */,
+				E07E0A722BB68AE000BD3D4E /* title.bmp */,
 				E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */,
 			);
 			name = assets;
@@ -263,6 +264,7 @@
 				E00F80162BB1302100D78335 /* main.c in Sources */,
 				E07E0A682BB6371B00BD3D4E /* scene_gameplay.c in Sources */,
 				E00F801D2BB1329800D78335 /* cube_mesh.c in Sources */,
+				E07E0A712BB67C3100BD3D4E /* ui_progress_bar.c in Sources */,
 				E00F80172BB1302100D78335 /* matrix.c in Sources */,
 				E07E0A622BB6340F00BD3D4E /* scene_title.c in Sources */,
 				E07E0A6E2BB63CD500BD3D4E /* scene_manager.c in Sources */,

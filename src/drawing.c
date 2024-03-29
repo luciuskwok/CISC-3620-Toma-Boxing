@@ -36,6 +36,18 @@ mat4_t camera_transform_3d;
 
 #pragma mark - SDL Interface
 
+void init_projection(void) {
+	// Set default view transform to center on and scale to screen
+	mat3_get_identity(view_transform_2d);
+	mat3_translate(view_transform_2d, screen_w / 2, screen_h / 2);
+	float scale2d = screen_h;
+	mat3_scale(view_transform_2d, scale2d, scale2d);
+	
+	// Set default camera transform to -5 units
+	mat4_get_identity(camera_transform_3d);
+	mat4_translate(camera_transform_3d, 0, 0, -5);
+}
+
 bool init_screen(int width, int height, int scale) {
 	//fprintf(stdout, "initialize_windowing_system().\n");
 	
@@ -83,6 +95,9 @@ bool init_screen(int width, int height, int scale) {
 
 	// Debug logging: window * texture size
 	fprintf(stdout, "Created window (%dx%d) and texture (%dx%d).\n", window_rect.w, window_rect.h, screen_w, screen_h);
+	
+	// Set up default transforms
+	init_projection();
 
 	return true;
 }
@@ -171,18 +186,6 @@ uint32_t get_screen_width(void) { return screen_w; }
 uint32_t get_screen_height(void) { return screen_h; }
 
 #pragma mark - Projection 3D
-
-void init_projection(void) {
-	// Set default view transform to center on and scale to screen
-	mat3_get_identity(view_transform_2d);
-	mat3_translate(view_transform_2d, screen_w / 2, screen_h / 2);
-	float scale2d = screen_h;
-	mat3_scale(view_transform_2d, scale2d, scale2d);
-	
-	// Set default camera transform to -5 units
-	mat4_get_identity(camera_transform_3d);
-	mat4_translate(camera_transform_3d, 0, 0, -5);
-}
 
 vec2_t orthographic_project_point(vec3_t pt3d) {
 	// Drop z

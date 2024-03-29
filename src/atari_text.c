@@ -13,10 +13,14 @@ uint8_t *atari_font = NULL;
 size_t atari_font_len = 0;
 
 
-bool atari_renderer_init(void) {
+bool atari_text_init(void) {
 	// Load Atari font from file
 	FILE *file = fopen("assets/font.data", "rb");
-	
+	if (!file) {
+		fprintf(stderr, "Unable to open font file!\n");
+		return false;
+	}
+
 	fseek(file, 0L, SEEK_END);
 	atari_font_len = ftell(file);
 	fseek(file, 0L, SEEK_SET);

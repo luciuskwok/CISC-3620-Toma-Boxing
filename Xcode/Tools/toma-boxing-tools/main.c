@@ -25,7 +25,7 @@ void create_custom_font_data(void) {
 
 void convert_png_to_indexed_image(void) {
 	const char input[] = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/(Artwork)/title.png";
-	const char output[] = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/(Artwork)/title.indexed_image";
+	const char output[] = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/(Artwork)/title.idximg";
 	convert_png(input, output);
 }
 

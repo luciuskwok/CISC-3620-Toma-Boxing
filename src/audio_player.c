@@ -20,11 +20,14 @@
 // Constants
 #define DEFAULT_CHUNK_SIZE (512)
 #define SFX_CHANNEL (0)
+#define MAX_MUSIC_VOLUME (9)
 
 // Globals
 //SDL_AudioSpec audio_spec;
 Mix_Music *song = NULL;
-bool audio_paused = false;
+bool music_paused = false;
+int music_volume = MAX_MUSIC_VOLUME;
+bool music_muted = false;
 
 // Functions
 
@@ -48,8 +51,8 @@ bool init_audio(void) {
 		return false;
 	}
 	
-	// Set volume to 75%
-	set_music_volume(0.75f);
+	// Set volume to -10 dB
+	set_music_volume(7);
 	
 	return true;
 }
@@ -57,17 +60,17 @@ bool init_audio(void) {
 void start_music(void) {
 	// fprintf(stdout, "Start audio playback.\n");
 	Mix_PlayMusic(song, 0);
-	audio_paused = false;
+	music_paused = false;
 }
 
 void pause_music(bool state) {
 	// fprintf(stdout, "Pause audio playback.\n");
 	if (state) {
 		Mix_PauseMusic();
-		audio_paused = true;
+		music_paused = true;
 	} else {
 		Mix_ResumeMusic();
-		audio_paused = false;
+		music_paused = false;
 	}
 }
 
@@ -81,10 +84,36 @@ bool is_music_playing(void) {
 }
 
 bool is_music_paused(void) {
-	return audio_paused;
+	return music_paused;
 }
 
-void set_music_volume(float vol) {
-	int x = vol * 128.0f;
-	Mix_VolumeMusic(x);
+int get_music_volume(void) {
+	return music_volume;
+}
+
+void set_music_volume(int vol) {
+	// Limit vol to range 0-9
+	vol = (vol <= 9)? vol : 9;
+	vol = (vol >= 1)? vol : 1;
+
+	music_volume = vol;
+	music_muted = false;
+	float db = (vol - MAX_MUSIC_VOLUME) * 3.0f;
+	float scalar = powf(10.0f, db/10.0f);
+	Mix_VolumeMusic(roundf(scalar * 128.0f));
+	
+	//fprintf(stdout, "Volume: %1.0f dB, %1.4f\n", db, scalar);
+}
+
+bool is_music_muted(void) {
+	return music_muted;
+}
+
+void set_music_muted(bool state) {
+	music_muted = state;
+	if (music_muted) {
+		Mix_VolumeMusic(0);
+	} else {
+		set_music_volume(music_volume);
+	}
 }
