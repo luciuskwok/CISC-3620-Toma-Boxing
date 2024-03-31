@@ -38,28 +38,28 @@ bool title_handle_keyboard(SDL_Event event) {
 	return false;
 }
 
-void title_update(uint64_t frame_index) {
+void title_update(uint64_t delta_time) {
 	
 }
 
 void title_render(void) {
-	vec2_t p, scr;
-	scr.x = get_screen_width();
-	scr.y = get_screen_height();
-	
+	vec2_t p;
+	int scr_w = get_screen_width();
+	int scr_h = get_screen_height();
+
 	set_fill_color(BLACK_COLOR);
 	fill_screen();
 
 	// Draw image
-	p.x = scr.x/2 - title_image->w/2;
-	p.y = scr.y/2 - title_image->h/2;
+	p.x = scr_w/2 - title_image->w/2;
+	p.y = scr_h/2 - title_image->h/2;
 	move_to(p);
 	draw_image(title_image);
 
 	// Draw text
 	set_fill_color(WHITE_COLOR);
-	p.x = scr.x / 2;
-	p.y = scr.y - 32;
+	p.x = scr_w / 2;
+	p.y = scr_h - 32;
 	move_to(p);
 	atari_draw_centered_text("Press Space to Start", 2);
 	

@@ -67,10 +67,9 @@ void mat3_multiply(const mat3_t a, const mat3_t b, mat3_t result) {
 
 vec2_t vec2_mat3_multiply(const vec2_t a, const mat3_t m) {
 	vec2_t b;
-	float w;
 	b.x = m[0][0] * a.x + m[0][1] * a.y + m[0][2];
 	b.y = m[1][0] * a.x + m[1][1] * a.y + m[1][2];
-	w = m[2][0] * a.x + m[2][1] * a.y + m[2][2];
+	//float w = m[2][0] * a.x + m[2][1] * a.y + m[2][2];
 	return b;
 }
 

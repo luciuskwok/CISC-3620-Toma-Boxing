@@ -100,7 +100,7 @@ void set_music_volume(int vol) {
 	music_muted = false;
 	float db = (vol - MAX_MUSIC_VOLUME) * 3.0f;
 	float scalar = powf(10.0f, db/10.0f);
-	Mix_VolumeMusic(roundf(scalar * 128.0f));
+	Mix_VolumeMusic((int)roundf(scalar * 128.0f));
 	
 	//fprintf(stdout, "Volume: %1.0f dB, %1.4f\n", db, scalar);
 }

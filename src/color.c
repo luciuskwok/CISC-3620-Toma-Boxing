@@ -10,12 +10,12 @@
 
 
 uint32_t color_from_rgba_int(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
-    return (a << 24) | (b << 16) | (g << 8) | r;
+    return ((uint32_t)a << 24) | ((uint32_t)b << 16) | ((uint32_t)g << 8) | (uint32_t)r;
 }
 
-uint32_t color_from_rgba_float(float r, float g, float b, float a) {
-    return ((int)(a * 255.0) << 24) | ((int)(b * 255.0) << 16) |
-        ((int)(g * 255.0) << 8) | (int)(r * 255.0);
+uint32_t color_from_rgba_double(double r, double g, double b, double a) {
+	return ((uint32_t)(a * 255.0) << 24) | ((uint32_t)(b * 255.0) << 16) |
+		((uint32_t)(g * 255.0) << 8) | (uint32_t)(r * 255.0);
 }
 
 uint32_t blend_color(uint32_t x, uint32_t y) {
@@ -42,20 +42,20 @@ uint32_t blend_color(uint32_t x, uint32_t y) {
     zg = (zg < 255)? zg : 255;
     zr = (zr < 255)? zr : 255;
     
-    return color_from_rgba_int(zr, zg, zb, 255);
+    return color_from_rgba_int((uint8_t)zr, (uint8_t)zg, (uint8_t)zb, 255);
 }
 
-uint32_t color_from_hsv(float h, float s, float v, float a) {
+uint32_t color_from_hsv(double h, double s, double v, double a) {
     // Adapted from: https://stackoverflow.com/questions/3018313/algorithm-to-convert-rgb-to-hsv-and-hsv-to-rgb-in-range-0-255-for-both
     
     double hh, p, q, t, ff;
     long i;
-    float r, g, b;
+	double r, g, b;
 
     if (s <= 0.0) {       // < is bogus, just shuts up warnings
-        return color_from_rgba_float(v, v, v, a);
+        return color_from_rgba_double(v, v, v, a);
     }
-    hh = fmodf(h, 360.0);
+    hh = fmod(h, 360.0);
     hh = hh / 60.0;
     i = (long)hh;
     ff = hh - i;
@@ -97,5 +97,5 @@ uint32_t color_from_hsv(float h, float s, float v, float a) {
         b = q;
         break;
     }
-    return color_from_rgba_float(r, g, b, a);
+    return color_from_rgba_double(r, g, b, a);
 }

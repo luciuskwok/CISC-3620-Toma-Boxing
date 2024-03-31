@@ -14,7 +14,7 @@
 
 void gameplay_init(void);
 bool gameplay_handle_keyboard(SDL_Event event);
-void gameplay_update(uint64_t frame_index);
+void gameplay_update(uint64_t delta_time);
 void gameplay_render(void);
 
 #endif /* scene_gameplay_h */

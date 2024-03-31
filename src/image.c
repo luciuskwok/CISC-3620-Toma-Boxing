@@ -30,6 +30,7 @@ image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int w, int h, bo
 	uint32_t *pixels = (uint32_t *)malloc(n * sizeof(uint32_t));
 	if (!pixels) {
 		fprintf(stderr, "Unable to allocate memory for pixels.\n");
+		free(img);
 		return NULL;
 	}
 	img->pixels = pixels;

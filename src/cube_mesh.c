@@ -74,6 +74,7 @@ mat4_t cube_transform_3d;
 float cube_pitch, cube_roll, cube_yaw; // how many degrees per second of rotation
 uint32_t cube_line_color;
 uint32_t cube_point_color;
+uint64_t cube_ticks;
 
 // Projected points
 triangle_t projected_triangles[M_MESH_FACES];
@@ -85,17 +86,19 @@ vec2_t projected_points[M_MESH_VERTICES];
 void init_cube(void) {
 	mat4_get_identity(cube_transform_3d);
 	cube_pitch = cube_roll = cube_yaw = 0;
+	cube_ticks = 0;
 }
 
-void update_cube(uint64_t frame_index) {
+void update_cube(uint64_t delta_time) {
 	// Update rotation
-	float increment = (M_PI / 180.f) / 60.0f; // 1 deg/sec divided by 60 fps
+	float increment = ((float)M_PI / 180.f) * (float)delta_time / 1000.f; // 1 deg/sec
 	mat4_pitch(cube_transform_3d, cube_pitch * increment);
 	mat4_roll(cube_transform_3d, cube_roll * increment);
 	mat4_yaw(cube_transform_3d, cube_yaw * increment);
 
 	// Update triangle colors
-	int hue = frame_index % 360;
+	cube_ticks += delta_time;
+	int hue = (cube_ticks / 16) % 360;
 	cube_line_color = color_from_hsv(hue, 1.0, 1.0, 1.0);
 	cube_point_color = color_from_hsv((hue + 60) % 360, 1.0, 1.0, 0.5);
 }
@@ -136,9 +139,9 @@ void draw_cube(void) {
 			line_to(a2);
 			
 			// Points
-			fill_centered_rect(a2.x, a2.y, point_w, point_w);
-			fill_centered_rect(b2.x, b2.y, point_w, point_w);
-			fill_centered_rect(c2.x, c2.y, point_w, point_w);
+			fill_centered_rect((int)a2.x, (int)a2.y, point_w, point_w);
+			fill_centered_rect((int)b2.x, (int)b2.y, point_w, point_w);
+			fill_centered_rect((int)c2.x, (int)c2.y, point_w, point_w);
 		}
 	}
 }

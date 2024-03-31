@@ -14,7 +14,7 @@
 
 // Functions
 void init_cube(void);
-void update_cube(uint64_t frame_index);
+void update_cube(uint64_t delta_time);
 void draw_cube(void);
 
 void cube_reset_transform(void);

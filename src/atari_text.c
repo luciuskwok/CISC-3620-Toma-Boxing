@@ -22,7 +22,7 @@ bool atari_text_init(void) {
 	}
 
 	fseek(file, 0L, SEEK_END);
-	atari_font_len = ftell(file);
+	atari_font_len = (size_t)ftell(file);
 	fseek(file, 0L, SEEK_SET);
 	
 	atari_font = malloc(atari_font_len);
@@ -48,8 +48,8 @@ void atari_draw_text(const char* s, int scale) {
 	vec2_t cursor = get_cursor();
 
 	while (*s != 0) {
-		atari_draw_char(*s, cursor.x, cursor.y, scale);
-		cursor.x += 8 * scale;
+		atari_draw_char(*s, (int)cursor.x, (int)cursor.y, scale);
+		cursor.x += 8.0f * scale;
 		s++;
 	}
 	
@@ -57,7 +57,7 @@ void atari_draw_text(const char* s, int scale) {
 }
 
 void atari_draw_centered_text(const char* s, int scale) {
-	size_t w = strnlen(s, 255);
+	int w = (int)strnlen(s, 255);
 	vec2_t p = get_cursor();
 	p.x -= w * 4 * scale;
 	move_to(p);
@@ -80,7 +80,7 @@ void atari_draw_char(char c, int x, int y, int scale) {
 }
 
 void atari_draw_test_text(void) {
-	int i = 0;
+	char i = 0;
 	for (int y = 0; y < 8; y++) {
 		for (int x = 0; x < 16; x++) {
 			atari_draw_char(i, x * 8, y * 8, 1);

@@ -20,8 +20,9 @@ SDL_Rect window_rect;
 SDL_Renderer* sdl_renderer;
 SDL_Texture* sdl_texture;
 uint32_t* screen_pixels;
-uint32_t screen_w;
-uint32_t screen_h;
+int screen_w;
+int screen_h;
+size_t screen_pitch;
 
 // Drawing context
 uint32_t line_color;
@@ -60,6 +61,7 @@ bool init_screen(int width, int height, int scale) {
 	// Store dimensions in globals
 	screen_w = width;
 	screen_h = height;
+	screen_pitch = (size_t)width * sizeof(uint32_t);
 	window_rect.x = window_rect.y = 0;
 	window_rect.w = width * scale;
 	window_rect.h = height * scale;
@@ -78,7 +80,7 @@ bool init_screen(int width, int height, int scale) {
 	}
 
 	// Allocate frame buffer
-	screen_pixels = (uint32_t*)malloc(width * height * sizeof(uint32_t));
+	screen_pixels = (uint32_t*)malloc((size_t)(height) * screen_pitch);
 	if (!screen_pixels) {
 		fprintf(stderr, "malloc() failed!\n");
 		return false;
@@ -112,7 +114,7 @@ void destroy_screen(void) {
 
 void render_to_screen(void) {
 	// Render frame buffer
-	SDL_UpdateTexture(sdl_texture, NULL, screen_pixels, screen_w * sizeof(uint32_t));
+	SDL_UpdateTexture(sdl_texture, NULL, screen_pixels, (int)screen_pitch);
 	SDL_RenderCopy(sdl_renderer, sdl_texture, NULL, &window_rect);
 	SDL_RenderPresent(sdl_renderer);
 }
@@ -140,13 +142,13 @@ void move_to(vec2_t a) {
 void line_to(vec2_t a) {
 	float dx = a.x - cursor.x;
 	float dy = a.y - cursor.y;
-	float steps = fabs(dx) > fabs(dy)? fabs(dx) : fabs(dy);
+	float steps = fabsf(dx) > fabsf(dy)? fabsf(dx) : fabsf(dy);
 	float sx = dx / steps;
 	float sy = dy / steps;
 	float x = cursor.x;
 	float y = cursor.y;
 	for (float i = 0.0f; i <= steps; i++) {
-		set_pixel(floorf(x), floorf(y), line_color);
+		set_pixel((int)floorf(x), (int)floorf(y), line_color);
 		x += sx;
 		y += sy;
 	}
@@ -182,8 +184,8 @@ void set_pixel(int x, int y, uint32_t color) {
 vec2_t get_cursor(void) { return cursor; }
 uint32_t get_line_color(void) { return line_color; }
 uint32_t get_fill_color(void) { return fill_color; }
-uint32_t get_screen_width(void) { return screen_w; }
-uint32_t get_screen_height(void) { return screen_h; }
+int get_screen_width(void) { return screen_w; }
+int get_screen_height(void) { return screen_h; }
 
 #pragma mark - Projection 3D
 
