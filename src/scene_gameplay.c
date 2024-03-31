@@ -13,6 +13,7 @@
 #include "cube_mesh.h"
 #include "audio_player.h"
 #include "scene_manager.h"
+#include "ui_progress_bar.h"
 
 
 void gameplay_init(void) {
@@ -78,6 +79,17 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 void gameplay_update(uint64_t delta_time) {
 	update_cube(delta_time);
 
+	// Update song progress bar
+	double x = 0.0f;
+	if (is_music_playing()) {
+		double total = get_music_duration();
+		double progress = get_music_position();
+		if (total > 0.0) {
+			x = progress / total;
+		}
+	}
+	set_progress_value(x);
+	
 }
 
 void gameplay_render(void) {
@@ -85,14 +97,17 @@ void gameplay_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	set_fill_color(BLACK_COLOR);
+	set_fill_color(COLOR_BLACK);
 	fill_screen();
 
 	// Draw cube
 	draw_cube();
 	
+	// Draw song progress bar
+	draw_progress_bar();
+	
 	// Draw text
-	set_fill_color(WHITE_COLOR);
+	set_fill_color(COLOR_WHITE);
 
 	p.x = scr_w / 2;
 	p.y = 8;

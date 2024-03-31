@@ -12,8 +12,14 @@
 
 // NOTE: pixel format is ABGR
 
-#define BLACK_COLOR (0xFF000000)
-#define WHITE_COLOR (0xFFFFFFFF)
+#define COLOR_BLACK (0xFF000000)
+#define COLOR_WHITE (0xFFFFFFFF)
+#define COLOR_GRAY (0xFF888888)
+#define COLOR_DARK_GRAY (0xFF444444)
+#define COLOR_LIGHT_GRAY (0xFFBBBBBB)
+#define COLOR_RED (0xFF0000FF)
+#define COLOR_GREEN (0xFF00FF00)
+#define COLOR_BLUE (0xFFFF0000)
 
 uint32_t blend_color(uint32_t x, uint32_t y);
 

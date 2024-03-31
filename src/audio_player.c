@@ -117,3 +117,11 @@ void set_music_muted(bool state) {
 		set_music_volume(music_volume);
 	}
 }
+
+double get_music_duration(void) {
+	return Mix_MusicDuration(song);
+}
+
+double get_music_position(void) {
+	return Mix_GetMusicPosition(song);
+}

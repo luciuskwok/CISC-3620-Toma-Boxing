@@ -12,7 +12,7 @@
 
 void progress_bar_init(void);
 void draw_progress_bar(void);
-
+void set_progress_value(double x);
 
 
 #endif /* ui_progress_bar_h */

@@ -85,7 +85,7 @@ bool init_screen(int width, int height, int scale) {
 		fprintf(stderr, "malloc() failed!\n");
 		return false;
 	}
-	set_fill_color(BLACK_COLOR);
+	set_fill_color(COLOR_BLACK);
 	fill_screen();
 	
 	// Set up the renderer
@@ -153,6 +153,19 @@ void line_to(vec2_t a) {
 		y += sy;
 	}
 	cursor = a;
+}
+
+void stroke_rect(int x, int y, int w, int h) {
+	vec2_t a = { x, y };
+	vec2_t b = { x + w - 1, y };
+	vec2_t c = { x + w - 1, y + h - 1 };
+	vec2_t d = { x, y + h - 1 };
+	
+	move_to(a);
+	line_to(b);
+	line_to(c);
+	line_to(d);
+	line_to(a);
 }
 
 void fill_rect(int x, int y, int w, int h) {

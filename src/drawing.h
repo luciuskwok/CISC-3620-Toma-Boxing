@@ -25,6 +25,8 @@ void set_fill_color(uint32_t color);
 
 void move_to(vec2_t a);
 void line_to(vec2_t a);
+void stroke_rect(int x, int y, int w, int h);
+
 void fill_rect(int x, int y, int w, int h);
 void fill_centered_rect(int x, int y, int w, int h);
 

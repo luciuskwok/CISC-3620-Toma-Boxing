@@ -47,7 +47,7 @@ void title_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	set_fill_color(BLACK_COLOR);
+	set_fill_color(COLOR_BLACK);
 	fill_screen();
 
 	// Draw image
@@ -57,7 +57,7 @@ void title_render(void) {
 	draw_image(title_image);
 
 	// Draw text
-	set_fill_color(WHITE_COLOR);
+	set_fill_color(COLOR_WHITE);
 	p.x = scr_w / 2;
 	p.y = scr_h - 32;
 	move_to(p);

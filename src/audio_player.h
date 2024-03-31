@@ -21,6 +21,7 @@ int get_music_volume(void);
 void set_music_volume(int vol);
 bool is_music_muted(void);
 void set_music_muted(bool state);
-
+double get_music_duration(void);
+double get_music_position(void);
 
 #endif /* audio_player_h */
