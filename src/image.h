@@ -14,8 +14,8 @@
 // Image type
 typedef struct {
 	uint32_t *pixels;
-	uint32_t w;
-	uint32_t h;
+	int w;
+	int h;
 } image_t;
 
 image_t *load_indexed_image(const char *file);

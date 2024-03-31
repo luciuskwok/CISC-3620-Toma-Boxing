@@ -17,7 +17,7 @@
 #define FILE_SIGNATURE (0x494E4458) /* Spells out 'INDX' */
 
 
-image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int w, int h, bool flipped, uint32_t *palette, int palette_len) {
+image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int w, int h, bool flipped, uint32_t *palette, uint32_t palette_len) {
 	// Create image_t
 	image_t *img = (image_t *)malloc(sizeof(image_t));
 	if (!img) {
@@ -26,8 +26,7 @@ image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int w, int h, bo
 	}
 	img->w = w;
 	img->h = h;
-	int n = w * h;
-	uint32_t *pixels = (uint32_t *)malloc(n * sizeof(uint32_t));
+	uint32_t *pixels = (uint32_t *)malloc((size_t)(w * h) * sizeof(uint32_t));
 	if (!pixels) {
 		fprintf(stderr, "Unable to allocate memory for pixels.\n");
 		free(img);
@@ -47,59 +46,7 @@ image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int w, int h, bo
 	return img;
 }
 
-image_t *load_indexed_image(const char *file) {
-	FILE *in = fopen(file, "rb");
-	if (!in) {
-		fprintf(stderr, "File could not be opened!\n");
-		return NULL;
-	}
-	
-	// Header: sig, width, height, and number of palette entries
-	uint32_t sig = read_uint32(in);
-	uint32_t w = read_uint32(in);
-	uint32_t h = read_uint32(in);
-	uint32_t palette_len = read_uint32(in);
-	uint32_t n = w * h;
-	
-	if (sig != FILE_SIGNATURE) {
-		fprintf(stderr, "Invalid file!\n");
-		return NULL;
-	}
-	
-	// Read color palette
-	uint32_t *palette = malloc(palette_len * sizeof(uint32_t));
-	if (!palette) {
-		fprintf(stderr, "Unable to allocate palette!\n");
-		return NULL;
-	}
-	if (!read_buffer(in, palette, palette_len * sizeof(uint32_t))) {
-		fprintf(stderr, "Unable to read palette!\n");
-		return NULL;
-	}
-	
-	// Read bitmap
-	uint8_t *bitmap = malloc(n);
-	if (!bitmap) {
-		fprintf(stderr, "Unable to allocate bitmap!\n");
-		return NULL;
-	}
-	if (!read_buffer(in, bitmap, n)) {
-		fprintf(stderr, "Unable to read bitmap!\n");
-		return NULL;
-	}
-	
-	// Create image_t
-	image_t *img = create_abgr_image_from_indexed_bitmap(bitmap, w, h, false, palette, palette_len);
-
-	// Clean up
-	fclose(in);
-	free(palette);
-	free(bitmap);
-	
-	return img;
-}
-
-void convert_bmp_palette_to_abgr(uint32_t *palette, int palette_len) {
+void convert_bmp_palette_to_abgr(uint32_t *palette, uint32_t palette_len) {
 	uint8_t *p = (uint8_t *)palette;
 	uint8_t r, g, b;
 	for (int i = 0; i < palette_len; i++) {
@@ -168,7 +115,11 @@ image_t *load_bmp_image(const char *file) {
 	}
 	
 	// Palette
-	int palette_len = (BitmapOffset - 54) / 4;
+	if (BitmapOffset < 54) {
+		fprintf(stderr, "Invalid palette length!\n");
+		return NULL;
+	}
+	uint32_t palette_len = (BitmapOffset - 54) / 4;
 	// printf("  palette_len = %d\n", palette_len);
 	uint32_t *palette = malloc(palette_len * sizeof(uint32_t));
 	if (!palette) {
@@ -217,7 +168,7 @@ void draw_image(image_t *image) {
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
 			uint32_t c = pixels[x + y * w];
-			set_pixel(cursor.x + x, cursor.y + y, c);
+			set_pixel((int)floorf(cursor.x) + x, (int)floorf(cursor.y) + y, c);
 		}
 	}
 }

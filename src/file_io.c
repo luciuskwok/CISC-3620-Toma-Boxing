@@ -32,13 +32,13 @@ int32_t read_int32(FILE *file) {
 }
 
 int16_t read_int16(FILE *file) {
-	int32_t x = 0;
+	int16_t x = 0;
 	fread(&x, sizeof(x), 1, file);
 	return x;
 }
 
 int8_t read_int8(FILE *file) {
-	int32_t x = 0;
+	int8_t x = 0;
 	fread(&x, sizeof(x), 1, file);
 	return x;
 }

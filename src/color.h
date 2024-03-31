@@ -19,5 +19,4 @@ uint32_t blend_color(uint32_t x, uint32_t y);
 
 uint32_t color_from_hsv(double h, double s, double v, double a);
 
-
 #endif /* color_h */
