@@ -15,9 +15,13 @@
 #include "scene_manager.h"
 #include "ui_progress_bar.h"
 
+// Globals
+image_t *track_image = NULL;
+
 
 void gameplay_init(void) {
 	init_cube();
+	track_image = load_bmp_image("assets/track.bmp");
 }
 
 bool gameplay_handle_keyboard(SDL_Event event) {
@@ -100,6 +104,15 @@ void gameplay_render(void) {
 	set_fill_color(COLOR_BLACK);
 	fill_screen();
 
+	// Draw 2 tracks
+	p.x = scr_w / 4 - track_image->w / 2;
+	p.y = scr_h / 2 - track_image->h / 2;
+	move_to(p);
+	draw_image(track_image);
+	p.x = scr_w * 3 / 4 - track_image->w / 2;
+	move_to(p);
+	draw_image(track_image);
+	
 	// Draw cube
 	draw_cube();
 	
@@ -110,7 +123,7 @@ void gameplay_render(void) {
 	set_fill_color(COLOR_WHITE);
 
 	p.x = scr_w / 2;
-	p.y = 8;
+	p.y = 12;
 	move_to(p);
 	atari_draw_centered_text("Cube", 2);
 

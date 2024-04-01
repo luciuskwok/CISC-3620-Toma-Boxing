@@ -64,6 +64,14 @@ void atari_draw_centered_text(const char* s, int scale) {
 	atari_draw_text(s, scale);
 }
 
+void atari_draw_right_justified_text(const char* s, int scale) {
+	int w = (int)strnlen(s, 255);
+	vec2_t p = get_cursor();
+	p.x -= w * 8 * scale;
+	move_to(p);
+	atari_draw_text(s, scale);
+}
+
 void atari_draw_char(char c, int x, int y, int scale) {
 	const int num_chars = (int)atari_font_len / 8;
 

@@ -18,10 +18,6 @@ image_t *title_image = NULL;
 
 
 void title_init(void) {
-	// Image
-	//title_image = load_indexed_image("assets/title.idximg");
-	
-	// Testing
 	title_image = load_bmp_image("assets/title.bmp");
 }
 
