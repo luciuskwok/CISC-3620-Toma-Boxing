@@ -17,6 +17,10 @@ void results_init(void) {
 	
 }
 
+void results_start(void) {
+	
+}
+
 bool results_handle_keyboard(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
@@ -38,10 +42,10 @@ void results_render(void) {
 	vec2_t p;
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
-
+	
 	set_fill_color(COLOR_BLACK);
 	fill_screen();
-
+	
 	// Draw text
 	set_fill_color(COLOR_WHITE);
 	
@@ -52,7 +56,7 @@ void results_render(void) {
 	p.y = top_margin;
 	move_to(p);
 	atari_draw_text("Results", 2);
-		
+	
 	// Left column: labels
 	set_fill_color(COLOR_PINK);
 	p.y = top_margin + title_spacing;
@@ -95,11 +99,14 @@ void results_render(void) {
 	p.y += 24;
 	move_to(p);
 	atari_draw_right_justified_text("23456", 1);
-
-
+	
 	p.x = scr_w - 2;
 	p.y = scr_h - 12;
 	move_to(p);
 	set_fill_color(COLOR_WHITE);
 	atari_draw_right_justified_text("Press Space to Return to Title", 1);
+	
+	// Draw meshes and shapes
+	draw_meshes();
+	draw_shapes();
 }

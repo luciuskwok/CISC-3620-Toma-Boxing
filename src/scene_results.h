@@ -14,6 +14,7 @@
 
 
 void results_init(void);
+void results_start(void);
 bool results_handle_keyboard(SDL_Event event);
 void results_update(double delta_time);
 void results_render(void);

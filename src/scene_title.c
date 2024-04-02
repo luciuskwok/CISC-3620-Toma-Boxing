@@ -21,6 +21,10 @@ void title_init(void) {
 	title_image = load_bmp_image("assets/title.bmp");
 }
 
+void title_start(void) {
+	
+}
+
 bool title_handle_keyboard(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
@@ -62,5 +66,9 @@ void title_render(void) {
 	// Test font
 	// set_fill_color(0xFFCCFFCC);
 	// atari_draw_test_text();
+	
+	// Draw meshes and shapes
+	draw_meshes();
+	draw_shapes();
 }
 

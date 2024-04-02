@@ -29,7 +29,6 @@ void gameplay_init(void) {
 }
 
 void gameplay_start(void) {
-	remove_all_meshes();
 	add_mesh(gameplay_cube);
 }
 
@@ -131,9 +130,10 @@ void gameplay_render(void) {
 	move_to(p);
 	draw_image(track_image);
 	
-	// Draw cube
+	// Draw meshes and shapes
 	draw_meshes();
-	
+	draw_shapes();
+
 	// Draw song progress bar
 	draw_progress_bar();
 	

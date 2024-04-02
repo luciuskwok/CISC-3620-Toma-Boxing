@@ -13,6 +13,7 @@
 #include <stdint.h>
 
 void instructions_init(void);
+void instructions_start(void);
 bool instructions_handle_keyboard(SDL_Event event);
 void instructions_update(double delta_time);
 void instructions_render(void);

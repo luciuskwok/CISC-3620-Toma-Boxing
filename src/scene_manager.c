@@ -7,6 +7,7 @@
 
 #include "scene_manager.h"
 #include "mesh.h"
+#include "shape.h"
 
 
 // Globals
@@ -19,18 +20,23 @@ SCENE_INDEX get_scene_index(void) {
 
 void set_scene_index(SCENE_INDEX x) {
 	if (scene_index != x) {
+		
+		remove_all_meshes();
+		remove_all_shapes();
+
 		scene_index = x;
 		switch (scene_index) {
 			case SCENE_TITLE:
-				
+				title_start();
 				break;
 			case SCENE_INSTRUCTIONS:
-				
+				instructions_start();
 				break;
 			case SCENE_GAMEPLAY:
 				gameplay_start();
 				break;
 			case SCENE_RESULTS:
+				results_start();
 				break;
 		}
 	}
@@ -80,9 +86,16 @@ void draw_scene(void) {
 
 void draw_meshes(void) {
 	mesh_t **meshes = get_meshes();
-	int mesh_count = get_mesh_count();
-	for (int i = 0; i < mesh_count; i++) {
-		mesh_t *mesh = meshes[i];
-		mesh_draw(mesh);
+	int n = get_mesh_count();
+	for (int i = 0; i < n; i++) {
+		mesh_draw(meshes[i]);
+	}
+}
+
+void draw_shapes(void) {
+	shape_t **shapes = get_shapes();
+	int n = get_shape_count();
+	for (int i = 0; i < n; i++) {
+		shape_draw(shapes[i]);
 	}
 }

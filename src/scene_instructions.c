@@ -21,6 +21,10 @@ void instructions_init(void) {
 	instr_track_image = load_bmp_image("assets/track.bmp");
 }
 
+void instructions_start(void) {
+	
+}
+
 bool instructions_handle_keyboard(SDL_Event event) {
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
@@ -84,5 +88,9 @@ void instructions_render(void) {
 	p.y = scr_h - 10;
 	move_to(p);
 	atari_draw_right_justified_text("Press Space to Play", 1);
+	
+	// Draw meshes and shapes
+	draw_meshes();
+	draw_shapes();
 }
 

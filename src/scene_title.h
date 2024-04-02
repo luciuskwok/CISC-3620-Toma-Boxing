@@ -13,6 +13,7 @@
 #include <stdint.h>
 
 void title_init(void);
+void title_start(void);
 bool title_handle_keyboard(SDL_Event event);
 void title_update(double delta_time);
 void title_render(void);
