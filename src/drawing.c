@@ -8,7 +8,6 @@
 #include "drawing.h"
 #include "color.h"
 #include "matrix.h"
-#include "cube_mesh.h"
 #include "vector.h"
 
 #include <SDL2/SDL.h>

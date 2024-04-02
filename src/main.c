@@ -110,20 +110,8 @@ void process_keyboard_input(void) {
 }
 
 void update_state(uint64_t delta_time) {
-	switch (get_scene_index()) {
-		case SCENE_TITLE:
-			title_update(delta_time);
-			break;
-		case SCENE_INSTRUCTIONS:
-			instructions_update(delta_time);
-			break;
-		case SCENE_GAMEPLAY:
-			gameplay_update(delta_time);
-			break;
-		case SCENE_RESULTS:
-			results_update(delta_time);
-			break;
-	}
+	double x = (double)delta_time / 1000.0;
+	update_scene(x);
 }
 
 void render_volume_overlay(void) {
@@ -153,20 +141,8 @@ void render_volume_overlay(void) {
 
 void run_render_pipeline(void) {
 	// Render scene
-	switch (get_scene_index()) {
-		case SCENE_TITLE:
-			title_render();
-			break;
-		case SCENE_INSTRUCTIONS:
-			instructions_render();
-			break;
-		case SCENE_GAMEPLAY:
-			gameplay_render();
-			break;
-		case SCENE_RESULTS:
-			results_render();
-			break;
-	}
+	draw_scene();
+
 	// Render overlays
 	render_volume_overlay();
 	

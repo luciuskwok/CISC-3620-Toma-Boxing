@@ -14,7 +14,7 @@
 
 void instructions_init(void);
 bool instructions_handle_keyboard(SDL_Event event);
-void instructions_update(uint64_t delta_time);
+void instructions_update(double delta_time);
 void instructions_render(void);
 
 #endif /* scene_instructions_h */

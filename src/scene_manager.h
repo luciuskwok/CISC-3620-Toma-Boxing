@@ -24,5 +24,8 @@ typedef enum {
 SCENE_INDEX get_scene_index(void);
 void set_scene_index(SCENE_INDEX x);
 
+void update_scene(double delta_time);
+void draw_scene(void);
+void draw_meshes(void);
 
 #endif /* scene_manager_h */

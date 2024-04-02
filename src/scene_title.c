@@ -34,7 +34,7 @@ bool title_handle_keyboard(SDL_Event event) {
 	return false;
 }
 
-void title_update(uint64_t delta_time) {
+void title_update(double delta_time) {
 	
 }
 

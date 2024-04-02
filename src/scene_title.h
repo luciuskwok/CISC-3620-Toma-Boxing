@@ -14,7 +14,7 @@
 
 void title_init(void);
 bool title_handle_keyboard(SDL_Event event);
-void title_update(uint64_t delta_time);
+void title_update(double delta_time);
 void title_render(void);
 
 #endif /* scene_title_h */

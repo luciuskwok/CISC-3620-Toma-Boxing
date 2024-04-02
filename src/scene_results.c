@@ -30,7 +30,7 @@ bool results_handle_keyboard(SDL_Event event) {
 	return false;
 }
 
-void results_update(uint64_t delta_time) {
+void results_update(double delta_time) {
 	
 }
 

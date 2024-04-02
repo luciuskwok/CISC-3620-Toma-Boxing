@@ -15,7 +15,7 @@
 
 void results_init(void);
 bool results_handle_keyboard(SDL_Event event);
-void results_update(uint64_t delta_time);
+void results_update(double delta_time);
 void results_render(void);
 
 #endif /* scene_results_h */
