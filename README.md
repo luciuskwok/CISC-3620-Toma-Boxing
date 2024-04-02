@@ -1,5 +1,7 @@
 # Toma Boxing (CISC 3620 Midterm Project)
 
+This project is for my _CISC 3620 Computer Graphics_ course, and is the midterm project which shows what I've learned in this course so far.
+
 ## Building
 - Download and install Emscripten from <https://emscripten.org/docs/getting_started/downloads.html>
 - `cd` into the emsdk folder
