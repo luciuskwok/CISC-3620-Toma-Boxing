@@ -34,6 +34,8 @@ void fill_rect(int x, int y, int w, int h);
 void fill_centered_rect(int x, int y, int w, int h);
 
 void set_pixel(int x, int y, uint32_t color);
+vec2_t apply_view_transform_2d(vec2_t point);
+
 
 vec2_t get_cursor(void);
 uint32_t get_line_color(void);

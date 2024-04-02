@@ -1,0 +1,113 @@
+//
+//  shape.c
+//  Toma Boxing
+//
+//  Created by Lucius Kwok on 4/2/24.
+//
+
+#include "shape.h"
+#include "color.h"
+#include "drawing.h"
+
+#include <math.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+
+// Global list of 3D meshes
+#define SHAPES_MAX (256)
+shape_t *shapes[SHAPES_MAX];
+int shape_count = 0;
+
+
+shape_t *shape_new(int point_count) {
+	shape_t *shape = malloc(sizeof(shape_t));
+	if (!shape) {
+		fprintf(stderr, "Unable to allocate shape!\n");
+		return NULL;
+	}
+	vec2_t *points = malloc(sizeof(vec2_t) * (size_t)point_count);
+	if (!points) {
+		fprintf(stderr, "Unable to allocate shape points!\n");
+		free(shape);
+		return NULL;
+	}
+	
+	shape->point_count = point_count;
+	shape->points = points;
+	shape->is_closed = true;
+	shape->line_color = COLOR_WHITE;
+	shape->fill_color = COLOR_WHITE;
+	shape_reset_transform(shape);
+	shape_reset_momentum(shape);
+	shape->lifetime = 0.0;
+	return shape;
+}
+
+void shape_destroy(shape_t *shape) {
+	free(shape->points);
+	free(shape);
+}
+
+void shape_update(shape_t *shape, double delta_time) {
+	momentum2d_t *m = &shape->momentum;
+	
+	float increment = (float)((M_PI / 180.0) * delta_time); // 1 deg/sec
+	mat3_rotate(shape->transform, m->rotation * increment);
+	
+	float t = (float)delta_time;
+	mat3_translate(shape->transform, m->x * t, m->y * t);
+	
+	shape->lifetime += delta_time;
+}
+
+void shape_draw(shape_t *shape) {
+	set_line_color(shape->line_color);
+	set_fill_color(shape->fill_color);
+	
+	if (shape->point_count < 2) return;
+	
+	vec2_t a = apply_view_transform_2d(shape->points[0]);
+	move_to(a);
+	
+	for (int i = 1; i < shape->point_count; i++) {
+		vec2_t b = apply_view_transform_2d(shape->points[i]);
+		line_to(b);
+	}
+	if (shape->is_closed) {
+		line_to(a);
+	}
+}
+
+void shape_reset_transform(shape_t *shape) {
+	mat3_get_identity(shape->transform);
+}
+
+void shape_reset_momentum(shape_t *shape) {
+	momentum2d_t *m = &shape->momentum;
+	m->x = m->y = 0.0f;
+	m->rotation = 0;
+}
+
+// Global list of 2d shapes
+void add_shape(shape_t *shape) {
+	if (shape_count < SHAPES_MAX) {
+		shapes[shape_count] = shape;
+		shape_count++;
+	} else {
+		fprintf(stderr, "Shapes array is full!\n");
+	}
+}
+
+void remove_all_shapes(void) {
+	shape_count = 0;
+}
+
+int get_shape_count(void) {
+	return shape_count;
+}
+
+shape_t **get_shapes(void) {
+	return shapes;
+}
+

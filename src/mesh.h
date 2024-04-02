@@ -17,8 +17,9 @@ typedef struct {
 } mesh_face_t;
 
 typedef struct {
+	float x, y, z;
 	float pitch, roll, yaw;
-} momentum_t;
+} momentum3d_t;
 
 typedef struct {
 	float alpha; 	// yaw
@@ -32,7 +33,7 @@ typedef struct {
 	uint32_t line_color;
 	uint32_t point_color;
 	mat4_t transform;
-	momentum_t momentum;
+	momentum3d_t momentum;
 	double lifetime;
 } mesh_t;
 

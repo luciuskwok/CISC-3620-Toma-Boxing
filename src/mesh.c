@@ -49,7 +49,7 @@ void mesh_destroy(mesh_t *mesh) {
 }
 
 void mesh_update(mesh_t *mesh, double delta_time) {
-	// Update rotation
+	// Update posiiton & rotation
 	float increment = (float)((M_PI / 180.0) * delta_time); // 1 deg/sec
 	mat4_yaw(mesh->transform, mesh->momentum.yaw * increment);
 	mat4_pitch(mesh->transform, mesh->momentum.pitch * increment);
@@ -110,7 +110,9 @@ void mesh_reset_transform(mesh_t *mesh) {
 }
 
 void mesh_reset_momentum(mesh_t *mesh) {
-	mesh->momentum.pitch = mesh->momentum.roll = mesh->momentum.yaw = 0;
+	momentum3d_t *m = &mesh->momentum;
+	m->x = m->y = m->z = 0.0f;
+	m->pitch = m->roll = m->yaw = 0;
 }
 
 void mesh_add_pitch(mesh_t *mesh, float x) {
