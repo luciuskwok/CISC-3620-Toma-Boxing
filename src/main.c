@@ -65,6 +65,8 @@ void process_keyboard_input(void) {
 		case SCENE_RESULTS:
 			handled = results_handle_keyboard(event);
 			break;
+		case SCENE_STARTUP:
+			break;
 	}
 	if (handled) return;
 

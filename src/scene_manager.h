@@ -15,6 +15,7 @@
 
 // Game Scenes
 typedef enum {
+	SCENE_STARTUP,
 	SCENE_TITLE,		/**< Title scene */
 	SCENE_INSTRUCTIONS,	/**< Instructions scene */
 	SCENE_GAMEPLAY,		/**< Gameplaly scene */

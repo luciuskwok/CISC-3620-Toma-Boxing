@@ -34,6 +34,9 @@ typedef struct {
 shape_t *shape_new(int point_count);
 void shape_destroy(shape_t *shape);
 
+shape_t *create_rectangle_shape(float w, float h);
+shape_t *create_polygon_shape(int sides);
+
 void shape_update(shape_t *shape, double delta_time);
 void shape_draw(shape_t *shape);
 

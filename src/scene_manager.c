@@ -11,7 +11,7 @@
 
 
 // Globals
-SCENE_INDEX scene_index;
+SCENE_INDEX scene_index = SCENE_STARTUP;
 
 
 SCENE_INDEX get_scene_index(void) {
@@ -38,6 +38,8 @@ void set_scene_index(SCENE_INDEX x) {
 			case SCENE_RESULTS:
 				results_start();
 				break;
+			case SCENE_STARTUP:
+				break;
 		}
 	}
 }
@@ -57,13 +59,18 @@ void update_scene(double delta_time) {
 		case SCENE_RESULTS:
 			results_update(delta_time);
 			break;
+		case SCENE_STARTUP:
+			break;
 	}
 	
 	mesh_t **meshes = get_meshes();
-	int mesh_count = get_mesh_count();
-	for (int i = 0; i < mesh_count; i++) {
-		mesh_t *mesh = meshes[i];
-		mesh_update(mesh, delta_time);
+	for (int i = 0; i < get_mesh_count(); i++) {
+		mesh_update(meshes[i], delta_time);
+	}
+	
+	shape_t **shapes = get_shapes();
+	for (int i = 0; i < get_shape_count(); i++) {
+		shape_update(shapes[i], delta_time);
 	}
 }
 
@@ -81,21 +88,21 @@ void draw_scene(void) {
 		case SCENE_RESULTS:
 			results_render();
 			break;
+		case SCENE_STARTUP:
+			break;
 	}
 }
 
 void draw_meshes(void) {
 	mesh_t **meshes = get_meshes();
-	int n = get_mesh_count();
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < get_mesh_count(); i++) {
 		mesh_draw(meshes[i]);
 	}
 }
 
 void draw_shapes(void) {
 	shape_t **shapes = get_shapes();
-	int n = get_shape_count();
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i < get_shape_count(); i++) {
 		shape_draw(shapes[i]);
 	}
 }

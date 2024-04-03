@@ -12,6 +12,8 @@
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
+
 
 
 // Global list of 3D meshes
@@ -49,6 +51,42 @@ void shape_destroy(shape_t *shape) {
 	free(shape);
 }
 
+#pragma mark -
+
+shape_t *create_rectangle_shape(float w, float h) {
+	shape_t *s = shape_new(4);
+	if (s) {
+		s->is_closed = true;
+		vec2_t *p = s->points;
+		float x1 = -w / 2.0f;
+		float x2 = w / 2.0f;
+		float y1 = -h / 2.0f;
+		float y2 = h / 2.0f;
+		p[0].x = x1;	p[0].y = y1;
+		p[1].x = x2;	p[1].y = y1;
+		p[2].x = x2;	p[2].y = y2;
+		p[3].x = x1;	p[3].y = y2;
+	}
+	return s;
+}
+
+shape_t *create_polygon_shape(int sides) {
+	shape_t *s = shape_new(sides);
+	if (s) {
+		s->is_closed = true;
+		vec2_t *p = s->points;
+		for (int i = 0; i < sides; i++) {
+			float angle = (float)(M_PI * 2.0) * i /  sides;
+			p[i].x = cosf(angle);
+			p[i].y = sinf(angle);
+		}
+	}
+	return s;
+
+}
+
+#pragma mark -
+
 void shape_update(shape_t *shape, double delta_time) {
 	momentum2d_t *m = &shape->momentum;
 	
@@ -67,11 +105,13 @@ void shape_draw(shape_t *shape) {
 	
 	if (shape->point_count < 2) return;
 	
-	vec2_t a = apply_view_transform_2d(shape->points[0]);
+	vec2_t a = vec2_mat3_multiply(shape->points[0], shape->transform);
+	a = apply_view_transform_2d(a);
 	move_to(a);
 	
 	for (int i = 1; i < shape->point_count; i++) {
-		vec2_t b = apply_view_transform_2d(shape->points[i]);
+		vec2_t b = vec2_mat3_multiply(shape->points[i], shape->transform);
+		b = apply_view_transform_2d(b);
 		line_to(b);
 	}
 	if (shape->is_closed) {
@@ -88,6 +128,8 @@ void shape_reset_momentum(shape_t *shape) {
 	m->x = m->y = 0.0f;
 	m->rotation = 0;
 }
+
+#pragma mark -
 
 // Global list of 2d shapes
 void add_shape(shape_t *shape) {
