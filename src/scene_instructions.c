@@ -28,7 +28,12 @@ void instructions_init(void) {
 
 void instructions_start(void) {
 	add_mesh(instr_cube);
-
+	
+	// Have cube spin by itself
+	mesh_reset_transform(instr_cube);
+	mesh_reset_momentum(instr_cube);
+	mesh_add_yaw(instr_cube, 5.0f);
+	mesh_add_pitch(instr_cube, 1.0f);
 }
 
 bool instructions_handle_keyboard(SDL_Event event) {
@@ -45,7 +50,16 @@ bool instructions_handle_keyboard(SDL_Event event) {
 }
 
 void instructions_update(double delta_time) {
+	double t = get_scene_lifetime();
 	
+	// Color cycling
+	int hue = (int)round(t * 60.0) % 360;
+	uint32_t line_color = color_from_hsv(hue, 1.0, 1.0, 1.0);
+	uint32_t point_color = color_from_hsv((hue + 60) % 360, 1.0, 1.0, 0.5);
+	
+	instr_cube->line_color = line_color;
+	instr_cube->point_color = point_color;
+
 }
 
 void instructions_render(void) {

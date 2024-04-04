@@ -58,23 +58,24 @@ void results_render(void) {
 	atari_draw_text("Results", 2);
 	
 	// Left column: labels
+	const int line_height = 12;
 	set_fill_color(COLOR_PINK);
 	p.y = top_margin + title_spacing;
 	move_to(p);
 	atari_draw_text("Great", 1);
-	p.y += 16;
+	p.y += line_height;
 	move_to(p);
 	atari_draw_text("OK", 1);
-	p.y += 16;
+	p.y += line_height;
 	move_to(p);
 	atari_draw_text("Bad", 1);
-	p.y += 16;
+	p.y += line_height;
 	move_to(p);
 	atari_draw_text("Miss", 1);
-	p.y += 24;
+	p.y += line_height * 2;
 	move_to(p);
 	atari_draw_text("Combo", 1);
-	p.y += 24;
+	p.y += line_height * 2;
 	move_to(p);
 	atari_draw_text("Score", 1);
 	
@@ -84,19 +85,19 @@ void results_render(void) {
 	set_fill_color(COLOR_LIME);
 	move_to(p);
 	atari_draw_right_justified_text("123", 1);
-	p.y += 16;
+	p.y += line_height;
 	move_to(p);
 	atari_draw_right_justified_text("54", 1);
-	p.y += 16;
+	p.y += line_height;
 	move_to(p);
 	atari_draw_right_justified_text("2", 1);
-	p.y += 16;
+	p.y += line_height;
 	move_to(p);
 	atari_draw_right_justified_text("5", 1);
-	p.y += 24;
+	p.y += line_height * 2;
 	move_to(p);
 	atari_draw_right_justified_text("36", 1);
-	p.y += 24;
+	p.y += line_height * 2;
 	move_to(p);
 	atari_draw_right_justified_text("23456", 1);
 	
