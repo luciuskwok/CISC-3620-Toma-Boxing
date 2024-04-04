@@ -12,6 +12,7 @@
 
 // Globals
 SCENE_INDEX scene_index = SCENE_STARTUP;
+double scene_lifetime = 0.0;
 
 
 SCENE_INDEX get_scene_index(void) {
@@ -19,33 +20,31 @@ SCENE_INDEX get_scene_index(void) {
 }
 
 void set_scene_index(SCENE_INDEX x) {
-	if (scene_index != x) {
-		
-		remove_all_meshes();
-		remove_all_shapes();
+	remove_all_meshes();
+	remove_all_shapes();
 
-		scene_index = x;
-		switch (scene_index) {
-			case SCENE_TITLE:
-				title_start();
-				break;
-			case SCENE_INSTRUCTIONS:
-				instructions_start();
-				break;
-			case SCENE_GAMEPLAY:
-				gameplay_start();
-				break;
-			case SCENE_RESULTS:
-				results_start();
-				break;
-			case SCENE_STARTUP:
-				break;
-		}
+	scene_index = x;
+	switch (scene_index) {
+		case SCENE_TITLE:
+			title_start();
+			break;
+		case SCENE_INSTRUCTIONS:
+			instructions_start();
+			break;
+		case SCENE_GAMEPLAY:
+			gameplay_start();
+			break;
+		case SCENE_RESULTS:
+			results_start();
+			break;
+		case SCENE_STARTUP:
+			break;
 	}
+
+	scene_lifetime = 0.0;
 }
 
 void update_scene(double delta_time) {
-	
 	switch (scene_index) {
 		case SCENE_TITLE:
 			title_update(delta_time);
@@ -72,6 +71,8 @@ void update_scene(double delta_time) {
 	for (int i = 0; i < get_shape_count(); i++) {
 		shape_update(shapes[i], delta_time);
 	}
+
+	scene_lifetime += delta_time;
 }
 
 void draw_scene(void) {
@@ -105,4 +106,8 @@ void draw_shapes(void) {
 	for (int i = 0; i < get_shape_count(); i++) {
 		shape_draw(shapes[i]);
 	}
+}
+
+double get_scene_lifetime(void) {
+	return scene_lifetime;
 }

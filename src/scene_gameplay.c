@@ -19,9 +19,8 @@
 
 // Globals
 image_t *track_image = NULL;
-double scene_gameplay_lifetime = 0.0;
 mesh_t *gameplay_cube = NULL;
-
+double time_remaining = -1.0;
 
 void gameplay_init(void) {
 	track_image = load_bmp_image("assets/track.bmp");
@@ -30,6 +29,11 @@ void gameplay_init(void) {
 
 void gameplay_start(void) {
 	add_mesh(gameplay_cube);
+	
+	time_remaining = -1.0;
+	
+	// Start playing music
+	start_music();
 }
 
 bool gameplay_handle_keyboard(SDL_Event event) {
@@ -90,9 +94,10 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 }
 
 void gameplay_update(double delta_time) {
+	double t = get_scene_lifetime();
 	
 	// Color cycling
-	int hue = (int)round(scene_gameplay_lifetime * 60.0) % 360;
+	int hue = (int)round(t * 60.0) % 360;
 	uint32_t line_color = color_from_hsv(hue, 1.0, 1.0, 1.0);
 	uint32_t point_color = color_from_hsv((hue + 60) % 360, 1.0, 1.0, 0.5);
 	
@@ -100,17 +105,17 @@ void gameplay_update(double delta_time) {
 	gameplay_cube->point_color = point_color;
 
 	// Update song progress bar
-	double x = 0.0f;
+	double fraction = 0.0;
+	time_remaining = -1.0;
 	if (is_music_playing()) {
 		double total = get_music_duration();
-		double progress = get_music_position();
 		if (total > 0.0) {
-			x = progress / total;
+			double position = get_music_position();
+			time_remaining = total - position;
+			fraction = position / total;
 		}
 	}
-	set_progress_value(x);
-	
-	scene_gameplay_lifetime += delta_time;
+	set_progress_value(fraction);
 }
 
 void gameplay_render(void) {
@@ -137,6 +142,20 @@ void gameplay_render(void) {
 	// Draw song progress bar
 	draw_progress_bar();
 	
+	// Draw remaining time text
+	set_fill_color(COLOR_WHITE);
+	if (time_remaining >= 0.0) {
+		int seconds = (int)ceil(time_remaining);
+		int minutes = seconds / 60;
+		seconds = seconds % 60;
+		char s[16];
+		sprintf(s, "%d:%02d", minutes, seconds);
+		p.x = scr_w - 2;
+		p.y = 2;
+		move_to(p);
+		atari_draw_right_justified_text(s, 1);
+	}
+
 	// Draw text
 	set_fill_color(COLOR_WHITE);
 
@@ -145,8 +164,15 @@ void gameplay_render(void) {
 	move_to(p);
 	atari_draw_centered_text("Cube", 2);
 
-	p.x = scr_w / 2;
-	p.y = scr_h - 32;
+	p.x = scr_w - 10 * 8 - 2;
+	p.y = scr_h - 10;
 	move_to(p);
-	atari_draw_centered_text("Controls: QWE/ASD/IOP/L", 1);
+	set_fill_color(COLOR_RED);
+	atari_draw_text("A", 1);
+	set_fill_color(COLOR_WHITE);
+	atari_draw_text("/", 1);
+	set_fill_color(COLOR_RED);
+	atari_draw_text("D", 1);
+	set_fill_color(COLOR_WHITE);
+	atari_draw_text(":Punch", 1);
 }

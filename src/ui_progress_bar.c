@@ -22,7 +22,7 @@ void draw_progress_bar(void) {
 	// Draws progress bar at top of screen
 	int scr_w = get_screen_width();
 	//int scr_h = get_screen_height();
-	int w = scr_w * 8 / 10;
+	int w = scr_w * 75 / 100;
 	int h = 10;
 	int x = (scr_w - w) / 2;
 	int y = 0;

@@ -30,4 +30,6 @@ void draw_scene(void);
 void draw_meshes(void);
 void draw_shapes(void);
 
+double get_scene_lifetime(void);
+
 #endif /* scene_manager_h */
