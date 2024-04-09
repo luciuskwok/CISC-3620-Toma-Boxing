@@ -93,7 +93,7 @@ void gameplay_render(void) {
 
 	// Draw 2 tracks
 	p.x = scr_w / 4 - track_image->w / 2;
-	p.y = scr_h / 2 - track_image->h / 2;
+	p.y = scr_h - track_image->h;
 	move_to(p);
 	draw_image(track_image);
 	p.x = scr_w * 3 / 4 - track_image->w / 2;

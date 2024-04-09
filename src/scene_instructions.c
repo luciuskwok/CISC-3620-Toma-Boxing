@@ -70,9 +70,13 @@ void instructions_render(void) {
 	set_fill_color(COLOR_BLACK);
 	fill_screen();
 
+	// Draw meshes and shapes
+	draw_meshes();
+	draw_shapes();
+
 	// Draw 2 tracks
 	p.x = scr_w / 4 - instr_track_image->w / 2;
-	p.y = scr_h / 2 - instr_track_image->h / 2;
+	p.y = scr_h - instr_track_image->h;
 	move_to(p);
 	draw_image(instr_track_image);
 	p.x = scr_w * 3 / 4 - instr_track_image->w / 2;
@@ -113,9 +117,5 @@ void instructions_render(void) {
 	p.y = scr_h - 10;
 	move_to(p);
 	atari_draw_right_justified_text("Press Space to Play", 1);
-	
-	// Draw meshes and shapes
-	draw_meshes();
-	draw_shapes();
 }
 

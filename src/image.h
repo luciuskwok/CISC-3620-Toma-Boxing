@@ -18,7 +18,6 @@ typedef struct {
 	int h;
 } image_t;
 
-image_t *load_indexed_image(const char *file);
 image_t *load_bmp_image(const char *file);
 
 void free_image(image_t *image);

@@ -53,15 +53,16 @@ void title_start(void) {
 	s[3] = create_polygon_shape(6);
 	s[3]->momentum.rotation = 8.0f;
 	set_scale_and_translate(s[3]->transform, 0.125f, -2 * grid, grid + ty);
-	s[2]->line_color = COLOR_GREEN;
+	s[3]->line_color = COLOR_GREEN;
 
 	s[4] = create_polygon_shape(8);
 	s[4]->momentum.rotation = 12.0f;
 	set_scale_and_translate(s[4]->transform, 0.125f, 0, grid + ty);
-	s[2]->line_color = COLOR_BLUE;
+	s[4]->line_color = COLOR_BLUE;
 
 	s[5] = create_polygon_shape(16);
 	s[5]->momentum.rotation = 16.0f;
+	s[5]->line_color = COLOR_WHITE;
 	set_scale_and_translate(s[5]->transform, 0.125f, 2 * grid, grid + ty);
 
 	for (int i = 0; i < 6; i++) {
