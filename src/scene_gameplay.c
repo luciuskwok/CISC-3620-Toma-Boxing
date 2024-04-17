@@ -134,7 +134,7 @@ void gameplay_render(void) {
 	set_fill_color(COLOR_LIME);
 	atari_draw_text("All Night Radio", 1);
 
-	p.x = scr_w - 10 * 8 - 2;
+	p.x = scr_w - 9 * 8 - 4;
 	p.y = scr_h - 10;
 	move_to(p);
 	set_fill_color(COLOR_RED);

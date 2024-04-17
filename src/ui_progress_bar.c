@@ -36,7 +36,7 @@ void draw_progress_bar(void) {
 	x += 1;
 	y += 1;
 	w = (int)( round((double)w * ui_progress_value) );
-	set_fill_color(COLOR_LIGHT_GRAY);
+	set_fill_color(COLOR_LIGHT_BLUE);
 	fill_rect(x, y, w, h);
 }
 

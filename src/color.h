@@ -22,6 +22,7 @@
 #define COLOR_BLUE 		(0xffFF0000)
 #define COLOR_PINK 		(0xff9381EA)
 #define COLOR_LIME 		(0xff50E599)
+#define COLOR_LIGHT_BLUE (0xffFF8888)
 
 uint32_t blend_color(uint32_t x, uint32_t y);
 
