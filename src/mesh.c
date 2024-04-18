@@ -51,6 +51,17 @@ void mesh_destroy(mesh_t *mesh) {
 void mesh_update(mesh_t *mesh, double delta_time) {
 	// Update posiiton & rotation
 	float increment = (float)((M_PI / 180.0) * delta_time); // 1 deg/sec
+	
+	// Acceleration due to gravity
+	if (mesh->gravity) {
+		mesh->momentum.y -= 9.8f * increment;
+	}
+	
+	// Translation
+	mat4_translate(mesh->transform, mesh->momentum.x * increment,
+				   mesh->momentum.y * increment, mesh->momentum.z * increment);
+	
+	// Rotation
 	mat4_yaw(mesh->transform, mesh->momentum.yaw * increment);
 	mat4_pitch(mesh->transform, mesh->momentum.pitch * increment);
 	mat4_roll(mesh->transform, mesh->momentum.roll * increment);
@@ -113,6 +124,12 @@ void mesh_reset_momentum(mesh_t *mesh) {
 	momentum3d_t *m = &mesh->momentum;
 	m->x = m->y = m->z = 0.0f;
 	m->pitch = m->roll = m->yaw = 0;
+}
+
+void mesh_add_translation_momentum(mesh_t *mesh, float x, float y, float z) {
+	mesh->momentum.x += x;
+	mesh->momentum.y += y;
+	mesh->momentum.z += z;
 }
 
 void mesh_add_pitch(mesh_t *mesh, float x) {

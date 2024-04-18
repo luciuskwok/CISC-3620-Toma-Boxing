@@ -46,6 +46,10 @@ void instructions_start(void) {
 	mesh_reset_momentum(cube2);
 	mesh_add_yaw(cube2, -10.0f);
 	mesh_add_pitch(cube2, -5.0f);
+	
+	// Set translation momentum & gravity
+	cube2->gravity = true;
+	mesh_add_translation_momentum(cube2, 0, 5.0f, 0);
 }
 
 bool instructions_handle_keyboard(SDL_Event event) {
@@ -73,7 +77,9 @@ void instructions_update(double delta_time) {
 	cube2->line_color = line_color;
 	cube1->point_color = point_color;
 	cube2->point_color = point_color;
-
+	
+	// Reset momentum when cube hits bottom
+	
 }
 
 void instructions_render(void) {

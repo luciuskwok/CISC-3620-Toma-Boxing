@@ -191,6 +191,38 @@ void set_pixel(int x, int y, uint32_t color) {
 	screen_pixels[i] = color;
 }
 
+void swap_vec2(vec2_t *x, vec2_t *y) {
+	vec2_t tmp = *x;
+	*y = *x;
+	*x = tmp;
+}
+
+void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
+	// Sort vertices by y-position
+	if (a.y > b.y) {
+		swap_vec2(&a, &b);
+	}
+	if (b.y > c.y) {
+		swap_vec2(&b, &c);
+	}
+	if (a.y > b.y) {
+		swap_vec2(&a, &b);
+	}
+	
+	float x0 = (a.x < b.x)? a.x : b.x;
+	x0 = (x0 < c.x)? x0 : c.x;
+	float x1 = (a.x > b.x)? a.x: b.x;
+	x1 = (x1 > c.x)? x0 : c.x;
+
+	int y0 = (int)floor(a.y);
+	int y1 = (int)floor(b.y);
+	int y2 = (int)ceil(c.y);
+	
+	for (int y = y0; y <= y1; y++) {
+		
+	}
+}
+
 vec2_t apply_view_transform_2d(vec2_t point) {
 	return vec2_mat3_multiply(point, view_transform_2d);
 }

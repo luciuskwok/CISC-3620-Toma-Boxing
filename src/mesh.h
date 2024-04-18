@@ -10,6 +10,7 @@
 
 #include "matrix.h"
 #include "vector.h"
+#include <stdbool.h>
 
 
 typedef struct {
@@ -34,6 +35,7 @@ typedef struct {
 	uint32_t point_color;
 	mat4_t transform;
 	momentum3d_t momentum;
+	bool gravity;
 	double lifetime;
 } mesh_t;
 
@@ -46,6 +48,7 @@ void mesh_draw(mesh_t *mesh);
 
 void mesh_reset_transform(mesh_t *mesh);
 void mesh_reset_momentum(mesh_t *mesh);
+void mesh_add_translation_momentum(mesh_t *mesh, float x, float y, float z);
 void mesh_add_pitch(mesh_t *mesh, float x);
 void mesh_add_roll(mesh_t *mesh, float x);
 void mesh_add_yaw(mesh_t *mesh, float x);
