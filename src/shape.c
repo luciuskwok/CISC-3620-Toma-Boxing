@@ -71,6 +71,10 @@ shape_t *create_rectangle_shape(float w, float h) {
 }
 
 shape_t *create_polygon_shape(int sides) {
+	/*
+	 Creates a n-sided polygon starting from (1, 0) and going clockwise,
+	 assuming a coordinate system with positive y is down.
+	 */
 	shape_t *s = shape_new(sides);
 	if (s) {
 		s->is_closed = true;
@@ -110,7 +114,7 @@ void shape_draw(shape_t *shape) {
 		vec2_t d = apply_view_transform_2d(vec2_mat3_multiply(shape->points[0], shape->transform));
 		vec2_t e = apply_view_transform_2d(vec2_mat3_multiply(shape->points[1], shape->transform));
 		vec2_t f = apply_view_transform_2d(vec2_mat3_multiply(shape->points[2], shape->transform));
-		fill_triangle(d, e, f);
+		fill_triangle(d, f, e);
 	}
 	
 	// Stroke

@@ -219,8 +219,8 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 	float y1 = (a.y > b.y)? a.y: b.y;
 	y1 = (y1 > c.y)? y1 : c.y;
 
-	vec2_t v1 = { c.x - a.x, c.y - a.y };
-	vec2_t v2 = { b.x - a.x, b.y - a.y };
+	vec2_t v1 = { b.x - a.x, b.y - a.y };
+	vec2_t v2 = { c.x - a.x, c.y - a.y };
 	
 	int x0i = (int)floorf(x0);
 	int x1i = (int)ceilf(x1);

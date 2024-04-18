@@ -40,7 +40,13 @@ void title_start(void) {
 	set_scale_and_translate(s[0]->transform, 0.125f, -2 * grid, -grid + ty);
 	s[0]->line_color = COLOR_LIME;
 	s[0]->fill_color = 0x800000FF;
-
+	
+/*	// Debug: print triangle points
+	printf("Triangle:\n");
+	for (int i=0; i<3; i++) {
+		printf("  %1.3f, %1.3f\n", s[0]->points[i].x, s[0]->points[i].y);
+	}
+*/
 	s[1] = create_polygon_shape(4);
 	s[1]->momentum.rotation = 10.0f;
 	set_scale_and_translate(s[1]->transform, 0.125f, 0, -grid + ty);
