@@ -198,7 +198,7 @@ void swap_vec2(vec2_t *x, vec2_t *y) {
 }
 
 void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
-	// Sort vertices by y-position
+/*	// Sort vertices by x-position
 	if (a.y > b.y) {
 		swap_vec2(&a, &b);
 	}
@@ -208,18 +208,36 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 	if (a.y > b.y) {
 		swap_vec2(&a, &b);
 	}
-	
+*/
 	float x0 = (a.x < b.x)? a.x : b.x;
 	x0 = (x0 < c.x)? x0 : c.x;
 	float x1 = (a.x > b.x)? a.x: b.x;
 	x1 = (x1 > c.x)? x0 : c.x;
 
-	int y0 = (int)floor(a.y);
-	int y1 = (int)floor(b.y);
-	int y2 = (int)ceil(c.y);
+	float y0 = (a.y < b.y)? a.y : b.y;
+	y0 = (y0 < c.y)? y0 : c.y;
+	float y1 = (a.y > b.y)? a.y: b.y;
+	y1 = (y1 > c.y)? y1 : c.y;
+
+	vec2_t v1 = { c.x - a.x, c.y - a.y };
+	vec2_t v2 = { b.x - a.x, b.y - a.y };
 	
-	for (int y = y0; y <= y1; y++) {
-		
+	int x0i = (int)floorf(x0);
+	int x1i = (int)ceilf(x1);
+	int y0i = (int)floorf(y0);
+	int y1i = (int)ceilf(y1);
+	
+	float cross12 = vec2_cross(v1, v2);
+
+	for (int y = y0i; y <= y1i; y++) {
+		for (int x = x0i; x <= x1i; x++) {
+			vec2_t q = { x - a.x, y - a.y };
+			float s = vec2_cross(q, v2) / cross12;
+			float t = vec2_cross(v1, q) / cross12;
+			if ((s >= 0.0f) && (t >= 0.0f) && (s + t <= 1.0f)) {
+				set_pixel(x, y, fill_color);
+			}
+		}
 	}
 }
 

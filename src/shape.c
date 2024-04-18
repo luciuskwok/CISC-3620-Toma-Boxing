@@ -105,10 +105,19 @@ void shape_draw(shape_t *shape) {
 	
 	if (shape->point_count < 2) return;
 	
+	// Fill
+	if (shape->point_count >= 3) {
+		vec2_t d = apply_view_transform_2d(vec2_mat3_multiply(shape->points[0], shape->transform));
+		vec2_t e = apply_view_transform_2d(vec2_mat3_multiply(shape->points[1], shape->transform));
+		vec2_t f = apply_view_transform_2d(vec2_mat3_multiply(shape->points[2], shape->transform));
+		fill_triangle(d, e, f);
+	}
+	
+	// Stroke
 	vec2_t a = vec2_mat3_multiply(shape->points[0], shape->transform);
 	a = apply_view_transform_2d(a);
 	move_to(a);
-	
+
 	for (int i = 1; i < shape->point_count; i++) {
 		vec2_t b = vec2_mat3_multiply(shape->points[i], shape->transform);
 		b = apply_view_transform_2d(b);

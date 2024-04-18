@@ -36,33 +36,39 @@ void title_start(void) {
 	// Create shapes that rotate
 	shape_t *s[6];
 	s[0] = create_polygon_shape(3);
-	s[0]->momentum.rotation = 4.0f;
+	s[0]->momentum.rotation = 15.0f;
 	set_scale_and_translate(s[0]->transform, 0.125f, -2 * grid, -grid + ty);
 	s[0]->line_color = COLOR_LIME;
+	s[0]->fill_color = 0x800000FF;
 
 	s[1] = create_polygon_shape(4);
-	s[1]->momentum.rotation = 5.0f;
+	s[1]->momentum.rotation = 10.0f;
 	set_scale_and_translate(s[1]->transform, 0.125f, 0, -grid + ty);
 	s[1]->line_color = COLOR_PINK;
+	s[1]->fill_color = 0x800000FF;
 
 	s[2] = create_polygon_shape(5);
 	s[2]->momentum.rotation = 6.0f;
 	set_scale_and_translate(s[2]->transform, 0.125f, 2 * grid, -grid + ty);
 	s[2]->line_color = COLOR_RED;
+	s[2]->fill_color = 0x800000FF;
 
 	s[3] = create_polygon_shape(6);
 	s[3]->momentum.rotation = 8.0f;
 	set_scale_and_translate(s[3]->transform, 0.125f, -2 * grid, grid + ty);
 	s[3]->line_color = COLOR_GREEN;
+	s[3]->fill_color = 0x800000FF;
 
 	s[4] = create_polygon_shape(8);
 	s[4]->momentum.rotation = 12.0f;
 	set_scale_and_translate(s[4]->transform, 0.125f, 0, grid + ty);
 	s[4]->line_color = COLOR_BLUE;
+	s[4]->fill_color = 0x800000FF;
 
 	s[5] = create_polygon_shape(16);
 	s[5]->momentum.rotation = 16.0f;
 	s[5]->line_color = COLOR_WHITE;
+	s[5]->fill_color = 0x800000FF;
 	set_scale_and_translate(s[5]->transform, 0.125f, 2 * grid, grid + ty);
 
 	for (int i = 0; i < 6; i++) {

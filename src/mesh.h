@@ -53,6 +53,8 @@ void mesh_add_pitch(mesh_t *mesh, float x);
 void mesh_add_roll(mesh_t *mesh, float x);
 void mesh_add_yaw(mesh_t *mesh, float x);
 
+vec3_t mesh_get_position(mesh_t *mesh);
+
 // Global list of meshes
 void add_mesh(mesh_t *mesh);
 void remove_all_meshes(void);

@@ -79,7 +79,10 @@ void instructions_update(double delta_time) {
 	cube2->point_color = point_color;
 	
 	// Reset momentum when cube hits bottom
-	
+	vec3_t cube2pos = mesh_get_position(cube2);
+	if (cube2pos.y < -2.0f) {
+		cube2->momentum.y = 5.0f;
+	}
 }
 
 void instructions_render(void) {
@@ -94,10 +97,10 @@ void instructions_render(void) {
 	p.x = scr_w / 4 - instr_track_image->w / 2;
 	p.y = scr_h - instr_track_image->h;
 	move_to(p);
-	draw_image(instr_track_image);
+//	draw_image(instr_track_image);
 	p.x = scr_w * 3 / 4 - instr_track_image->w / 2;
 	move_to(p);
-	draw_image(instr_track_image);
+//	draw_image(instr_track_image);
 
 	// Draw meshes and shapes
 	draw_shapes();

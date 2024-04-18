@@ -95,10 +95,10 @@ void gameplay_render(void) {
 	p.x = scr_w / 4 - track_image->w / 2;
 	p.y = scr_h - track_image->h;
 	move_to(p);
-	draw_image(track_image);
+//	draw_image(track_image);
 	p.x = scr_w * 3 / 4 - track_image->w / 2;
 	move_to(p);
-	draw_image(track_image);
+//	draw_image(track_image);
 	
 	// Draw meshes and shapes
 	draw_meshes();

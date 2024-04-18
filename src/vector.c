@@ -41,6 +41,11 @@ float vec2_length(vec2_t v) {
     return hypotf(v.x, v.y);
 }
 
+float vec2_cross(vec2_t a, vec2_t b) {
+	// (a,b)*(c,d) = a*d - c*b
+	return a.x * b.y - a.y * b.x;
+}
+
 #pragma mark - 3D Vector
 
 vec3_t vec3_add(vec3_t a, vec3_t b) {

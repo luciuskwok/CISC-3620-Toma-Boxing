@@ -51,15 +51,16 @@ void mesh_destroy(mesh_t *mesh) {
 void mesh_update(mesh_t *mesh, double delta_time) {
 	// Update posiiton & rotation
 	float increment = (float)((M_PI / 180.0) * delta_time); // 1 deg/sec
+	float dt = (float)delta_time;
 	
 	// Acceleration due to gravity
 	if (mesh->gravity) {
-		mesh->momentum.y -= 9.8f * increment;
+		mesh->momentum.y -= 9.8f * dt;
 	}
 	
 	// Translation
-	mat4_translate(mesh->transform, mesh->momentum.x * increment,
-				   mesh->momentum.y * increment, mesh->momentum.z * increment);
+	mat4_translate(mesh->transform, mesh->momentum.x * dt,
+				   mesh->momentum.y * dt, mesh->momentum.z * dt);
 	
 	// Rotation
 	mat4_yaw(mesh->transform, mesh->momentum.yaw * increment);
@@ -142,6 +143,13 @@ void mesh_add_roll(mesh_t *mesh, float x) {
 
 void mesh_add_yaw(mesh_t *mesh, float x) {
 	mesh->momentum.yaw += x;
+}
+
+#pragma mark - Getters
+
+vec3_t mesh_get_position(mesh_t *mesh) {
+	vec3_t orig = { 0, 0, 0 };
+	return vec3_mat4_multiply(orig, mesh->transform);
 }
 
 #pragma mark - Global list of meshes
