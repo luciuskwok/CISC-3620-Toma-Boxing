@@ -88,22 +88,34 @@ shape_t *create_rectangle_shape(float w, float h) {
 }
 
 shape_t *create_polygon_shape(int sides) {
-	/*
-	 Creates a n-sided polygon starting from (1, 0) and going clockwise,
-	 assuming a coordinate system with positive y is down.
+	/* Creates a n-sided polygon starting from (1, 0) and going clockwise,
+	   assuming a coordinate system with positive y is down.
 	 */
 	shape_t *s = shape_new(sides);
-	if (s) {
-		s->is_closed = true;
-		vec2_t *p = s->points;
-		for (int i = 0; i < sides; i++) {
-			float angle = (float)(M_PI * 2.0) * i /  sides;
-			p[i].x = cosf(angle);
-			p[i].y = sinf(angle);
-		}
+	if (!s) return NULL;
+	s->is_closed = true;
+	vec2_t *p = s->points;
+	for (int i = 0; i < sides; i++) {
+		float angle = (float)(M_PI * 2.0) * i / sides;
+		p[i].x = cosf(angle);
+		p[i].y = sinf(angle);
 	}
 	return s;
+}
 
+shape_t *create_star_shape(int points, float indent) {
+	int n = points * 2;
+	shape_t *s = shape_new(n);
+	if (!s) return NULL;
+	s->is_closed = true;
+	vec2_t *p = s->points;
+	for (int i = 0; i < n; i++) {
+		float a = (float)(M_PI * 2.0) * i / n;
+		float d = (i % 2 == 0)? 1.0f : indent;
+		p[i].x = cosf(a) * d;
+		p[i].y = sinf(a) * d;
+	}
+	return s;
 }
 
 #pragma mark -
@@ -141,10 +153,8 @@ void shape_draw(shape_t *shape) {
 
 	// Fill
 	if (shape->fill_color != 0) {
-		if (shape->point_count == 3) {
-			fill_triangle(pp[0], pp[1], pp[2]);
-		} else {
-			// TODO: shape_fill()
+		if (shape->point_count >= 3) {
+			fill_polygon(pp, shape->point_count);
 		}
 	}
 	

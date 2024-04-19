@@ -239,6 +239,12 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 	}
 }
 
+void fill_polygon(vec2_t *points, int n) {
+	if (n < 3) return;
+	if (n == 3) fill_triangle(points[0], points[1], points[2]);
+	// TODO
+}
+
 vec2_t apply_view_transform_2d(vec2_t point) {
 	return vec2_mat3_multiply(point, view_transform_2d);
 }

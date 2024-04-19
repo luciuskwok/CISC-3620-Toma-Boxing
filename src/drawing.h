@@ -38,6 +38,7 @@ void stroke_rect(rectangle_t r);
 void fill_rect(rectangle_t r);
 void fill_centered_rect(int x, int y, int w, int h);
 void fill_triangle(vec2_t a, vec2_t b, vec2_t c);
+void fill_polygon(vec2_t *points, int n);
 
 void set_pixel(int x, int y, uint32_t color);
 vec2_t apply_view_transform_2d(vec2_t point);

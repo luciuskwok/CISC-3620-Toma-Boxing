@@ -50,7 +50,7 @@ void title_start(void) {
 	s[1]->line_color = COLOR_PINK;
 	s[0]->fill_color = color_set_alpha(COLOR_PINK, 96);
 
-	s[2] = create_polygon_shape(5);
+	s[2] = create_star_shape(5, 0.5f);
 	s[2]->angular_momentum = 6.0f * rad_deg;
 	set_scale_and_translate(s[2], 0.125f, 2 * grid, -grid + ty);
 	s[2]->line_color = COLOR_RED;
@@ -62,13 +62,13 @@ void title_start(void) {
 	s[3]->line_color = COLOR_GREEN;
 	s[0]->fill_color = color_set_alpha(COLOR_GREEN, 96);
 
-	s[4] = create_polygon_shape(8);
+	s[4] = create_star_shape(8, 0.25f);
 	s[4]->angular_momentum = 12.0f * rad_deg;
 	set_scale_and_translate(s[4], 0.125f, 0, grid + ty);
 	s[4]->line_color = COLOR_BLUE;
 	s[0]->fill_color = color_set_alpha(COLOR_BLUE, 96);
 
-	s[5] = create_polygon_shape(16);
+	s[5] = create_star_shape(16, 0.75f);
 	s[5]->angular_momentum = 16.0f * rad_deg;
 	s[5]->line_color = COLOR_WHITE;
 	s[0]->fill_color = color_set_alpha(COLOR_WHITE, 96);
