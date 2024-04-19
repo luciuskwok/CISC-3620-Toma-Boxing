@@ -217,7 +217,8 @@ bool point_in_triangle(vec2_t p, vec2_t a, vec2_t b, vec2_t c) {
 }
 
 void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
-	// Using https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+	// Fill triangle by scanline by testing if each point is within the half-planes formed by triangle.
+	// https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
 
 	float x0 = (a.x < b.x)? a.x : b.x;
 	x0 = (x0 < c.x)? x0 : c.x;
@@ -237,6 +238,20 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 			}
 		}
 	}
+}
+
+bool point_in_convex_hull(vec2_t a, vec2_t *p, int n) {
+	bool has_neg = false;
+	bool has_pos = false;
+	for (int i = 0; i < n; i++) {
+		float sign = sign_3vec2(a, p[i], p[(i+1)%n]);
+		if (sign < 0) {
+			has_neg = true;
+		} else {
+			has_pos = true;
+		}
+	}
+	return !(has_neg && has_pos);
 }
 
 rectangle_t bounding_rect(vec2_t *points, int n) {
@@ -259,30 +274,45 @@ rectangle_t bounding_rect(vec2_t *points, int n) {
 	return r;
 }
 
-bool point_in_polygon(vec2_t a, vec2_t *p, int n) {
-	bool has_neg = false;
-	bool has_pos = false;
-	for (int i = 0; i < n; i++) {
-		float sign = sign_3vec2(a, p[i], p[(i+1)%n]);
-		if (sign < 0) {
-			has_neg = true;
-		} else {
-			has_pos = true;
-		}
+bool is_edge_crossing(float left, float right, float y, vec2_t a, vec2_t b) {
+	if (a.y < b.y) {
+		if (y < a.y || y >= b.y) return false;
+	} else {
+		if (y < b.y || y >= a.y) return false;
 	}
-	return !(has_neg && has_pos);
+	
+	float slope = (b.y - a.y) / (b.x - a.x);
+	float dy = y - a.y;
+	float dx = dy / slope;
+	float x = a.x + dx;
+	return (left <= x) && (x < right);
+}
+
+int edge_crossings(float left, float right, float y, vec2_t *p, int n) {
+	int sum = 0;
+	for (int i = 0; i < n; i++) {
+		vec2_t a = p[i];
+		vec2_t b = p[(i+1)%n];
+		if (is_edge_crossing(left, right, y, a, b)) sum++;
+	}
+	return sum;
 }
 
 void fill_polygon(vec2_t *points, int n) {
+	// Fill polygon by scanline by counting the number of edge crossings
+	// https://stackoverflow.com/questions/65573101/draw-a-filled-polygon-using-scanline-loop
 	if (n < 3) return;
 	if (n == 3) {
 		fill_triangle(points[0], points[1], points[2]);
 	} else {
 		rectangle_t b = bounding_rect(points, n);
 		for (float y = floorf(b.y); y <= ceilf(b.y + b.h); y++) {
+			int crossings = 0;
 			for (float x = floorf(b.x); x <= ceilf(b.x + b.w); x++) {
-				vec2_t a = { x + 0.5f, y + 0.5f };
-				if (point_in_polygon(a, points, n)) {
+				float left = x - 0.5f;
+				float right = x + 0.5f;
+				crossings += edge_crossings(left, right, y + 0.5f, points, n);
+				if (crossings % 2 == 1) {
 					set_pixel((int)x, (int)y, fill_color);
 				}
 			}
