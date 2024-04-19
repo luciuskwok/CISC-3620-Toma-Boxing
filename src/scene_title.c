@@ -38,7 +38,7 @@ void title_start(void) {
 	// Create shapes that rotate
 	shape_t *s[6];
 	s[0] = create_polygon_shape(3);
-	s[0]->angular_momentum = 15.0f * rad_deg;
+	s[0]->angular_momentum = 8.0f * rad_deg;
 	set_scale_and_translate(s[0], 0.125f, -2 * grid, -grid + ty);
 	s[0]->line_color = COLOR_LIME;
 	s[0]->fill_color = color_set_alpha(COLOR_LIME, 96);
@@ -48,30 +48,30 @@ void title_start(void) {
 	s[1]->angular_momentum = 10.0f * rad_deg;
 	set_scale_and_translate(s[1], 0.125f, 0, -grid + ty);
 	s[1]->line_color = COLOR_PINK;
-	s[0]->fill_color = color_set_alpha(COLOR_PINK, 96);
+	s[1]->fill_color = color_set_alpha(COLOR_PINK, 96);
 
 	s[2] = create_star_shape(5, 0.5f);
-	s[2]->angular_momentum = 6.0f * rad_deg;
+	s[2]->angular_momentum = 12.0f * rad_deg;
 	set_scale_and_translate(s[2], 0.125f, 2 * grid, -grid + ty);
 	s[2]->line_color = COLOR_RED;
-	s[0]->fill_color = color_set_alpha(COLOR_RED, 96);
+	s[2]->fill_color = color_set_alpha(COLOR_RED, 96);
 
 	s[3] = create_polygon_shape(6);
-	s[3]->angular_momentum = 8.0f * rad_deg;
+	s[3]->angular_momentum = 14.0f * rad_deg;
 	set_scale_and_translate(s[3], 0.125f, -2 * grid, grid + ty);
 	s[3]->line_color = COLOR_GREEN;
-	s[0]->fill_color = color_set_alpha(COLOR_GREEN, 96);
+	s[3]->fill_color = color_set_alpha(COLOR_GREEN, 96);
 
 	s[4] = create_star_shape(8, 0.25f);
-	s[4]->angular_momentum = 12.0f * rad_deg;
+	s[4]->angular_momentum = 16.0f * rad_deg;
 	set_scale_and_translate(s[4], 0.125f, 0, grid + ty);
 	s[4]->line_color = COLOR_BLUE;
-	s[0]->fill_color = color_set_alpha(COLOR_BLUE, 96);
+	s[4]->fill_color = color_set_alpha(COLOR_BLUE, 96);
 
 	s[5] = create_star_shape(16, 0.75f);
-	s[5]->angular_momentum = 16.0f * rad_deg;
+	s[5]->angular_momentum = 24.0f * rad_deg;
 	s[5]->line_color = COLOR_WHITE;
-	s[0]->fill_color = color_set_alpha(COLOR_WHITE, 96);
+	s[5]->fill_color = color_set_alpha(COLOR_WHITE, 96);
 	set_scale_and_translate(s[5], 0.125f, 2 * grid, grid + ty);
 
 	for (int i = 0; i < 6; i++) {

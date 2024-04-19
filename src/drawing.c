@@ -229,20 +229,66 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 	float y1 = (a.y > b.y)? a.y: b.y;
 	y1 = (y1 > c.y)? y1 : c.y;
 
-	for (int y = (int)floorf(y0); y <= (int)ceilf(y1); y++) {
-		for (int x = (int)floorf(x0); x <= (int)ceilf(x1); x++) {
-			vec2_t p = { (float)x + 0.5f, (float)y + 0.5f };
+	for (float y = floorf(y0); y <= ceilf(y1); y++) {
+		for (float x = floorf(x0); x <= ceilf(x1); x++) {
+			vec2_t p = { x + 0.5f, y + 0.5f };
 			if (point_in_triangle(p, a, b, c)) {
-				set_pixel(x, y, fill_color);
+				set_pixel((int)x, (int)y, fill_color);
 			}
 		}
 	}
 }
 
+rectangle_t bounding_rect(vec2_t *points, int n) {
+	rectangle_t r = { 0, 0, 0, 0 };
+	if (n < 1) return r;
+	vec2_t a = points[0];
+	vec2_t b = points[0];
+	for (int i = 1; i < n; i++) {
+		vec2_t c = points[i];
+		if (a.x > c.x) a.x = c.x;
+		if (b.x < c.x) b.x = c.x;
+		if (a.y > c.y) a.y = c.y;
+		if (b.y < c.y) b.y = c.y;
+	}
+	r.x = a.x;
+	r.y = a.y;
+	r.w = b.x - a.x;
+	r.h = b.y - a.y;
+	
+	return r;
+}
+
+bool point_in_polygon(vec2_t a, vec2_t *p, int n) {
+	bool has_neg = false;
+	bool has_pos = false;
+	for (int i = 0; i < n; i++) {
+		float sign = sign_3vec2(a, p[i], p[(i+1)%n]);
+		if (sign < 0) {
+			has_neg = true;
+		} else {
+			has_pos = true;
+		}
+	}
+	return !(has_neg && has_pos);
+}
+
 void fill_polygon(vec2_t *points, int n) {
 	if (n < 3) return;
-	if (n == 3) fill_triangle(points[0], points[1], points[2]);
-	// TODO
+	if (n == 3) {
+		fill_triangle(points[0], points[1], points[2]);
+	} else {
+		rectangle_t b = bounding_rect(points, n);
+		for (float y = floorf(b.y); y <= ceilf(b.y + b.h); y++) {
+			for (float x = floorf(b.x); x <= ceilf(b.x + b.w); x++) {
+				vec2_t a = { x + 0.5f, y + 0.5f };
+				if (point_in_polygon(a, points, n)) {
+					set_pixel((int)x, (int)y, fill_color);
+				}
+			}
+		}
+
+	}
 }
 
 vec2_t apply_view_transform_2d(vec2_t point) {
