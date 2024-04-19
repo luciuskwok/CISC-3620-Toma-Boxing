@@ -35,10 +35,17 @@ mesh_t *mesh_new(int face_count) {
 	
 	mesh->face_count = face_count;
 	mesh->faces = faces;
+	
+	// Colors
 	mesh->line_color = COLOR_WHITE;
 	mesh->point_color = COLOR_WHITE;
-	mesh_reset_transform(mesh);
-	mesh_reset_momentum(mesh);
+	
+	// Physics
+	mesh->scale = vec3_identity();
+	mesh->position = vec3_zero(); // meters
+	mesh->linear_momentum = vec3_zero(); // meters/second
+	mesh->rotation = vec3_zero(); // radians
+	mesh->angular_momentum = vec3_zero(); // radians/second
 	mesh->lifetime = 0.0;
 	return mesh;
 }
@@ -55,17 +62,11 @@ void mesh_update(mesh_t *mesh, double delta_time) {
 	
 	// Acceleration due to gravity
 	if (mesh->gravity) {
-		mesh->momentum.y -= 9.8f * dt;
+		mesh->linear_momentum.y -= 9.8f * dt;
 	}
 	
-	// Translation
-	mat4_translate(mesh->transform, mesh->momentum.x * dt,
-				   mesh->momentum.y * dt, mesh->momentum.z * dt);
-	
-	// Rotation
-	mat4_yaw(mesh->transform, mesh->momentum.yaw * increment);
-	mat4_pitch(mesh->transform, mesh->momentum.pitch * increment);
-	mat4_roll(mesh->transform, mesh->momentum.roll * increment);
+	mesh->position = vec3_add(mesh->position, vec3_mul(mesh->linear_momentum, dt));
+	mesh->rotation = vec3_add(mesh->rotation, mesh->angular_momentum);
 	mesh->lifetime += delta_time;
 }
 
@@ -77,15 +78,22 @@ void mesh_draw(mesh_t *mesh) {
 	const vec3_t camera_pos = get_camera_position();
 	const int point_w = 5;
 	
+	// Color
 	set_line_color(mesh->line_color);
 	set_fill_color(mesh->point_color);
+	
+	// Tranformation matrix
+	mat4_t tr = mat4_get_identity();
+	tr = mat4_translate(tr, mesh->position);
+	tr = mat4_apply_euler_angles(tr, mesh->rotation);
+	tr = mat4_scale(tr, mesh->scale);
 	
 	for (int i = 0; i < mesh->face_count; i++) {
 		mesh_face_t face = mesh->faces[i];
 		
-		a3 = vec3_mat4_multiply(face.a, mesh->transform);
-		b3 = vec3_mat4_multiply(face.b, mesh->transform);
-		c3 = vec3_mat4_multiply(face.c, mesh->transform);
+		a3 = vec3_mat4_multiply(face.a, tr);
+		b3 = vec3_mat4_multiply(face.b, tr);
+		c3 = vec3_mat4_multiply(face.c, tr);
 		
 		// Backface culling
 		vab = vec3_sub(b3, a3);
@@ -117,40 +125,12 @@ void mesh_draw(mesh_t *mesh) {
 
 #pragma mark - Momentum
 
-void mesh_reset_transform(mesh_t *mesh) {
-	mat4_get_identity(mesh->transform);
-}
-
 void mesh_reset_momentum(mesh_t *mesh) {
-	momentum3d_t *m = &mesh->momentum;
-	m->x = m->y = m->z = 0.0f;
-	m->pitch = m->roll = m->yaw = 0;
+	mesh->linear_momentum = vec3_zero();
+	mesh->angular_momentum = vec3_zero();
 }
 
-void mesh_add_translation_momentum(mesh_t *mesh, float x, float y, float z) {
-	mesh->momentum.x += x;
-	mesh->momentum.y += y;
-	mesh->momentum.z += z;
-}
 
-void mesh_add_pitch(mesh_t *mesh, float x) {
-	mesh->momentum.pitch += x;
-}
-
-void mesh_add_roll(mesh_t *mesh, float x) {
-	mesh->momentum.roll += x;
-}
-
-void mesh_add_yaw(mesh_t *mesh, float x) {
-	mesh->momentum.yaw += x;
-}
-
-#pragma mark - Getters
-
-vec3_t mesh_get_position(mesh_t *mesh) {
-	vec3_t orig = { 0, 0, 0 };
-	return vec3_mat4_multiply(orig, mesh->transform);
-}
 
 #pragma mark - Global list of meshes
 

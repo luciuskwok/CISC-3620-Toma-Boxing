@@ -18,23 +18,19 @@ typedef struct {
 } mesh_face_t;
 
 typedef struct {
-	float x, y, z;
-	float pitch, roll, yaw;
-} momentum3d_t;
-
-typedef struct {
-	float alpha; 	// yaw
-	float beta; 	// pitch
-	float gamma;	// roll
-} euler_angles_t;
-
-typedef struct {
 	int face_count;
 	mesh_face_t *faces;
+	
+	// Colors
 	uint32_t line_color;
 	uint32_t point_color;
-	mat4_t transform;
-	momentum3d_t momentum;
+	
+	// Physics
+	vec3_t scale;
+	vec3_t position; // meters
+	vec3_t linear_momentum; // meters/second
+	vec3_t rotation; // radians
+	vec3_t angular_momentum; // radians/second
 	bool gravity;
 	double lifetime;
 } mesh_t;
@@ -46,14 +42,11 @@ void mesh_destroy(mesh_t *mesh);
 void mesh_update(mesh_t *mesh, double delta_time);
 void mesh_draw(mesh_t *mesh);
 
-void mesh_reset_transform(mesh_t *mesh);
 void mesh_reset_momentum(mesh_t *mesh);
-void mesh_add_translation_momentum(mesh_t *mesh, float x, float y, float z);
+void mesh_add_linear_momentum(mesh_t *mesh, vec3_t momentum);
 void mesh_add_pitch(mesh_t *mesh, float x);
 void mesh_add_roll(mesh_t *mesh, float x);
 void mesh_add_yaw(mesh_t *mesh, float x);
-
-vec3_t mesh_get_position(mesh_t *mesh);
 
 // Global list of meshes
 void add_mesh(mesh_t *mesh);

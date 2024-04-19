@@ -119,11 +119,10 @@ void shape_draw(shape_t *shape) {
 	if (shape->point_count < 2) return;
 	
 	// Calculate transform matrix
-	mat3_t tr;
-	mat3_get_identity(tr);
-	mat3_translate(tr, shape->position);
-	mat3_rotate(tr, shape->rotation);
-	mat3_scale(tr, shape->scale);
+	mat3_t tr = mat3_get_identity();
+	tr = mat3_translate(tr, shape->position);
+	tr = mat3_rotate(tr, shape->rotation);
+	tr = mat3_scale(tr, shape->scale);
 
 	// Fill
 	if (shape->point_count >= 3) {

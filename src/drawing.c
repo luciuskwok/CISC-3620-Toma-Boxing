@@ -38,14 +38,14 @@ mat4_t camera_transform_3d;
 
 void init_projection(void) {
 	// Set default view transform to center on and scale to screen
-	mat3_get_identity(view_transform_2d);
-	mat3_translate_xy(view_transform_2d, screen_w / 2, screen_h / 2);
+	view_transform_2d = mat3_get_identity();
+	view_transform_2d = mat3_translate(view_transform_2d, vec2_make(screen_w / 2, screen_h / 2));
 	float scale2d = screen_h;
-	mat3_scale_xy(view_transform_2d, scale2d, scale2d);
+	view_transform_2d = mat3_scale(view_transform_2d, vec2_make(scale2d, scale2d));
 	
 	// Set default camera transform to -5 units
-	mat4_get_identity(camera_transform_3d);
-	mat4_translate(camera_transform_3d, 0, 0, -5);
+	camera_transform_3d = mat4_get_identity();
+	camera_transform_3d = mat4_translate(camera_transform_3d, vec3_make(0, 0, -5));
 }
 
 bool init_screen(int width, int height, int scale) {

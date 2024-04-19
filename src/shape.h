@@ -18,8 +18,12 @@ typedef struct {
 	int point_count;
 	vec2_t *points;
 	bool is_closed;
+	
+	// Colors
 	uint32_t line_color;
 	uint32_t fill_color;
+	
+	// Physics
 	vec2_t scale;
 	vec2_t position; // meters
 	vec2_t linear_momentum; // meters/second

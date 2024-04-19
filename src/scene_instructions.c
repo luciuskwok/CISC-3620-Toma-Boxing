@@ -33,23 +33,21 @@ void instructions_start(void) {
 	add_mesh(cube1);
 	add_mesh(cube2);
 	
+	const float rotationUnit = 1.0f * (float)M_PI / 180.0f;
+	
 	// Have cube spin by itself
-	mesh_reset_transform(cube1);
-	mat4_translate(cube1->transform, 2.5, 0, 0);
-	mesh_reset_transform(cube2);
-	mat4_translate(cube2->transform, -2.5, 0, 0);
-	
-	mesh_reset_momentum(cube1);
-	mesh_add_yaw(cube1, 5.0f);
-	mesh_add_pitch(cube1, 1.0f);
-	
-	mesh_reset_momentum(cube2);
-	mesh_add_yaw(cube2, -10.0f);
-	mesh_add_pitch(cube2, -5.0f);
+	cube1->position = vec3_make(2.5, 0, 0);
+	cube1->linear_momentum = vec3_zero();
+	cube1->rotation = vec3_zero();
+	cube1->angular_momentum = vec3_make(0, rotationUnit, 0);
+
+	cube2->position = vec3_make(-2.5, 0, 0);
+	cube2->linear_momentum = vec3_zero();
+	cube2->rotation = vec3_zero();
+	cube2->angular_momentum = vec3_make(0, -2 * rotationUnit, rotationUnit);
 	
 	// Set translation momentum & gravity
 	cube2->gravity = true;
-	mesh_add_translation_momentum(cube2, 0, 5.0f, 0);
 }
 
 bool instructions_handle_keyboard(SDL_Event event) {
@@ -79,9 +77,8 @@ void instructions_update(double delta_time) {
 	cube2->point_color = point_color;
 	
 	// Reset momentum when cube hits bottom
-	vec3_t cube2pos = mesh_get_position(cube2);
-	if (cube2pos.y < -2.0f) {
-		cube2->momentum.y = 5.0f;
+	if (cube2->position.y < -1.0f) {
+		cube2->linear_momentum.y = 7.0f;
 	}
 }
 

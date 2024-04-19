@@ -31,6 +31,9 @@ float vec2_length(vec2_t v);
 float vec2_cross(vec2_t a, vec2_t b);
 
 // 3D Functions
+vec3_t vec3_zero(void);
+vec3_t vec3_identity(void);
+vec3_t vec3_make(float x, float y, float z);
 vec3_t vec3_add(vec3_t a, vec3_t b);
 vec3_t vec3_sub(vec3_t a, vec3_t b);
 vec3_t vec3_mul(vec3_t a, float b);

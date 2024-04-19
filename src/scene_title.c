@@ -25,9 +25,9 @@ void title_init(void) {
 	title_image = load_bmp_image("assets/title.bmp");
 }
 
-void set_scale_and_translate(mat3_t transform, float scale, float tx, float ty) {
-	mat3_scale_xy(transform, scale, scale);
-	mat3_translate_xy(transform, tx / scale, ty / scale);
+void set_scale_and_translate(shape_t *shape, float scale, float tx, float ty) {
+	shape->scale = vec2_make(scale, scale);
+	shape->position = vec2_make(tx, ty);
 }
 
 void title_start(void) {

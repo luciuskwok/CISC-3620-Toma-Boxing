@@ -63,6 +63,21 @@ float vec2_cross(vec2_t a, vec2_t b) {
 
 #pragma mark - 3D Vector
 
+vec3_t vec3_zero(void) {
+	static const vec3_t zero = { 0, 0, 0 };
+	return zero;
+}
+
+vec3_t vec3_identity(void) {
+	static const vec3_t identity = { 1, 1, 1 };
+	return identity;
+}
+
+vec3_t vec3_make(float x, float y, float z) {
+	vec3_t v = { x, y, z };
+	return v;
+}
+
 vec3_t vec3_add(vec3_t a, vec3_t b) {
 	vec3_t c = { a.x + b.x, a.y + b.y, a.z + b.z };
 	return c;
