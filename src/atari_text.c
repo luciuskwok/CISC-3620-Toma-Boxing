@@ -80,7 +80,8 @@ void atari_draw_char(char c, int x, int y, int scale) {
 		uint8_t acc = atari_font[c * 8 + y1];
 		for (int x1 = 7; x1 >= 0; x1--) {
 			if (acc & 1) {
-				fill_rect(x + x1 * scale, y + y1 * scale, scale, scale);
+				rectangle_t r = { x + x1 * scale, y + y1 * scale, scale, scale };
+				fill_rect(r);
 			}
 			acc = acc >> 1;
 		}

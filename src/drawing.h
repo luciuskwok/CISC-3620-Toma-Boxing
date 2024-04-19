@@ -14,6 +14,11 @@
 #include "mesh.h"
 #include "vector.h"
 
+// Rectangle
+typedef struct {
+	float x, y;
+	float w, h;
+} rectangle_t;
 
 // SDL Interface
 bool init_screen(int width, int height, int scale);
@@ -28,15 +33,14 @@ void set_fill_color(uint32_t color);
 
 void move_to(vec2_t a);
 void line_to(vec2_t a);
-void stroke_rect(int x, int y, int w, int h);
+void stroke_rect(rectangle_t r);
 
-void fill_rect(int x, int y, int w, int h);
+void fill_rect(rectangle_t r);
 void fill_centered_rect(int x, int y, int w, int h);
 void fill_triangle(vec2_t a, vec2_t b, vec2_t c);
 
 void set_pixel(int x, int y, uint32_t color);
 vec2_t apply_view_transform_2d(vec2_t point);
-
 
 vec2_t get_cursor(void);
 uint32_t get_line_color(void);

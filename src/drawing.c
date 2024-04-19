@@ -154,11 +154,11 @@ void line_to(vec2_t a) {
 	cursor = a;
 }
 
-void stroke_rect(int x, int y, int w, int h) {
-	vec2_t a = { x, y };
-	vec2_t b = { x + w - 1, y };
-	vec2_t c = { x + w - 1, y + h - 1 };
-	vec2_t d = { x, y + h - 1 };
+void stroke_rect(rectangle_t r) {
+	vec2_t a = { r.x, r.y };
+	vec2_t b = { r.x + r.w - 1, r.y };
+	vec2_t c = { r.x + r.w - 1, r.y + r.h - 1 };
+	vec2_t d = { r.x, r.y + r.h - 1 };
 	
 	move_to(a);
 	line_to(b);
@@ -167,16 +167,22 @@ void stroke_rect(int x, int y, int w, int h) {
 	line_to(a);
 }
 
-void fill_rect(int x, int y, int w, int h) {
-	for (int y1 = 0; y1 < h; y1++) {
-		for (int x1 = 0; x1 < w; x1++) {
-			set_pixel(x + x1, y + y1, fill_color);
+void fill_rect(rectangle_t r) {
+	int x0 = (int)round(r.x);
+	int x1 = (int)round(r.x + r.w);
+	int y0 = (int)round(r.y);
+	int y1 = (int)round(r.y + r.h);
+	
+	for (int y = y0; y < y1; y++) {
+		for (int x = x0; x < x1; x++) {
+			set_pixel(x, y, fill_color);
 		}
 	}
 }
 
 void fill_centered_rect(int x, int y, int w, int h) {
-	fill_rect(x - w / 2, y - h / 2, w, h);
+	rectangle_t r = { x - w / 2, y - h / 2, w, h };
+	fill_rect(r);
 }
 
 void set_pixel(int x, int y, uint32_t color) {
@@ -197,7 +203,22 @@ void swap_vec2(vec2_t *x, vec2_t *y) {
 	*x = tmp;
 }
 
+float sign_3vec2(vec2_t a, vec2_t b, vec2_t c) {
+	return (a.x - c.x) * (b.y - c.y) - (b.x - c.x) * (a.y - c.y);
+}
+
+bool point_in_triangle(vec2_t p, vec2_t a, vec2_t b, vec2_t c) {
+	float d = sign_3vec2(p, a, b);
+	float e = sign_3vec2(p, b, c);
+	float f = sign_3vec2(p, c, a);
+	bool has_neg = (d < 0) || (e < 0) || (f < 0);
+	bool has_pos = (d > 0) || (e > 0) || (f > 0);
+	return !(has_neg && has_pos);
+}
+
 void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
+	// Using https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+	
 /*	// Sort vertices by x-position
 	if (a.y > b.y) {
 		swap_vec2(&a, &b);
@@ -212,33 +233,17 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 	float x0 = (a.x < b.x)? a.x : b.x;
 	x0 = (x0 < c.x)? x0 : c.x;
 	float x1 = (a.x > b.x)? a.x: b.x;
-	x1 = (x1 > c.x)? x0 : c.x;
+	x1 = (x1 > c.x)? x1 : c.x;
 
 	float y0 = (a.y < b.y)? a.y : b.y;
 	y0 = (y0 < c.y)? y0 : c.y;
 	float y1 = (a.y > b.y)? a.y: b.y;
 	y1 = (y1 > c.y)? y1 : c.y;
 
-	vec2_t ab = vec2_sub(b, a);
-	vec2_t ac = vec2_sub(c, a);
-	
-	float area = vec2_cross(ab, ac);
-	
-	// Using this formula to determine if a point is inside the triangle:
-	//     P = A + u * AB + v * AC
-	// where u >= 0, v >= 0, and u + v <= 1
-	// Compute barycentric coordinates by:
-	//     u = triangle(c,a,p).area / triangle(a,b,c).area
-	//     v = triangle(a,b,p).area / triangle(a,b,c).area
-	//     w = triangle(b,p,c).area / triangle(a,b,c).area
-
 	for (int y = (int)floorf(y0); y <= (int)ceilf(y1); y++) {
 		for (int x = (int)floorf(x0); x <= (int)ceilf(x1); x++) {
 			vec2_t p = { x, y };
-			vec2_t ap = vec2_sub(p, a);
-			float u = vec2_cross(ap, ac) / area;
-			float v = vec2_cross(ab, ap) / area;
-			if ((u >= 0.0f) && (v >= 0.0f) && (u + v <= 1.0f)) {
+			if (point_in_triangle(p, a, b, c)) {
 				set_pixel(x, y, fill_color);
 			}
 		}

@@ -93,7 +93,8 @@ void title_start(void) {
 }
 
 bool title_handle_keyboard(SDL_Event event) {
-	const float angle = (float)(5.0 * (M_PI / 180.0));
+	const float rad_deg = (float)M_PI / 180.0f;
+	const float angle = 5.0f * rad_deg;
 	
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
@@ -103,9 +104,11 @@ bool title_handle_keyboard(SDL_Event event) {
 				return true;
 			case SDLK_q:
 				title_triangle->rotation -= angle;
+				printf("Rotation: %1.0f\n", title_triangle->rotation / rad_deg);
 				return true;
 			case SDLK_e:
 				title_triangle->rotation += angle;
+				printf("Rotation: %1.0f\n", title_triangle->rotation / rad_deg);
 				return true;
 			case SDLK_w:
 				title_triangle->position = vec2_add(title_triangle->position, vec2_make(0.0f, -0.25f));

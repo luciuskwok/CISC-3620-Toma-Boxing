@@ -57,7 +57,6 @@ void mesh_destroy(mesh_t *mesh) {
 
 void mesh_update(mesh_t *mesh, double delta_time) {
 	// Update posiiton & rotation
-	float increment = (float)((M_PI / 180.0) * delta_time); // 1 deg/sec
 	float dt = (float)delta_time;
 	
 	// Acceleration due to gravity

@@ -22,22 +22,23 @@ void draw_progress_bar(void) {
 	// Draws progress bar at top of screen
 	int scr_w = get_screen_width();
 	//int scr_h = get_screen_height();
-	int w = scr_w * 75 / 100;
-	int h = 10;
-	int x = (scr_w - w) / 2;
-	int y = 0;
+	rectangle_t r;
+	r.w = scr_w * 75 / 100;
+	r.h = 10;
+	r.x = (scr_w - r.w) / 2;
+	r.y = 0;
 
 	set_line_color(COLOR_WHITE);
-	stroke_rect(x, y, w, h);
+	stroke_rect(r);
 	
 	// Inset rect
-	w -= 2;
-	h -= 2;
-	x += 1;
-	y += 1;
-	w = (int)( round((double)w * ui_progress_value) );
+	r.w -= 2;
+	r.h -= 2;
+	r.x += 1;
+	r.y += 1;
+	r.w = (int)( round((double)r.w * ui_progress_value) );
 	set_fill_color(COLOR_LIGHT_BLUE);
-	fill_rect(x, y, w, h);
+	fill_rect(r);
 }
 
 void set_progress_value(double x) {

@@ -124,7 +124,8 @@ void render_volume_overlay(void) {
 	
 	// Use 50% opaque black as overlay background
 	set_fill_color(0x88000000);
-	fill_rect(0, scr_h - 12, 4 * 8 + 4, 12);
+	rectangle_t r = { 0, scr_h - 12, 4 * 8 + 4, 12 };
+	fill_rect(r);
 
 	// Draw text
 	set_fill_color(0xeeFFaaAA);
