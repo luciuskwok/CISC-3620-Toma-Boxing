@@ -39,9 +39,9 @@ mat4_t camera_transform_3d;
 void init_projection(void) {
 	// Set default view transform to center on and scale to screen
 	mat3_get_identity(view_transform_2d);
-	mat3_translate(view_transform_2d, screen_w / 2, screen_h / 2);
+	mat3_translate_xy(view_transform_2d, screen_w / 2, screen_h / 2);
 	float scale2d = screen_h;
-	mat3_scale(view_transform_2d, scale2d, scale2d);
+	mat3_scale_xy(view_transform_2d, scale2d, scale2d);
 	
 	// Set default camera transform to -5 units
 	mat4_get_identity(camera_transform_3d);
@@ -219,22 +219,26 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 	float y1 = (a.y > b.y)? a.y: b.y;
 	y1 = (y1 > c.y)? y1 : c.y;
 
-	vec2_t v1 = { b.x - a.x, b.y - a.y };
-	vec2_t v2 = { c.x - a.x, c.y - a.y };
+	vec2_t ab = vec2_sub(b, a);
+	vec2_t ac = vec2_sub(c, a);
 	
-	int x0i = (int)floorf(x0);
-	int x1i = (int)ceilf(x1);
-	int y0i = (int)floorf(y0);
-	int y1i = (int)ceilf(y1);
+	float area = vec2_cross(ab, ac);
 	
-	float cross12 = vec2_cross(v1, v2);
+	// Using this formula to determine if a point is inside the triangle:
+	//     P = A + u * AB + v * AC
+	// where u >= 0, v >= 0, and u + v <= 1
+	// Compute barycentric coordinates by:
+	//     u = triangle(c,a,p).area / triangle(a,b,c).area
+	//     v = triangle(a,b,p).area / triangle(a,b,c).area
+	//     w = triangle(b,p,c).area / triangle(a,b,c).area
 
-	for (int y = y0i; y <= y1i; y++) {
-		for (int x = x0i; x <= x1i; x++) {
-			vec2_t q = { x - a.x, y - a.y };
-			float s = vec2_cross(q, v2) / cross12;
-			float t = vec2_cross(v1, q) / cross12;
-			if ((s >= 0.0f) && (t >= 0.0f) && (s + t <= 1.0f)) {
+	for (int y = (int)floorf(y0); y <= (int)ceilf(y1); y++) {
+		for (int x = (int)floorf(x0); x <= (int)ceilf(x1); x++) {
+			vec2_t p = { x, y };
+			vec2_t ap = vec2_sub(p, a);
+			float u = vec2_cross(ap, ac) / area;
+			float v = vec2_cross(ab, ap) / area;
+			if ((u >= 0.0f) && (v >= 0.0f) && (u + v <= 1.0f)) {
 				set_pixel(x, y, fill_color);
 			}
 		}

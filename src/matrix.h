@@ -17,8 +17,10 @@ typedef float mat4_t[4][4];
 
 // 2D Matrix Functions
 void mat3_get_identity(mat3_t m);
-void mat3_translate(mat3_t m, float tx, float ty);
-void mat3_scale(mat3_t m, float sx, float sy);
+void mat3_translate_xy(mat3_t m, float tx, float ty);
+void mat3_translate(mat3_t m, vec2_t t);
+void mat3_scale_xy(mat3_t m, float sx, float sy);
+void mat3_scale(mat3_t m, vec2_t s);
 void mat3_rotate(mat3_t m, float a);
 void mat3_multiply(const mat3_t a, const mat3_t b, mat3_t result);
 vec2_t vec2_mat3_multiply(const vec2_t a, const mat3_t m);

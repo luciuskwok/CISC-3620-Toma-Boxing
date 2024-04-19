@@ -38,10 +38,18 @@ shape_t *shape_new(int point_count) {
 	shape->point_count = point_count;
 	shape->points = points;
 	shape->is_closed = true;
+	
+	// Colors
 	shape->line_color = COLOR_WHITE;
 	shape->fill_color = COLOR_WHITE;
-	shape_reset_transform(shape);
-	shape_reset_momentum(shape);
+	
+	// Physics
+	shape->scale = vec2_identity();
+	shape->position = vec2_zero(); // meters
+	shape->linear_momentum = vec2_zero(); // meters/second
+	shape->rotation = 0.0f; // radians
+	shape->angular_momentum = 0.0f; // radians/second
+	
 	shape->lifetime = 0.0;
 	return shape;
 }
@@ -92,13 +100,14 @@ shape_t *create_polygon_shape(int sides) {
 #pragma mark -
 
 void shape_update(shape_t *shape, double delta_time) {
-	momentum2d_t *m = &shape->momentum;
+	float dt = (float)delta_time;
 	
-	float increment = (float)((M_PI / 180.0) * delta_time); // 1 deg/sec
-	mat3_rotate(shape->transform, m->rotation * increment);
+	// Linear momentum
+	vec2_t movement = vec2_mul(shape->linear_momentum, dt);
+	shape->position = vec2_add(shape->position, movement);
 	
-	float t = (float)delta_time;
-	mat3_translate(shape->transform, m->x * t, m->y * t);
+	// Angular momentum
+	shape->rotation += shape->angular_momentum * dt;
 	
 	shape->lifetime += delta_time;
 }
@@ -109,37 +118,34 @@ void shape_draw(shape_t *shape) {
 	
 	if (shape->point_count < 2) return;
 	
+	// Calculate transform matrix
+	mat3_t tr;
+	mat3_get_identity(tr);
+	mat3_translate(tr, shape->position);
+	mat3_rotate(tr, shape->rotation);
+	mat3_scale(tr, shape->scale);
+
 	// Fill
 	if (shape->point_count >= 3) {
-		vec2_t d = apply_view_transform_2d(vec2_mat3_multiply(shape->points[0], shape->transform));
-		vec2_t e = apply_view_transform_2d(vec2_mat3_multiply(shape->points[1], shape->transform));
-		vec2_t f = apply_view_transform_2d(vec2_mat3_multiply(shape->points[2], shape->transform));
+		vec2_t d = apply_view_transform_2d(vec2_mat3_multiply(shape->points[0], tr));
+		vec2_t e = apply_view_transform_2d(vec2_mat3_multiply(shape->points[1], tr));
+		vec2_t f = apply_view_transform_2d(vec2_mat3_multiply(shape->points[2], tr));
 		fill_triangle(d, f, e);
 	}
 	
 	// Stroke
-	vec2_t a = vec2_mat3_multiply(shape->points[0], shape->transform);
+	vec2_t a = vec2_mat3_multiply(shape->points[0], tr);
 	a = apply_view_transform_2d(a);
 	move_to(a);
 
 	for (int i = 1; i < shape->point_count; i++) {
-		vec2_t b = vec2_mat3_multiply(shape->points[i], shape->transform);
+		vec2_t b = vec2_mat3_multiply(shape->points[i], tr);
 		b = apply_view_transform_2d(b);
 		line_to(b);
 	}
 	if (shape->is_closed) {
 		line_to(a);
 	}
-}
-
-void shape_reset_transform(shape_t *shape) {
-	mat3_get_identity(shape->transform);
-}
-
-void shape_reset_momentum(shape_t *shape) {
-	momentum2d_t *m = &shape->momentum;
-	m->x = m->y = 0.0f;
-	m->rotation = 0;
 }
 
 #pragma mark -

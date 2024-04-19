@@ -16,7 +16,7 @@ void mat3_get_identity(mat3_t m) {
 	m[2][0] = 0; m[2][1] = 0; m[2][2] = 1;
 }
 
-void mat3_translate(mat3_t m, float tx, float ty) {
+void mat3_translate_xy(mat3_t m, float tx, float ty) {
 	mat3_t t = {
 		1, 0, tx,
 		0, 1, ty,
@@ -25,13 +25,31 @@ void mat3_translate(mat3_t m, float tx, float ty) {
 	mat3_multiply(m, t, m);
 }
 
-void mat3_scale(mat3_t m, float sx, float sy) {
+void mat3_translate(mat3_t m, vec2_t t) {
+	mat3_t n = {
+		1, 0, t.x,
+		0, 1, t.y,
+		0, 0, 1
+	};
+	mat3_multiply(m, n, m);
+}
+
+void mat3_scale_xy(mat3_t m, float sx, float sy) {
 	mat3_t s = {
 		sx, 0, 0,
 		0, sy, 0,
 		0, 0, 1
 	};
 	mat3_multiply(m, s, m);
+}
+
+void mat3_scale(mat3_t m, vec2_t s) {
+	mat3_t t = {
+		s.x, 0, 0,
+		0, s.y, 0,
+		0, 0, 1
+	};
+	mat3_multiply(m, t, m);
 }
 
 void mat3_rotate(mat3_t m, float a) {

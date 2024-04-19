@@ -10,6 +10,21 @@
 
 #pragma mark - 2D Vector
 
+vec2_t vec2_zero(void) {
+	static const vec2_t zero = { 0, 0 };
+	return zero;
+}
+
+vec2_t vec2_identity(void) {
+	static const vec2_t identity = { 1, 1 };
+	return identity;
+}
+
+vec2_t vec2_make(float x, float y) {
+	vec2_t a = { x, y };
+	return a;
+}
+
 vec2_t vec2_add(vec2_t a, vec2_t b) {
 	vec2_t c = { a.x + b.x, a.y + b.y };
 	return c;

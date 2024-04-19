@@ -19,6 +19,9 @@ typedef struct {
 } vec3_t;
 
 // 2D Functions
+vec2_t vec2_zero(void);
+vec2_t vec2_identity(void);
+vec2_t vec2_make(float x, float y);
 vec2_t vec2_add(vec2_t a, vec2_t b);
 vec2_t vec2_sub(vec2_t a, vec2_t b);
 vec2_t vec2_mul(vec2_t a, float b);
