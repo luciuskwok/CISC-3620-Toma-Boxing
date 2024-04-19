@@ -18,7 +18,7 @@
 
 // Globals
 image_t *title_image = NULL;
-shape_t *title_triangle = NULL;
+shape_t *title_shape = NULL;
 
 
 void title_init(void) {
@@ -33,68 +33,57 @@ void set_scale_and_translate(shape_t *shape, float scale, float tx, float ty) {
 void title_start(void) {
 	const float grid = 0.2f;
 	const float ty = -1.0f / 15.0f;
-	
-	// Create one large triangle that can be controlled
-	title_triangle = create_polygon_shape(3);
-	title_triangle->scale = vec2_make(0.5f, 0.5f);
-	//set_scale_and_translate(s[0]->transform, 0.5f, 0.0f, 0.0f);
-	title_triangle->line_color = COLOR_LIME;
-	title_triangle->fill_color = 0x800000FF;
-	add_shape(title_triangle);
-	
-	/*
-	 // Create shapes that rotate
-	 s[0] = create_polygon_shape(3);
-	 s[0]->momentum.rotation = 15.0f;
-	 set_scale_and_translate(s[0]->transform, 0.125f, -2 * grid, -grid + ty);
-	 s[0]->line_color = COLOR_LIME;
-	 s[0]->fill_color = 0x800000FF;
-	 
-	 // Debug: print triangle points
-	 printf("Triangle:\n");
-	 for (int i=0; i<3; i++) {
-	 printf("  %1.3f, %1.3f\n", s[0]->points[i].x, s[0]->points[i].y);
-	 }
-	 
-	 s[1] = create_polygon_shape(4);
-	 s[1]->momentum.rotation = 10.0f;
-	 set_scale_and_translate(s[1]->transform, 0.125f, 0, -grid + ty);
-	 s[1]->line_color = COLOR_PINK;
-	 s[1]->fill_color = 0x800000FF;
-	 
-	 s[2] = create_polygon_shape(5);
-	 s[2]->momentum.rotation = 6.0f;
-	 set_scale_and_translate(s[2]->transform, 0.125f, 2 * grid, -grid + ty);
-	 s[2]->line_color = COLOR_RED;
-	 s[2]->fill_color = 0x800000FF;
-	 
-	 s[3] = create_polygon_shape(6);
-	 s[3]->momentum.rotation = 8.0f;
-	 set_scale_and_translate(s[3]->transform, 0.125f, -2 * grid, grid + ty);
-	 s[3]->line_color = COLOR_GREEN;
-	 s[3]->fill_color = 0x800000FF;
-	 
-	 s[4] = create_polygon_shape(8);
-	 s[4]->momentum.rotation = 12.0f;
-	 set_scale_and_translate(s[4]->transform, 0.125f, 0, grid + ty);
-	 s[4]->line_color = COLOR_BLUE;
-	 s[4]->fill_color = 0x800000FF;
-	 
-	 s[5] = create_polygon_shape(16);
-	 s[5]->momentum.rotation = 16.0f;
-	 s[5]->line_color = COLOR_WHITE;
-	 s[5]->fill_color = 0x800000FF;
-	 set_scale_and_translate(s[5]->transform, 0.125f, 2 * grid, grid + ty);
-	 
-	 for (int i = 0; i < 6; i++) {
-	 add_shape(s[i]);
-	 }
-	 */
+	const float rad_deg = (float)M_PI / 180.0f;
+		
+	// Create shapes that rotate
+	shape_t *s[6];
+	s[0] = create_polygon_shape(3);
+	s[0]->angular_momentum = 15.0f * rad_deg;
+	set_scale_and_translate(s[0], 0.125f, -2 * grid, -grid + ty);
+	s[0]->line_color = COLOR_LIME;
+	s[0]->fill_color = color_set_alpha(COLOR_LIME, 96);
+	title_shape = s[0];
+
+	s[1] = create_polygon_shape(4);
+	s[1]->angular_momentum = 10.0f * rad_deg;
+	set_scale_and_translate(s[1], 0.125f, 0, -grid + ty);
+	s[1]->line_color = COLOR_PINK;
+	s[0]->fill_color = color_set_alpha(COLOR_PINK, 96);
+
+	s[2] = create_polygon_shape(5);
+	s[2]->angular_momentum = 6.0f * rad_deg;
+	set_scale_and_translate(s[2], 0.125f, 2 * grid, -grid + ty);
+	s[2]->line_color = COLOR_RED;
+	s[0]->fill_color = color_set_alpha(COLOR_RED, 96);
+
+	s[3] = create_polygon_shape(6);
+	s[3]->angular_momentum = 8.0f * rad_deg;
+	set_scale_and_translate(s[3], 0.125f, -2 * grid, grid + ty);
+	s[3]->line_color = COLOR_GREEN;
+	s[0]->fill_color = color_set_alpha(COLOR_GREEN, 96);
+
+	s[4] = create_polygon_shape(8);
+	s[4]->angular_momentum = 12.0f * rad_deg;
+	set_scale_and_translate(s[4], 0.125f, 0, grid + ty);
+	s[4]->line_color = COLOR_BLUE;
+	s[0]->fill_color = color_set_alpha(COLOR_BLUE, 96);
+
+	s[5] = create_polygon_shape(16);
+	s[5]->angular_momentum = 16.0f * rad_deg;
+	s[5]->line_color = COLOR_WHITE;
+	s[0]->fill_color = color_set_alpha(COLOR_WHITE, 96);
+	set_scale_and_translate(s[5], 0.125f, 2 * grid, grid + ty);
+
+	for (int i = 0; i < 6; i++) {
+		add_shape(s[i]);
+	}
+
 }
 
 bool title_handle_keyboard(SDL_Event event) {
 	const float rad_deg = (float)M_PI / 180.0f;
 	const float angle = 5.0f * rad_deg;
+	const float move = 1.0f / 32.0f;
 	
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
@@ -103,24 +92,24 @@ bool title_handle_keyboard(SDL_Event event) {
 				set_scene_index(SCENE_INSTRUCTIONS);
 				return true;
 			case SDLK_q:
-				title_triangle->rotation -= angle;
-				printf("Rotation: %1.0f\n", title_triangle->rotation / rad_deg);
+				title_shape->rotation -= angle;
+				printf("Rotation: %1.0f\n", title_shape->rotation / rad_deg);
 				return true;
 			case SDLK_e:
-				title_triangle->rotation += angle;
-				printf("Rotation: %1.0f\n", title_triangle->rotation / rad_deg);
+				title_shape->rotation += angle;
+				printf("Rotation: %1.0f\n", title_shape->rotation / rad_deg);
 				return true;
 			case SDLK_w:
-				title_triangle->position = vec2_add(title_triangle->position, vec2_make(0.0f, -0.25f));
+				title_shape->position = vec2_add(title_shape->position, vec2_make(0.0f, -move));
 				return true;
 			case SDLK_s:
-				title_triangle->position = vec2_add(title_triangle->position, vec2_make(0.0f, 0.25f));
+				title_shape->position = vec2_add(title_shape->position, vec2_make(0.0f, move));
 				return true;
 			case SDLK_a:
-				title_triangle->position = vec2_add(title_triangle->position, vec2_make(-0.25f, 0.0f));
+				title_shape->position = vec2_add(title_shape->position, vec2_make(-move, 0.0f));
 				return true;
 			case SDLK_d:
-				title_triangle->position = vec2_add(title_triangle->position, vec2_make(0.25f, 0.0f));
+				title_shape->position = vec2_add(title_shape->position, vec2_make(move, 0.0f));
 				return true;
 		}
 	}

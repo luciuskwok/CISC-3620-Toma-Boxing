@@ -218,18 +218,7 @@ bool point_in_triangle(vec2_t p, vec2_t a, vec2_t b, vec2_t c) {
 
 void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 	// Using https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
-	
-/*	// Sort vertices by x-position
-	if (a.y > b.y) {
-		swap_vec2(&a, &b);
-	}
-	if (b.y > c.y) {
-		swap_vec2(&b, &c);
-	}
-	if (a.y > b.y) {
-		swap_vec2(&a, &b);
-	}
-*/
+
 	float x0 = (a.x < b.x)? a.x : b.x;
 	x0 = (x0 < c.x)? x0 : c.x;
 	float x1 = (a.x > b.x)? a.x: b.x;
@@ -242,7 +231,7 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c) {
 
 	for (int y = (int)floorf(y0); y <= (int)ceilf(y1); y++) {
 		for (int x = (int)floorf(x0); x <= (int)ceilf(x1); x++) {
-			vec2_t p = { x, y };
+			vec2_t p = { (float)x + 0.5f, (float)y + 0.5f };
 			if (point_in_triangle(p, a, b, c)) {
 				set_pixel(x, y, fill_color);
 			}

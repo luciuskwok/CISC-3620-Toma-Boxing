@@ -34,9 +34,17 @@ shape_t *shape_new(int point_count) {
 		free(shape);
 		return NULL;
 	}
+	vec2_t *proj_pts = malloc(sizeof(vec2_t) * (size_t)point_count);
+	if (!proj_pts) {
+		fprintf(stderr, "Unable to allocate shape points!\n");
+		free(shape);
+		free(points);
+		return NULL;
+	}
 	
 	shape->point_count = point_count;
 	shape->points = points;
+	shape->projected_points = proj_pts;
 	shape->is_closed = true;
 	
 	// Colors
@@ -56,6 +64,7 @@ shape_t *shape_new(int point_count) {
 
 void shape_destroy(shape_t *shape) {
 	free(shape->points);
+	free(shape->projected_points);
 	free(shape);
 }
 
@@ -123,27 +132,31 @@ void shape_draw(shape_t *shape) {
 	tr = mat3_translate(tr, shape->position);
 	tr = mat3_rotate(tr, shape->rotation);
 	tr = mat3_scale(tr, shape->scale);
+	
+	// Apply transforms
+	vec2_t *pp = shape->projected_points;
+	for (int i = 0; i < shape->point_count; i++) {
+		pp[i] = apply_view_transform_2d(vec2_mat3_multiply(shape->points[i], tr));
+	}
 
 	// Fill
-	if (shape->point_count >= 3) {
-		vec2_t d = apply_view_transform_2d(vec2_mat3_multiply(shape->points[0], tr));
-		vec2_t e = apply_view_transform_2d(vec2_mat3_multiply(shape->points[1], tr));
-		vec2_t f = apply_view_transform_2d(vec2_mat3_multiply(shape->points[2], tr));
-		fill_triangle(d, f, e);
+	if (shape->fill_color != 0) {
+		if (shape->point_count == 3) {
+			fill_triangle(pp[0], pp[1], pp[2]);
+		} else {
+			// TODO: shape_fill()
+		}
 	}
 	
 	// Stroke
-	vec2_t a = vec2_mat3_multiply(shape->points[0], tr);
-	a = apply_view_transform_2d(a);
-	move_to(a);
-
-	for (int i = 1; i < shape->point_count; i++) {
-		vec2_t b = vec2_mat3_multiply(shape->points[i], tr);
-		b = apply_view_transform_2d(b);
-		line_to(b);
-	}
-	if (shape->is_closed) {
-		line_to(a);
+	if (shape->line_color != 0) {
+		move_to(pp[0]);
+		for (int i = 1; i < shape->point_count; i++) {
+			line_to(pp[i]);
+		}
+		if (shape->is_closed) {
+			line_to(pp[0]);
+		}
 	}
 }
 

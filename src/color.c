@@ -99,3 +99,9 @@ uint32_t color_from_hsv(double h, double s, double v, double a) {
     }
     return color_from_rgba_double(r, g, b, a);
 }
+
+uint32_t color_set_alpha(uint32_t c, uint8_t a) {
+	c = c & 0x00FFFFFF;
+	c = c |((uint32_t)a << 24);
+	return c;
+}
