@@ -12,7 +12,7 @@
 #include "drawing.h"
 #include "image.h"
 #include "mesh.h"
-#include "mesh_cube.h"
+#include "mesh_creation.h"
 #include "scene_manager.h"
 #include "ui_progress_bar.h"
 

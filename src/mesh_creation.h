@@ -1,5 +1,5 @@
 //
-//  cube_mesh.h
+//  mesh_creation.h
 //  Toma Boxing
 //
 //  Created by Lucius Kwok on 3/10/24.
@@ -11,9 +11,9 @@
 #include <stdint.h>
 #include "mesh.h"
 
-
-// Creates a mesh_t struct that is filled out with the faces for a cube
+// Create various solids
 mesh_t *create_mesh_cube(void);
-
+mesh_t *create_mesh_pyramid(int sides);
+mesh_t *create_mesh_sphere(int sides);
 
 #endif /* MESH_CUBE_H */

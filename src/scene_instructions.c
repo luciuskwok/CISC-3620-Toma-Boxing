@@ -13,7 +13,7 @@
 #include "scene_manager.h"
 
 #include "mesh.h"
-#include "mesh_cube.h"
+#include "mesh_creation.h"
 
 
 // Globals

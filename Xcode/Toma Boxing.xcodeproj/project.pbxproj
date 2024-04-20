@@ -11,7 +11,7 @@
 		E00F80162BB1302100D78335 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F800D2BB1302100D78335 /* main.c */; };
 		E00F80172BB1302100D78335 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F800E2BB1302100D78335 /* matrix.c */; };
 		E00F80192BB1302100D78335 /* vector.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F80122BB1302100D78335 /* vector.c */; };
-		E00F801D2BB1329800D78335 /* mesh_cube.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F801C2BB1329800D78335 /* mesh_cube.c */; };
+		E00F801D2BB1329800D78335 /* mesh_creation.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F801C2BB1329800D78335 /* mesh_creation.c */; };
 		E00F80202BB132A000D78335 /* drawing.c in Sources */ = {isa = PBXBuildFile; fileRef = E00F801F2BB132A000D78335 /* drawing.c */; };
 		E00F80222BB1CC6A00D78335 /* SDL2_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */; };
 		E00F80242BB1CC7000D78335 /* ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E00F80232BB1CC7000D78335 /* ogg.framework */; };
@@ -76,8 +76,8 @@
 		E00F80122BB1302100D78335 /* vector.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vector.c; sourceTree = "<group>"; };
 		E00F80132BB1302100D78335 /* vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
 		E00F801A2BB1302F00D78335 /* Toma Boxing.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Toma Boxing.entitlements"; sourceTree = "<group>"; };
-		E00F801B2BB1329800D78335 /* mesh_cube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh_cube.h; sourceTree = "<group>"; };
-		E00F801C2BB1329800D78335 /* mesh_cube.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mesh_cube.c; sourceTree = "<group>"; };
+		E00F801B2BB1329800D78335 /* mesh_creation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh_creation.h; sourceTree = "<group>"; };
+		E00F801C2BB1329800D78335 /* mesh_creation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mesh_creation.c; sourceTree = "<group>"; };
 		E00F801E2BB132A000D78335 /* drawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawing.h; sourceTree = "<group>"; };
 		E00F801F2BB132A000D78335 /* drawing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = drawing.c; sourceTree = "<group>"; };
 		E00F80212BB1CC6A00D78335 /* SDL2_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2_mixer.framework; sourceTree = "<group>"; };
@@ -148,8 +148,8 @@
 				E00F800E2BB1302100D78335 /* matrix.c */,
 				E07856632BBC84B300C31E16 /* mesh.h */,
 				E07856642BBC84B300C31E16 /* mesh.c */,
-				E00F801B2BB1329800D78335 /* mesh_cube.h */,
-				E00F801C2BB1329800D78335 /* mesh_cube.c */,
+				E00F801B2BB1329800D78335 /* mesh_creation.h */,
+				E00F801C2BB1329800D78335 /* mesh_creation.c */,
 				E07E0A602BB6340F00BD3D4E /* scene_title.h */,
 				E07E0A612BB6340F00BD3D4E /* scene_title.c */,
 				E07E0A632BB6370700BD3D4E /* scene_instructions.h */,
@@ -278,7 +278,7 @@
 				E07856652BBC84B300C31E16 /* mesh.c in Sources */,
 				E00F80162BB1302100D78335 /* main.c in Sources */,
 				E07E0A682BB6371B00BD3D4E /* scene_gameplay.c in Sources */,
-				E00F801D2BB1329800D78335 /* mesh_cube.c in Sources */,
+				E00F801D2BB1329800D78335 /* mesh_creation.c in Sources */,
 				E07856682BBCBF4700C31E16 /* shape.c in Sources */,
 				E07E0A712BB67C3100BD3D4E /* ui_progress_bar.c in Sources */,
 				E00F80172BB1302100D78335 /* matrix.c in Sources */,

@@ -1,16 +1,19 @@
 //
-//  cube_mesh.c
+//  mesh_creation.c
 //  Toma Boxing
 //
 //  Created by Lucius Kwok on 3/10/24.
 //
 
-#include "mesh_cube.h"
+#include "mesh_creation.h"
 #include "color.h"
 #include "drawing.h"
 #include "matrix.h"
 #include "vector.h"
 #include <math.h>
+
+
+#pragma mark - Cube
 
 /*
  Vertex numbering
@@ -27,10 +30,6 @@
 typedef struct {
 	int a, b, c;
 } cube_face_index_t;
-
-typedef struct {
-	vec2_t a, b, c;
-} triangle_t;
 
 // Number of points in the mesh
 #define MESH_CUBE_VERTICES (8)
@@ -70,8 +69,6 @@ cube_face_index_t cube_faces[MESH_CUBE_FACES] = {
     { 3, 7, 5 }
 };
 
-#pragma mark - Fuctions
-
 mesh_t *create_mesh_cube(void) {
 	// Create a set of faces that correspond to a cube
 	mesh_t *mesh = mesh_new(MESH_CUBE_FACES);
@@ -86,4 +83,16 @@ mesh_t *create_mesh_cube(void) {
 		face->c = cube_vertices[cube_faces[i].c];
 	}
 	return mesh;
+}
+
+#pragma mark - Pyramid
+
+mesh_t *create_mesh_pyramid(int sides) {
+	
+}
+
+#pragma mark - Sphere
+
+mesh_t *create_mesh_sphere(int sides) {
+	
 }
