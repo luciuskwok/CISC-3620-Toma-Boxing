@@ -85,14 +85,49 @@ mesh_t *create_mesh_cube(void) {
 	return mesh;
 }
 
-#pragma mark - Pyramid
+#pragma mark - Diamond/Pyramid
 
-mesh_t *create_mesh_pyramid(int sides) {
+vec2_t coordinates_for_side(int i, int n) {
+	float angle = 2.0f * (float)M_PI * (float)(i) / (float)n;
+	vec2_t v;
+	v.x = cosf(angle);
+	v.y = sinf(angle);
+	return v;
+}
+
+mesh_t *create_mesh_diamond(int sides, float top, float bottom) {
+	mesh_t *mesh = mesh_new(sides * 2);
+	if (!mesh) return NULL;
+
+	vec3_t vt = { 0, top, 0 };
+	vec3_t vb = { 0, -bottom, 0 };
 	
+	for (int i = 0; i < sides; i++) {
+		vec2_t c0 = coordinates_for_side(i, sides);
+		vec2_t c1 = coordinates_for_side(i+1, sides);
+		vec3_t v0 = { c0.x, 0, c0.y };
+		vec3_t v1 = { c1.x, 0, c1.y };
+
+		// Top face
+		mesh_face_t *ft = &mesh->faces[i * 2];
+		ft->a = vt;
+		ft->b = v0;
+		ft->c = v1;
+
+		// Bottom face
+		mesh_face_t *fb = &mesh->faces[i * 2 + 1];
+		fb->a = vb;
+		fb->b = v1;
+		fb->c = v0;
+	}
+	
+	return mesh;
 }
 
 #pragma mark - Sphere
 
 mesh_t *create_mesh_sphere(int sides) {
-	
+	mesh_t *mesh = mesh_new(sides * 2);
+	if (!mesh) return NULL;
+	return mesh;
 }

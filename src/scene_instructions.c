@@ -18,29 +18,30 @@
 
 // Globals
 image_t *instr_track_image = NULL;
-mesh_t *cube1 = NULL;
+mesh_t *diamond1 = NULL;
 mesh_t *cube2 = NULL;
 
 
 void instructions_init(void) {
 	instr_track_image = load_bmp_image("assets/track.bmp");
-	cube1 = create_mesh_cube();
+	diamond1 = create_mesh_diamond(4, 1.0f, 1.0f);
 	cube2 = create_mesh_cube();
 	
 }
 
 void instructions_start(void) {
-	add_mesh(cube1);
+	add_mesh(diamond1);
 	add_mesh(cube2);
 	
 	const float rotationUnit = 1.0f * (float)M_PI / 180.0f;
 	
-	// Have cube spin by itself
-	cube1->position = vec3_make(2.5, 0, 0);
-	cube1->linear_momentum = vec3_zero();
-	cube1->rotation = vec3_zero();
-	cube1->angular_momentum = vec3_make(0, rotationUnit, 0);
+	// Diamond
+	diamond1->position = vec3_make(2.5, 0, 0);
+	diamond1->linear_momentum = vec3_zero();
+	diamond1->rotation = vec3_zero();
+	diamond1->angular_momentum = vec3_make(0, rotationUnit, 0.125f * rotationUnit);
 
+	// Bouncing cube
 	cube2->position = vec3_make(-2.5, 0, 0);
 	cube2->linear_momentum = vec3_zero();
 	cube2->rotation = vec3_zero();
@@ -71,9 +72,9 @@ void instructions_update(double delta_time) {
 	uint32_t line_color = color_from_hsv(hue, 1.0, 1.0, 0.5);
 	uint32_t point_color = color_from_hsv((hue + 60) % 360, 1.0, 1.0, 0.5);
 	
-	cube1->line_color = line_color;
+	diamond1->line_color = line_color;
 	cube2->line_color = line_color;
-	cube1->point_color = point_color;
+	diamond1->point_color = point_color;
 	cube2->point_color = point_color;
 	
 	// Reset momentum when cube hits bottom
@@ -160,9 +161,9 @@ void instructions_render(void) {
 	set_fill_color(COLOR_WHITE);
 	atari_draw_text("Mute volume", 1);
 
-	p.x = scr_w - 2;
+	p.x = scr_w / 2;
 	p.y = scr_h - 10;
 	move_to(p);
-	atari_draw_right_justified_text("Press Space to Play", 1);
+	atari_draw_centered_text("Press Space to Play", 1);
 }
 

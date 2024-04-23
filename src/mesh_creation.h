@@ -13,7 +13,7 @@
 
 // Create various solids
 mesh_t *create_mesh_cube(void);
-mesh_t *create_mesh_pyramid(int sides);
+mesh_t *create_mesh_diamond(int sides, float top, float bottom);
 mesh_t *create_mesh_sphere(int sides);
 
 #endif /* MESH_CUBE_H */
