@@ -15,6 +15,6 @@
 mesh_t *mesh_create_cube(void);
 mesh_t *mesh_create_diamond(int sides, float top, float bottom);
 mesh_t *mesh_create_icosahedron(void);
-mesh_t *mesh_create_sphere(int sides);
+mesh_t *mesh_create_sphere(int subdivisions);
 
 #endif /* MESH_CUBE_H */

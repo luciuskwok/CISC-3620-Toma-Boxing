@@ -26,18 +26,15 @@
  */
 
 
-// Indexes of cube_vertices[] that defines the vertexes of the face
+// Indexes into vertices array that defines the 3 vertexes of the face triangle
 typedef struct {
 	int a, b, c;
-} cube_face_index_t;
-
-// Number of points in the mesh
-#define MESH_CUBE_VERTICES (8)
+} mesh_face_index_t;
 
 // Number of faces: 6 for each cube face * 2 for triangles per face
-#define MESH_CUBE_FACES (6 * 2)
+#define CUBE_FACE_COUNT (6 * 2)
 
-vec3_t cube_vertices[MESH_CUBE_VERTICES] = {
+vec3_t cube_vertices[8] = {
     { -1, -1, -1 },
     { -1,  1, -1 },
     {  1,  1, -1 },
@@ -48,7 +45,7 @@ vec3_t cube_vertices[MESH_CUBE_VERTICES] = {
     { -1, -1,  1 }
 };
 
-cube_face_index_t cube_faces[MESH_CUBE_FACES] = {
+mesh_face_index_t cube_faces[CUBE_FACE_COUNT] = {
     // front
     { 0, 2, 1 },
     { 0, 3, 2 },
@@ -71,12 +68,10 @@ cube_face_index_t cube_faces[MESH_CUBE_FACES] = {
 
 mesh_t *mesh_create_cube(void) {
 	// Create a set of faces that correspond to a cube
-	mesh_t *mesh = mesh_new(MESH_CUBE_FACES);
-	if (!mesh) {
-		return NULL;
-	}
+	mesh_t *mesh = mesh_new(CUBE_FACE_COUNT);
+	if (!mesh) return NULL;
 	
-	for (int i = 0; i < MESH_CUBE_FACES; i++) {
+	for (int i = 0; i < CUBE_FACE_COUNT; i++) {
 		mesh_face_t *face = &mesh->faces[i];
 		face->a = cube_vertices[cube_faces[i].a];
 		face->b = cube_vertices[cube_faces[i].b];
@@ -124,14 +119,79 @@ mesh_t *mesh_create_diamond(int sides, float top, float bottom) {
 	return mesh;
 }
 
+#pragma mark - Iconsahedron
+// Icosahedron code from:
+// http://blog.andreaskahler.com/2009/06/creating-icosphere-mesh-in-code.html
+
+#define ICO_T (1.618034f)
+
+vec3_t icosahedron_vertices[12] = {
+	{ -1,  ICO_T, 0 },
+	{  1,  ICO_T, 0 },
+	{ -1, -ICO_T, 0 },
+	{  1, -ICO_T, 0 },
+	{  0, -1,  ICO_T},
+	{  0,  1,  ICO_T},
+	{  0, -1, -ICO_T},
+	{  0,  1, -ICO_T},
+	{  ICO_T, 0, -1 },
+	{  ICO_T, 0,  1 },
+	{ -ICO_T, 0, -1 },
+	{ -ICO_T, 0,  1 }
+};
+
+#define ICOSAHEDRON_FACE_COUNT (20)
+
+// Faces are counter-clockwise in this array
+mesh_face_index_t icosahedron_faces[ICOSAHEDRON_FACE_COUNT] = {
+	// 5 faces around point 0
+	{ 0,11, 5},
+	{ 0, 5, 1},
+	{ 0, 1, 7},
+	{ 0, 7,10},
+	{ 0,10,11},
+	
+	// 5 adjacent faces
+	{ 1, 5, 9},
+	{ 5,11, 4},
+	{11,10, 2},
+	{10, 7, 6},
+	{ 7, 1, 8},
+	
+	// 5 faces around point 3
+	{ 3, 9, 4},
+	{ 3, 4, 2},
+	{ 3, 2, 6},
+	{ 3, 6, 8},
+	{ 3, 8, 9},
+	
+	// 5 adjacent faces
+	{ 4, 9, 5},
+	{ 2, 4,11},
+	{ 6, 2,10},
+	{ 8, 6, 7},
+	{ 9, 8, 1}
+};
+
 mesh_t *mesh_create_icosahedron(void) {
-	mesh_t *mesh = mesh_new(4);
+	mesh_t *mesh = mesh_new(ICOSAHEDRON_FACE_COUNT);
 	if (!mesh) return NULL;
+	
+	for (int i = 0; i < ICOSAHEDRON_FACE_COUNT; i++) {
+		mesh_face_t *face = &mesh->faces[i];
+		// Swap b and c to make clockwise-direction faces
+		face->a = icosahedron_vertices[icosahedron_faces[i].a];
+		face->b = icosahedron_vertices[icosahedron_faces[i].c];
+		face->c = icosahedron_vertices[icosahedron_faces[i].b];
+	}
 	return mesh;
 }
 
-mesh_t *mesh_create_sphere(int sides) {
-	mesh_t *mesh = mesh_new(sides * 2);
+mesh_t *mesh_create_sphere(int subdivisions) {
+	mesh_t *mesh = mesh_create_icosahedron();
 	if (!mesh) return NULL;
+	
+	
+	
 	return mesh;
 }

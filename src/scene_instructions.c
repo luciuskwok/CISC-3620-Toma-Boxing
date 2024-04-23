@@ -18,37 +18,38 @@
 
 // Globals
 image_t *instr_track_image = NULL;
-mesh_t *diamond1 = NULL;
-mesh_t *cube2 = NULL;
+mesh_t *mesh1 = NULL;
+mesh_t *mesh2 = NULL;
 
 
 void instructions_init(void) {
 	instr_track_image = load_bmp_image("assets/track.bmp");
-	diamond1 = mesh_create_diamond(4, 1.0f, 1.0f);
-	cube2 = mesh_create_cube();
+	//mesh1 = mesh_create_diamond(4, 1.0f, 1.0f);
+	mesh1 = mesh_create_icosahedron();
+	mesh2 = mesh_create_cube();
 	
 }
 
 void instructions_start(void) {
-	add_mesh(diamond1);
-	add_mesh(cube2);
+	add_mesh(mesh1);
+	add_mesh(mesh2);
 	
 	const float rotationUnit = 1.0f * (float)M_PI / 180.0f;
 	
 	// Diamond
-	diamond1->position = vec3_make(2.5, 0, 0);
-	diamond1->linear_momentum = vec3_zero();
-	diamond1->rotation = vec3_zero();
-	diamond1->angular_momentum = vec3_make(0, rotationUnit, 0.125f * rotationUnit);
+	mesh1->position = vec3_make(2.5, 0, 0);
+	mesh1->linear_momentum = vec3_zero();
+	mesh1->rotation = vec3_zero();
+	mesh1->angular_momentum = vec3_make(0, rotationUnit, 0.125f * rotationUnit);
 
 	// Bouncing cube
-	cube2->position = vec3_make(-2.5, 0, 0);
-	cube2->linear_momentum = vec3_zero();
-	cube2->rotation = vec3_zero();
-	cube2->angular_momentum = vec3_make(0, -2 * rotationUnit, rotationUnit);
+	mesh2->position = vec3_make(-2.5, 0, 0);
+	mesh2->linear_momentum = vec3_zero();
+	mesh2->rotation = vec3_zero();
+	mesh2->angular_momentum = vec3_make(0, -2 * rotationUnit, rotationUnit);
 	
 	// Set translation momentum & gravity
-	cube2->gravity = true;
+	mesh2->gravity = true;
 }
 
 bool instructions_handle_keyboard(SDL_Event event) {
@@ -72,14 +73,14 @@ void instructions_update(double delta_time) {
 	uint32_t line_color = color_from_hsv(hue, 1.0, 1.0, 0.5);
 	uint32_t point_color = color_from_hsv((hue + 60) % 360, 1.0, 1.0, 0.5);
 	
-	diamond1->line_color = line_color;
-	cube2->line_color = line_color;
-	diamond1->point_color = point_color;
-	cube2->point_color = point_color;
+	mesh1->line_color = line_color;
+	mesh2->line_color = line_color;
+	mesh1->point_color = point_color;
+	mesh2->point_color = point_color;
 	
 	// Reset momentum when cube hits bottom
-	if (cube2->position.y < -1.0f) {
-		cube2->linear_momentum.y = 7.0f;
+	if (mesh2->position.y < -1.0f) {
+		mesh2->linear_momentum.y = 7.0f;
 	}
 }
 
