@@ -12,8 +12,9 @@
 #include "mesh.h"
 
 // Create various solids
-mesh_t *create_mesh_cube(void);
-mesh_t *create_mesh_diamond(int sides, float top, float bottom);
-mesh_t *create_mesh_sphere(int sides);
+mesh_t *mesh_create_cube(void);
+mesh_t *mesh_create_diamond(int sides, float top, float bottom);
+mesh_t *mesh_create_icosahedron(void);
+mesh_t *mesh_create_sphere(int sides);
 
 #endif /* MESH_CUBE_H */

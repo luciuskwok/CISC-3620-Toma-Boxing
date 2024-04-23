@@ -24,8 +24,8 @@ mesh_t *cube2 = NULL;
 
 void instructions_init(void) {
 	instr_track_image = load_bmp_image("assets/track.bmp");
-	diamond1 = create_mesh_diamond(4, 1.0f, 1.0f);
-	cube2 = create_mesh_cube();
+	diamond1 = mesh_create_diamond(4, 1.0f, 1.0f);
+	cube2 = mesh_create_cube();
 	
 }
 

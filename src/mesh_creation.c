@@ -69,7 +69,7 @@ cube_face_index_t cube_faces[MESH_CUBE_FACES] = {
     { 3, 7, 5 }
 };
 
-mesh_t *create_mesh_cube(void) {
+mesh_t *mesh_create_cube(void) {
 	// Create a set of faces that correspond to a cube
 	mesh_t *mesh = mesh_new(MESH_CUBE_FACES);
 	if (!mesh) {
@@ -95,7 +95,7 @@ vec2_t coordinates_for_side(int i, int n) {
 	return v;
 }
 
-mesh_t *create_mesh_diamond(int sides, float top, float bottom) {
+mesh_t *mesh_create_diamond(int sides, float top, float bottom) {
 	mesh_t *mesh = mesh_new(sides * 2);
 	if (!mesh) return NULL;
 
@@ -124,9 +124,13 @@ mesh_t *create_mesh_diamond(int sides, float top, float bottom) {
 	return mesh;
 }
 
-#pragma mark - Sphere
+mesh_t *mesh_create_icosahedron(void) {
+	mesh_t *mesh = mesh_new(4);
+	if (!mesh) return NULL;
+	return mesh;
+}
 
-mesh_t *create_mesh_sphere(int sides) {
+mesh_t *mesh_create_sphere(int sides) {
 	mesh_t *mesh = mesh_new(sides * 2);
 	if (!mesh) return NULL;
 	return mesh;
