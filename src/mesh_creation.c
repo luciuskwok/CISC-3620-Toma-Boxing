@@ -10,7 +10,9 @@
 #include "drawing.h"
 #include "matrix.h"
 #include "vector.h"
+
 #include <math.h>
+#include <stdlib.h>
 
 
 #pragma mark - Cube
@@ -122,7 +124,7 @@ mesh_t *mesh_create_diamond(int sides, float top, float bottom) {
 #pragma mark - Iconsahedron
 // Icosahedron code from:
 // http://blog.andreaskahler.com/2009/06/creating-icosphere-mesh-in-code.html
-
+// ICO_T = (1.0 + sqrt(5.0)) / 2.0
 #define ICO_T (1.618034f)
 
 vec3_t icosahedron_vertices[12] = {
@@ -187,11 +189,45 @@ mesh_t *mesh_create_icosahedron(void) {
 	return mesh;
 }
 
+vec3_t sphere_middle_point(vec3_t a, vec3_t b) {
+	// Gets the middle point between two points on a sphere, projected onto the unit sphere
+	vec3_t c;
+	c.x = (a.x + b.x) / 2.0f;
+	c.y = (a.y + b.y) / 2.0f;
+	c.z = (a.z + b.z) / 2.0f;
+	return c;
+}
+
 mesh_t *mesh_create_sphere(int subdivisions) {
 	mesh_t *mesh = mesh_create_icosahedron();
 	if (!mesh) return NULL;
 	
-	
+	for (int i = 0; i < subdivisions; i++) {
+		// Subdivide triangles
+		int n = mesh->face_count;
+		mesh_face_t *new_faces = malloc((size_t)n * 4 * sizeof(mesh_face_t));
+		if (!new_faces) return mesh;
+		
+		for (int j = 0; j < mesh->face_count; j++) {
+			mesh_face_t face = mesh->faces[j];
+			vec3_t a = face.a;
+			vec3_t b = face.b;
+			vec3_t c = face.c;
+			vec3_t d = sphere_middle_point(a, b);
+			vec3_t e = sphere_middle_point(b, c);
+			vec3_t f = sphere_middle_point(c, a);
+			
+			new_faces[j * 4 + 0] = mesh_face_make(a, d, f);
+			new_faces[j * 4 + 1] = mesh_face_make(b, e, d);
+			new_faces[j * 4 + 2] = mesh_face_make(c, f, e);
+			new_faces[j * 4 + 3] = mesh_face_make(d, e, f);
+		}
+		
+		// Replace old faces with new faces
+ 		free(mesh->faces);
+		mesh->face_count = n * 4;
+		mesh->faces = new_faces;
+	}
 	
 	return mesh;
 }

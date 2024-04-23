@@ -35,6 +35,7 @@ typedef struct {
 	double lifetime;
 } mesh_t;
 
+mesh_face_t mesh_face_make(vec3_t a, vec3_t b, vec3_t c);
 
 mesh_t *mesh_new(int face_count);
 void mesh_destroy(mesh_t *mesh);

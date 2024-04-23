@@ -19,6 +19,10 @@
 mesh_t *meshes[MESHES_MAX];
 int mesh_count = 0;
 
+mesh_face_t mesh_face_make(vec3_t a, vec3_t b, vec3_t c) {
+	mesh_face_t face = { a, b, c };
+	return face;
+}
 
 mesh_t *mesh_new(int face_count) {
 	mesh_t *mesh = malloc(sizeof(mesh_t));
