@@ -36,7 +36,7 @@ typedef struct {
 // Number of faces: 6 for each cube face * 2 for triangles per face
 #define CUBE_FACE_COUNT (6 * 2)
 
-vec3_t cube_vertices[8] = {
+const vec3_t cube_vertices[8] = {
     { -1, -1, -1 },
     { -1,  1, -1 },
     {  1,  1, -1 },
@@ -47,7 +47,7 @@ vec3_t cube_vertices[8] = {
     { -1, -1,  1 }
 };
 
-mesh_face_index_t cube_faces[CUBE_FACE_COUNT] = {
+const mesh_face_index_t cube_faces[CUBE_FACE_COUNT] = {
     // front
     { 0, 2, 1 },
     { 0, 3, 2 },
@@ -127,7 +127,7 @@ mesh_t *mesh_create_diamond(int sides, float top, float bottom) {
 // ICO_T = (1.0 + sqrt(5.0)) / 2.0
 #define ICO_T (1.618034f)
 
-vec3_t icosahedron_vertices[12] = {
+const vec3_t icosahedron_vertices[12] = {
 	{ -1,  ICO_T, 0 },
 	{  1,  ICO_T, 0 },
 	{ -1, -ICO_T, 0 },
@@ -145,7 +145,7 @@ vec3_t icosahedron_vertices[12] = {
 #define ICOSAHEDRON_FACE_COUNT (20)
 
 // Faces are counter-clockwise in this array
-mesh_face_index_t icosahedron_faces[ICOSAHEDRON_FACE_COUNT] = {
+const mesh_face_index_t icosahedron_faces[ICOSAHEDRON_FACE_COUNT] = {
 	// 5 faces around point 0
 	{ 0,11, 5},
 	{ 0, 5, 1},
@@ -175,16 +175,27 @@ mesh_face_index_t icosahedron_faces[ICOSAHEDRON_FACE_COUNT] = {
 	{ 9, 8, 1}
 };
 
+vec3_t project_on_unit_sphere(vec3_t a) {
+	float len = sqrtf(a.x * a.x + a.y * a.y + a.z * a.z);
+	vec3_t b = { a.x/len, a.y/len, a.z/len };
+	return b;
+}
+
 mesh_t *mesh_create_icosahedron(void) {
 	mesh_t *mesh = mesh_new(ICOSAHEDRON_FACE_COUNT);
 	if (!mesh) return NULL;
 	
+	const vec3_t *v = icosahedron_vertices;
+	const mesh_face_index_t *f = icosahedron_faces;
+	
 	for (int i = 0; i < ICOSAHEDRON_FACE_COUNT; i++) {
 		mesh_face_t *face = &mesh->faces[i];
+		
+		// Project onto unit sphere for consistent size
 		// Swap b and c to make clockwise-direction faces
-		face->a = icosahedron_vertices[icosahedron_faces[i].a];
-		face->b = icosahedron_vertices[icosahedron_faces[i].c];
-		face->c = icosahedron_vertices[icosahedron_faces[i].b];
+		face->a = project_on_unit_sphere(v[f[i].a]);
+		face->b = project_on_unit_sphere(v[f[i].c]);
+		face->c = project_on_unit_sphere(v[f[i].b]);
 	}
 	return mesh;
 }
@@ -213,9 +224,9 @@ mesh_t *mesh_create_sphere(int subdivisions) {
 			vec3_t a = face.a;
 			vec3_t b = face.b;
 			vec3_t c = face.c;
-			vec3_t d = sphere_middle_point(a, b);
-			vec3_t e = sphere_middle_point(b, c);
-			vec3_t f = sphere_middle_point(c, a);
+			vec3_t d = project_on_unit_sphere(sphere_middle_point(a, b));
+			vec3_t e = project_on_unit_sphere(sphere_middle_point(b, c));
+			vec3_t f = project_on_unit_sphere(sphere_middle_point(c, a));
 			
 			new_faces[j * 4 + 0] = mesh_face_make(a, d, f);
 			new_faces[j * 4 + 1] = mesh_face_make(b, e, d);
