@@ -37,22 +37,24 @@ void title_start(void) {
 		
 	// Create shapes that rotate
 	shape_t *s[6];
-	s[0] = create_polygon_shape(3);
-	s[0]->angular_momentum = 8.0f * rad_deg;
-	set_scale_and_translate(s[0], 0.125f, -2 * grid, -grid + ty);
-	s[0]->line_color = COLOR_LIME;
-	s[0]->fill_color = color_set_alpha(COLOR_LIME, 96);
-	title_shape = s[0];
-
-	s[1] = create_polygon_shape(4);
+	
+	// Tomato body
+	s[0] = create_polygon_shape(15);
+	s[0]->angular_momentum = 10.0f * rad_deg;
+	set_scale_and_translate(s[0], 1.0f/7.0f, -2 * grid, -grid + ty);
+	s[0]->line_color = COLOR_WHITE;
+	s[0]->fill_color = COLOR_TOMATO_RED;
+	
+	// Tomato leaves
+	s[1] = create_star_shape(5, 0.25f);
 	s[1]->angular_momentum = 10.0f * rad_deg;
-	set_scale_and_translate(s[1], 0.125f, 0, -grid + ty);
-	s[1]->line_color = COLOR_PINK;
-	s[1]->fill_color = color_set_alpha(COLOR_PINK, 96);
+	set_scale_and_translate(s[1], 1.0f/13.0f, -2 * grid, -grid + ty);
+	s[1]->line_color = 0;
+	s[1]->fill_color = COLOR_TOMATO_GREEN;
 
 	s[2] = create_star_shape(5, 0.5f);
 	s[2]->angular_momentum = 12.0f * rad_deg;
-	set_scale_and_translate(s[2], 0.125f, 2 * grid, -grid + ty);
+	set_scale_and_translate(s[2], 1.0f/10.0f, 2 * grid, -grid + ty);
 	s[2]->line_color = COLOR_RED;
 	s[2]->fill_color = color_set_alpha(COLOR_RED, 96);
 
@@ -92,24 +94,36 @@ bool title_handle_keyboard(SDL_Event event) {
 				set_scene_index(SCENE_INSTRUCTIONS);
 				return true;
 			case SDLK_q:
-				title_shape->rotation -= angle;
-				printf("Rotation: %1.0f\n", title_shape->rotation / rad_deg);
+				if (title_shape) {
+					title_shape->rotation -= angle;
+					printf("Rotation: %1.0f\n", title_shape->rotation / rad_deg);
+				}
 				return true;
 			case SDLK_e:
-				title_shape->rotation += angle;
-				printf("Rotation: %1.0f\n", title_shape->rotation / rad_deg);
+				if (title_shape) {
+					title_shape->rotation += angle;
+					printf("Rotation: %1.0f\n", title_shape->rotation / rad_deg);
+				}
 				return true;
 			case SDLK_w:
-				title_shape->position = vec2_add(title_shape->position, vec2_make(0.0f, -move));
+				if (title_shape) {
+					title_shape->position = vec2_add(title_shape->position, vec2_make(0.0f, -move));
+				}
 				return true;
 			case SDLK_s:
-				title_shape->position = vec2_add(title_shape->position, vec2_make(0.0f, move));
+				if (title_shape) {
+					title_shape->position = vec2_add(title_shape->position, vec2_make(0.0f, move));
+				}
 				return true;
 			case SDLK_a:
-				title_shape->position = vec2_add(title_shape->position, vec2_make(-move, 0.0f));
+				if (title_shape) {
+					title_shape->position = vec2_add(title_shape->position, vec2_make(-move, 0.0f));
+				}
 				return true;
 			case SDLK_d:
-				title_shape->position = vec2_add(title_shape->position, vec2_make(move, 0.0f));
+				if (title_shape) {
+					title_shape->position = vec2_add(title_shape->position, vec2_make(move, 0.0f));
+				}
 				return true;
 		}
 	}

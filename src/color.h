@@ -24,6 +24,11 @@
 #define COLOR_LIME 		(0xff50E599)
 #define COLOR_LIGHT_BLUE (0xffFF8888)
 
+#define COLOR_TOMATO_RED (0xff9885F6) 		/* #F68598 */
+#define COLOR_TOMATO_GREEN (0xff7FE8D7)		/* #D7E87F */
+
+/* Lime bkgnd color: #D1E779 */
+
 uint32_t blend_color(uint32_t x, uint32_t y);
 
 uint32_t color_from_hsv(double h, double s, double v, double a);
