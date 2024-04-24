@@ -48,8 +48,8 @@ shape_t *shape_new(int point_count) {
 	shape->is_closed = true;
 	
 	// Colors
-	shape->line_color = COLOR_WHITE;
-	shape->fill_color = COLOR_WHITE;
+	shape->line_color = COLOR_ABGR_WHITE;
+	shape->fill_color = COLOR_ABGR_WHITE;
 	
 	// Physics
 	shape->scale = vec2_identity();

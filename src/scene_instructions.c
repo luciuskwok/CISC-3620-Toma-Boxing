@@ -89,7 +89,7 @@ void instructions_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	set_fill_color(COLOR_BLACK);
+	set_fill_color(COLOR_ABGR_BLACK);
 	fill_screen();
 
 	// Draw 2 tracks
@@ -105,12 +105,16 @@ void instructions_render(void) {
 	draw_shapes();
 	draw_meshes();
 
+	// Colors
+	const uint32_t white = COLOR_ABGR_WHITE;
+	const uint32_t red = rgb_to_abgr(COLOR_RGB_RED);
+	
 	// Draw text
 	// "Instructions"
 	p.x = scr_w / 2;
 	p.y = 8;
 	move_to(p);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(white);
 	atari_draw_centered_text("Instructions", 2);
 	
 	// Body
@@ -119,47 +123,47 @@ void instructions_render(void) {
 	p.x = left_margin;
 	p.y += line_height * 4;
 	move_to(p);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(white);
 	atari_draw_text("Controls: ", 1);
 
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(COLOR_RED);
+	set_fill_color(red);
 	atari_draw_text("A ", 1);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(white);
 	atari_draw_text("Punch left", 1);
 	
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(COLOR_RED);
+	set_fill_color(red);
 	atari_draw_text("D ", 1);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(white);
 	atari_draw_text("Punch right", 1);
 	
 	p.y += line_height * 2;
 	move_to(p);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(white);
 	atari_draw_text("Volume:", 1);
 	
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(COLOR_RED);
+	set_fill_color(red);
 	atari_draw_text("< ", 1);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(white);
 	atari_draw_text("Lower volume", 1);
 	
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(COLOR_RED);
+	set_fill_color(red);
 	atari_draw_text("> ", 1);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(white);
 	atari_draw_text("Increase volume", 1);
 
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(COLOR_RED);
+	set_fill_color(red);
 	atari_draw_text("M ", 1);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(white);
 	atari_draw_text("Mute volume", 1);
 
 	p.x = scr_w / 2;

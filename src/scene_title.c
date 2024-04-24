@@ -20,6 +20,8 @@
 image_t *title_image = NULL;
 shape_t *title_shape = NULL;
 
+#define RAD_DEG ((float)M_PI / 180.0f)
+
 
 void title_init(void) {
 	title_image = load_bmp_image("assets/title.bmp");
@@ -30,55 +32,50 @@ void set_scale_and_translate(shape_t *shape, float scale, float tx, float ty) {
 	shape->position = vec2_make(tx, ty);
 }
 
+// Return type for create_tomato_shapes()
+typedef struct {
+	shape_t *body;
+	shape_t *top;
+} tomato_shapes_t;
+
+tomato_shapes_t create_tomato_shapes(vec2_t position, float scale, float speed) {
+	tomato_shapes_t t;
+	
+	// Tomato body
+	const float body_scale = 1.0f/7.0f * scale;
+	t.body = create_polygon_shape(15);
+	t.body->angular_momentum = speed * RAD_DEG;
+	t.body->scale = vec2_make(body_scale, body_scale);
+	t.body->position = position;
+	t.body->line_color = COLOR_ABGR_WHITE;
+	t.body->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_RED);
+	
+	// Tomato leaves
+	const float top_scale = 1.0f/13.0f * scale;
+	t.top = create_star_shape(5, 0.25f);
+	t.top->angular_momentum = speed * RAD_DEG;
+	t.top->scale = vec2_make(top_scale, top_scale);
+	t.top->position = position;
+	t.top->line_color = 0;
+	t.top->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_GREEN);
+	
+	return t;
+}
+
 void title_start(void) {
 	const float grid = 0.2f;
 	const float ty = -1.0f / 15.0f;
-	const float rad_deg = (float)M_PI / 180.0f;
 		
-	// Create shapes that rotate
-	shape_t *s[6];
+	// Create tomato shapes that rotate
+	tomato_shapes_t t;
 	
-	// Tomato body
-	s[0] = create_polygon_shape(15);
-	s[0]->angular_momentum = 10.0f * rad_deg;
-	set_scale_and_translate(s[0], 1.0f/7.0f, -2 * grid, -grid + ty);
-	s[0]->line_color = COLOR_WHITE;
-	s[0]->fill_color = COLOR_TOMATO_RED;
+	t = create_tomato_shapes(vec2_make(-2.5f * grid, 1.5f * grid + ty), 1.0f, 10.0f);
+	add_shape(t.body);
+	add_shape(t.top);
 	
-	// Tomato leaves
-	s[1] = create_star_shape(5, 0.25f);
-	s[1]->angular_momentum = 10.0f * rad_deg;
-	set_scale_and_translate(s[1], 1.0f/13.0f, -2 * grid, -grid + ty);
-	s[1]->line_color = 0;
-	s[1]->fill_color = COLOR_TOMATO_GREEN;
-
-	s[2] = create_star_shape(5, 0.5f);
-	s[2]->angular_momentum = 12.0f * rad_deg;
-	set_scale_and_translate(s[2], 1.0f/10.0f, 2 * grid, -grid + ty);
-	s[2]->line_color = COLOR_RED;
-	s[2]->fill_color = color_set_alpha(COLOR_RED, 96);
-
-	s[3] = create_polygon_shape(6);
-	s[3]->angular_momentum = 14.0f * rad_deg;
-	set_scale_and_translate(s[3], 0.125f, -2 * grid, grid + ty);
-	s[3]->line_color = COLOR_GREEN;
-	s[3]->fill_color = color_set_alpha(COLOR_GREEN, 96);
-
-	s[4] = create_star_shape(8, 0.25f);
-	s[4]->angular_momentum = 16.0f * rad_deg;
-	set_scale_and_translate(s[4], 0.125f, 0, grid + ty);
-	s[4]->line_color = COLOR_BLUE;
-	s[4]->fill_color = color_set_alpha(COLOR_BLUE, 96);
-
-	s[5] = create_star_shape(16, 0.75f);
-	s[5]->angular_momentum = 24.0f * rad_deg;
-	s[5]->line_color = COLOR_WHITE;
-	s[5]->fill_color = color_set_alpha(COLOR_WHITE, 96);
-	set_scale_and_translate(s[5], 0.125f, 2 * grid, grid + ty);
-
-	for (int i = 0; i < 6; i++) {
-		add_shape(s[i]);
-	}
+	t = create_tomato_shapes(vec2_make(-2.75f * grid, ty), 0.5f, 5.0f);
+	add_shape(t.body);
+	add_shape(t.top);
 
 }
 
@@ -139,35 +136,32 @@ void title_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	set_fill_color(COLOR_BLACK);
-	fill_screen();
-
 	// Draw image
 	p.x = scr_w/2 - title_image->w/2;
 	p.y = scr_h/2 - title_image->h/2;
 	move_to(p);
-	//draw_image(title_image);
+	draw_image(title_image);
 	
+	// Draw meshes and shapes
+	draw_meshes();
+	draw_shapes();
+
 	// Half-second flasher
 	double t = fmod(get_scene_lifetime(), 1.0);
 
 	// Draw text
-	p.x = scr_w / 2 - (20 * 8) / 2;
-	p.y = scr_h - 16;
+	p.x = scr_w / 2 - (12 * 8);
+	p.y = scr_h - 30;
 	move_to(p);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(COLOR_ABGR_WHITE);
 	atari_draw_text("Press ", 1);
-	set_fill_color((t >= 0.5)? COLOR_LIME : COLOR_PINK);
+	set_fill_color(rgb_to_abgr((t >= 0.5)? COLOR_RGB_LIME : COLOR_RGB_PINK));
 	atari_draw_text("Space ", 1);
-	set_fill_color(COLOR_WHITE);
+	set_fill_color(COLOR_ABGR_WHITE);
 	atari_draw_text("to Start", 1);
 
 	// Test font
 	// set_fill_color(0xFFCCFFCC);
 	// atari_draw_test_text();
-	
-	// Draw meshes and shapes
-	draw_meshes();
-	draw_shapes();
 }
 

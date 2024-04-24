@@ -72,6 +72,25 @@ void atari_draw_right_justified_text(const char* s, int scale) {
 	atari_draw_text(s, scale);
 }
 
+void atari_draw_shadowed_text(const char* s, int scale, uint32_t shadow_color) {
+	// Save old parameters
+	uint32_t fill = get_fill_color();
+	vec2_t cursor = get_cursor();
+	
+	// Draw shadow below
+	vec2_t shadow_position = { cursor.x + 1, cursor.y + 1 };
+	move_to(shadow_position);
+	set_fill_color(shadow_color);
+	atari_draw_text(s, scale);
+	
+	// Draw normal text on top
+	move_to(cursor);
+	set_fill_color(fill);
+	atari_draw_text(s, scale);
+}
+
+#pragma mark -
+
 void atari_draw_char(char c, int x, int y, int scale) {
 	const int num_chars = (int)atari_font_len / 8;
 

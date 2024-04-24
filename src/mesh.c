@@ -41,8 +41,8 @@ mesh_t *mesh_new(int face_count) {
 	mesh->faces = faces;
 	
 	// Colors
-	mesh->line_color = COLOR_WHITE;
-	mesh->point_color = COLOR_WHITE;
+	mesh->line_color = COLOR_ABGR_WHITE;
+	mesh->point_color = COLOR_ABGR_WHITE;
 	
 	// Physics
 	mesh->scale = vec3_identity();

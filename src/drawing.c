@@ -84,7 +84,7 @@ bool init_screen(int width, int height, int scale) {
 		fprintf(stderr, "malloc() failed!\n");
 		return false;
 	}
-	set_fill_color(COLOR_BLACK);
+	set_fill_color(COLOR_ABGR_BLACK);
 	fill_screen();
 	
 	// Set up the renderer

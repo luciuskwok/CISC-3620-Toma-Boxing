@@ -12,8 +12,9 @@ void atari_renderer_dispose(void);
 void atari_draw_text(const char* s, int scale);
 void atari_draw_centered_text(const char* s, int scale);
 void atari_draw_right_justified_text(const char* s, int scale);
-void atari_draw_char(char c, int x, int y, int scale);
+void atari_draw_shadowed_text(const char* s, int scale, uint32_t shadow_color);
 
+void atari_draw_char(char c, int x, int y, int scale);
 void atari_draw_test_text(void);
 
 #endif

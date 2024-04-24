@@ -28,7 +28,7 @@ void draw_progress_bar(void) {
 	r.x = (scr_w - r.w) / 2;
 	r.y = 0;
 
-	set_line_color(COLOR_WHITE);
+	set_line_color(COLOR_ABGR_WHITE);
 	stroke_rect(r);
 	
 	// Inset rect
@@ -37,7 +37,7 @@ void draw_progress_bar(void) {
 	r.x += 1;
 	r.y += 1;
 	r.w = (int)( round((double)r.w * ui_progress_value) );
-	set_fill_color(COLOR_LIGHT_BLUE);
+	set_fill_color(rgb_to_abgr(COLOR_RGB_LIGHT_BLUE));
 	fill_rect(r);
 }
 

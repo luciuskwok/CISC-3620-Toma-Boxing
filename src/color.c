@@ -105,3 +105,11 @@ uint32_t color_set_alpha(uint32_t c, uint8_t a) {
 	c = c |((uint32_t)a << 24);
 	return c;
 }
+
+uint32_t rgb_to_abgr(uint32_t x) {
+	// Convert color from RGB hex code to ABGR format
+	uint32_t r = (x & 0x00FF0000) >> 16;
+	uint32_t g = (x & 0x0000FF00);
+	uint32_t b = (x & 0x000000FF) << 16;
+	return 0xFF000000 | b | g | r;
+}
