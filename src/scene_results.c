@@ -101,11 +101,11 @@ void results_render(void) {
 	move_to(p);
 	atari_draw_right_justified_text("23456", 1);
 	
-	p.x = scr_w - 2;
-	p.y = scr_h - 12;
+	p.x = scr_w / 2;
+	p.y = scr_h - 16;
 	move_to(p);
 	set_fill_color(COLOR_ABGR_WHITE);
-	atari_draw_right_justified_text("Press Space to Return to Title", 1);
+	atari_draw_centered_text("Press Space to Return to Title", 1);
 	
 	// Draw meshes and shapes
 	draw_meshes();

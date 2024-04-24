@@ -165,7 +165,7 @@ void title_render(void) {
 	// Press Space to Start
 	const uint32_t shadow_color = COLOR_ABGR_BLACK;
 	p.x = scr_w / 2 - (10 * 8);
-	p.y = scr_h - 30;
+	p.y = scr_h - 28;
 	move_to(p);
 	set_fill_color(COLOR_ABGR_WHITE);
 	atari_draw_shadowed_text("Press ", 1, shadow_color);

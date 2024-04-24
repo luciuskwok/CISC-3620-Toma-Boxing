@@ -163,7 +163,7 @@ void instructions_render(void) {
 	atari_draw_text("Mute", 1);
 
 	p.x = scr_w / 2;
-	p.y = scr_h - 10;
+	p.y = scr_h - 16;
 	move_to(p);
 	atari_draw_centered_text("Press Space to Play", 1);
 }
