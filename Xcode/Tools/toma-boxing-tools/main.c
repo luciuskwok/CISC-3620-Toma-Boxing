@@ -19,7 +19,7 @@ void generate_default_atari_font_png(void) {
 
 void create_custom_font_data(void) {
 	const char *png = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/(Artwork)/custom_font.png";
-	const char *data = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/assets/font.data";
+	const char *data = "/Users/lucius/_allSync/Academics/2024.1 Spring Courses/CISC 3620 Graphics/Toma-Boxing/assets/custom_font";
 	convert_png_to_font_data(png, data);
 }
 

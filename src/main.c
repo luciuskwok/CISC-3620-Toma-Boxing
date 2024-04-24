@@ -116,19 +116,14 @@ void update_state(uint64_t delta_time) {
 	update_scene(x);
 }
 
-void render_volume_overlay(void) {
+void draw_volume_overlay(void) {
 	// Draw volume overlay in bottom left of screen
 	vec2_t p;
 	// int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 	
-	// Use 50% opaque black as overlay background
-	set_fill_color(0x88000000);
-	rectangle_t r = { 0, scr_h - 12, 4 * 8 + 4, 12 };
-	fill_rect(r);
-
 	// Draw text
-	set_fill_color(0xeeFFaaAA);
+	set_fill_color(rgb_to_abgr(COLOR_RGB_DARK_GRAY));
 	p.x = 2;
 	p.y = scr_h - 10;
 	move_to(p);
@@ -143,11 +138,11 @@ void render_volume_overlay(void) {
 }
 
 void run_render_pipeline(void) {
-	// Render scene
+	// Draw scene
 	draw_scene();
 
-	// Render overlays
-	render_volume_overlay();
+	// Draw overlays
+	draw_volume_overlay();
 	
 	render_to_screen();
 }

@@ -27,7 +27,6 @@
 		E07856652BBC84B300C31E16 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = E07856642BBC84B300C31E16 /* mesh.c */; };
 		E07856682BBCBF4700C31E16 /* shape.c in Sources */ = {isa = PBXBuildFile; fileRef = E07856672BBCBF4700C31E16 /* shape.c */; };
 		E07E0A592BB60BF800BD3D4E /* file_io.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A582BB60BF800BD3D4E /* file_io.c */; };
-		E07E0A5D2BB60DB200BD3D4E /* font.data in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A5C2BB60DAE00BD3D4E /* font.data */; };
 		E07E0A622BB6340F00BD3D4E /* scene_title.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A612BB6340F00BD3D4E /* scene_title.c */; };
 		E07E0A652BB6370700BD3D4E /* scene_instructions.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A642BB6370700BD3D4E /* scene_instructions.c */; };
 		E07E0A682BB6371B00BD3D4E /* scene_gameplay.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A672BB6371B00BD3D4E /* scene_gameplay.c */; };
@@ -35,6 +34,7 @@
 		E07E0A6E2BB63CD500BD3D4E /* scene_manager.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A6D2BB63CD500BD3D4E /* scene_manager.c */; };
 		E07E0A712BB67C3100BD3D4E /* ui_progress_bar.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A702BB67C3100BD3D4E /* ui_progress_bar.c */; };
 		E07E0A732BB68AEF00BD3D4E /* title.bmp in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A722BB68AE000BD3D4E /* title.bmp */; };
+		E08486112BD8B81600747F30 /* custom_font in Copy Assets */ = {isa = PBXBuildFile; fileRef = E08486102BD8B80400747F30 /* custom_font */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,7 +44,7 @@
 			dstPath = assets;
 			dstSubfolderSpec = 16;
 			files = (
-				E07E0A5D2BB60DB200BD3D4E /* font.data in Copy Assets */,
+				E08486112BD8B81600747F30 /* custom_font in Copy Assets */,
 				E07E0A732BB68AEF00BD3D4E /* title.bmp in Copy Assets */,
 				E07856622BBA23F500C31E16 /* track.bmp in Copy Assets */,
 				E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in Copy Assets */,
@@ -98,7 +98,6 @@
 		E07856672BBCBF4700C31E16 /* shape.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = shape.c; sourceTree = "<group>"; };
 		E07E0A572BB60BF800BD3D4E /* file_io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file_io.h; sourceTree = "<group>"; };
 		E07E0A582BB60BF800BD3D4E /* file_io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = file_io.c; sourceTree = "<group>"; };
-		E07E0A5C2BB60DAE00BD3D4E /* font.data */ = {isa = PBXFileReference; lastKnownFileType = file; path = font.data; sourceTree = "<group>"; };
 		E07E0A602BB6340F00BD3D4E /* scene_title.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scene_title.h; sourceTree = "<group>"; };
 		E07E0A612BB6340F00BD3D4E /* scene_title.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scene_title.c; sourceTree = "<group>"; };
 		E07E0A632BB6370700BD3D4E /* scene_instructions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scene_instructions.h; sourceTree = "<group>"; };
@@ -112,6 +111,7 @@
 		E07E0A6F2BB67C3100BD3D4E /* ui_progress_bar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ui_progress_bar.h; sourceTree = "<group>"; };
 		E07E0A702BB67C3100BD3D4E /* ui_progress_bar.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ui_progress_bar.c; sourceTree = "<group>"; };
 		E07E0A722BB68AE000BD3D4E /* title.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = title.bmp; sourceTree = "<group>"; };
+		E08486102BD8B80400747F30 /* custom_font */ = {isa = PBXFileReference; lastKnownFileType = file; path = custom_font; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,7 +174,7 @@
 		E00F80282BB1CD2E00D78335 /* assets */ = {
 			isa = PBXGroup;
 			children = (
-				E07E0A5C2BB60DAE00BD3D4E /* font.data */,
+				E08486102BD8B80400747F30 /* custom_font */,
 				E07E0A722BB68AE000BD3D4E /* title.bmp */,
 				E07856612BBA230100C31E16 /* track.bmp */,
 				E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */,

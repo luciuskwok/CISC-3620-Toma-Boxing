@@ -64,16 +64,27 @@ tomato_shapes_t create_tomato_shapes(vec2_t position, float scale, float speed) 
 
 void title_start(void) {
 	const float grid = 0.2f;
-	const float ty = -1.0f / 15.0f;
 		
 	// Create tomato shapes that rotate
 	tomato_shapes_t t;
 	
-	t = create_tomato_shapes(vec2_make(-2.5f * grid, 1.5f * grid + ty), 1.0f, 10.0f);
+	t = create_tomato_shapes(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f);
 	add_shape(t.body);
 	add_shape(t.top);
-	
-	t = create_tomato_shapes(vec2_make(-2.75f * grid, ty), 0.5f, 5.0f);
+
+	t = create_tomato_shapes(vec2_make(-2.875f * grid, 1.5f * grid), 1.0f, 10.0f);
+	add_shape(t.body);
+	add_shape(t.top);
+
+	t = create_tomato_shapes(vec2_make(0.25f * grid, -1.5f * grid), 0.67f, 15.0f);
+	add_shape(t.body);
+	add_shape(t.top);
+
+	t = create_tomato_shapes(vec2_make(0.5f * grid, 1.25f * grid), 0.75f, 8.0f);
+	add_shape(t.body);
+	add_shape(t.top);
+
+	t = create_tomato_shapes(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f);
 	add_shape(t.body);
 	add_shape(t.top);
 
@@ -150,15 +161,28 @@ void title_render(void) {
 	double t = fmod(get_scene_lifetime(), 1.0);
 
 	// Draw text
-	p.x = scr_w / 2 - (12 * 8);
+	
+	// Press Space to Start
+	const uint32_t shadow_color = COLOR_ABGR_BLACK;
+	p.x = scr_w / 2 - (10 * 8);
 	p.y = scr_h - 30;
 	move_to(p);
 	set_fill_color(COLOR_ABGR_WHITE);
-	atari_draw_text("Press ", 1);
+	atari_draw_shadowed_text("Press ", 1, shadow_color);
 	set_fill_color(rgb_to_abgr((t >= 0.5)? COLOR_RGB_LIME : COLOR_RGB_PINK));
-	atari_draw_text("Space ", 1);
+	atari_draw_shadowed_text("Space ", 1, shadow_color);
 	set_fill_color(COLOR_ABGR_WHITE);
-	atari_draw_text("to Start", 1);
+	atari_draw_shadowed_text("to Start", 1, shadow_color);
+	
+	// Copyright
+	char s[255];
+	sprintf(s, " 2024 Lucius898");
+	s[0] = 0x06;
+	p.x = scr_w / 2;
+	p.y = scr_h - 10;
+	move_to(p);
+	set_fill_color(rgb_to_abgr(COLOR_RGB_DARK_GREEN));
+	atari_draw_centered_text(s, 1);
 
 	// Test font
 	// set_fill_color(0xFFCCFFCC);

@@ -15,7 +15,7 @@ size_t atari_font_len = 0;
 
 bool atari_text_init(void) {
 	// Load Atari font from file
-	FILE *file = fopen("assets/font.data", "rb");
+	FILE *file = fopen("assets/custom_font", "rb");
 	if (!file) {
 		fprintf(stderr, "Unable to open font file!\n");
 		return false;
