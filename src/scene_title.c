@@ -169,20 +169,10 @@ void title_render(void) {
 	move_to(p);
 	set_fill_color(COLOR_ABGR_WHITE);
 	atari_draw_shadowed_text("Press ", 1, shadow_color);
-	set_fill_color(rgb_to_abgr((t >= 0.5)? COLOR_RGB_LIME : COLOR_RGB_PINK));
+	set_fill_color(rgb_to_abgr((t >= 0.5)? COLOR_RGB_LIME : COLOR_RGB_DARK_RED));
 	atari_draw_shadowed_text("Space ", 1, shadow_color);
 	set_fill_color(COLOR_ABGR_WHITE);
 	atari_draw_shadowed_text("to Start", 1, shadow_color);
-	
-	// Copyright
-	char s[255];
-	sprintf(s, " 2024 Lucius898");
-	s[0] = 0x06;
-	p.x = scr_w / 2;
-	p.y = scr_h - 10;
-	move_to(p);
-	set_fill_color(rgb_to_abgr(COLOR_RGB_DARK_GREEN));
-	atari_draw_centered_text(s, 1);
 
 	// Test font
 	// set_fill_color(0xFFCCFFCC);

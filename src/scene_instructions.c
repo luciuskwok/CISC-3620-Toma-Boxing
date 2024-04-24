@@ -17,13 +17,11 @@
 
 
 // Globals
-image_t *instr_track_image = NULL;
 mesh_t *mesh1 = NULL;
 mesh_t *mesh2 = NULL;
 
 
 void instructions_init(void) {
-	instr_track_image = load_bmp_image("assets/track.bmp");
 	//mesh1 = mesh_create_diamond(4, 1.0f, 1.0f);
 	mesh1 = mesh_create_sphere(1);
 	mesh2 = mesh_create_cube();
@@ -92,15 +90,6 @@ void instructions_render(void) {
 	set_fill_color(COLOR_ABGR_BLACK);
 	fill_screen();
 
-	// Draw 2 tracks
-	p.x = scr_w / 4 - instr_track_image->w / 2;
-	p.y = scr_h - instr_track_image->h;
-	move_to(p);
-//	draw_image(instr_track_image);
-	p.x = scr_w * 3 / 4 - instr_track_image->w / 2;
-	move_to(p);
-//	draw_image(instr_track_image);
-
 	// Draw meshes and shapes
 	draw_shapes();
 	draw_meshes();
@@ -118,10 +107,17 @@ void instructions_render(void) {
 	atari_draw_centered_text("Instructions", 2);
 	
 	// Body
+	p.x = scr_w / 2;
+	p.y = 32;
+	move_to(p);
+	set_fill_color(white);
+	atari_draw_centered_text("Punch tomatoes to the beat!", 1);
+
+	// Controls
 	const int line_height = 12;
 	int left_margin = scr_w / 4 + 16;
 	p.x = left_margin;
-	p.y += line_height * 4;
+	p.y += line_height * 2;
 	move_to(p);
 	set_fill_color(white);
 	atari_draw_text("Controls: ", 1);
@@ -150,21 +146,21 @@ void instructions_render(void) {
 	set_fill_color(red);
 	atari_draw_text("< ", 1);
 	set_fill_color(white);
-	atari_draw_text("Lower volume", 1);
+	atari_draw_text("Quieter", 1);
 	
 	p.y += line_height;
 	move_to(p);
 	set_fill_color(red);
 	atari_draw_text("> ", 1);
 	set_fill_color(white);
-	atari_draw_text("Increase volume", 1);
+	atari_draw_text("Louder", 1);
 
 	p.y += line_height;
 	move_to(p);
 	set_fill_color(red);
 	atari_draw_text("M ", 1);
 	set_fill_color(white);
-	atari_draw_text("Mute volume", 1);
+	atari_draw_text("Mute", 1);
 
 	p.x = scr_w / 2;
 	p.y = scr_h - 10;

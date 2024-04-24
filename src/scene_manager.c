@@ -6,6 +6,7 @@
 //
 
 #include "scene_manager.h"
+#include "audio_player.h"
 #include "mesh.h"
 #include "shape.h"
 
@@ -22,7 +23,10 @@ SCENE_INDEX get_scene_index(void) {
 void set_scene_index(SCENE_INDEX x) {
 	remove_all_meshes();
 	remove_all_shapes();
-
+	
+	// Stop audio player
+	stop_music();
+	
 	scene_index = x;
 	switch (scene_index) {
 		case SCENE_TITLE:

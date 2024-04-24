@@ -28,6 +28,7 @@
 #define COLOR_RGB_TOMATO_RED (0xF68598)
 #define COLOR_RGB_TOMATO_GREEN (0xD7E87F)
 #define COLOR_RGB_DARK_GREEN (0x65A97C)
+#define COLOR_RGB_DARK_RED (0xff5260)
 
 /* More colors
 	Light pink bkgnd:	#FAE4E2
