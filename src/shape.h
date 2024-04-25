@@ -19,6 +19,7 @@ typedef struct {
 	vec2_t *points;
 	vec2_t *projected_points;
 	bool is_closed;
+	bool is_visible;
 	
 	// Colors
 	uint32_t line_color;
@@ -46,7 +47,9 @@ void shape_draw(shape_t *shape);
 
 
 // Global list of 2d shapes
+void init_shape_list(void);
 void add_shape(shape_t *shape);
+void remove_shape(shape_t *shape);
 void remove_all_shapes(void);
 int get_shape_count(void);
 shape_t **get_shapes(void);

@@ -17,6 +17,7 @@ double scene_lifetime = 0.0;
 
 void init_scene_manager(void) {
 	init_mesh_list();
+	init_shape_list();
 	title_init();
 	instructions_init();
 	gameplay_init();

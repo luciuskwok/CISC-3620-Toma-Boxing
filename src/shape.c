@@ -8,6 +8,7 @@
 #include "shape.h"
 #include "color.h"
 #include "drawing.h"
+#include "array_list.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -17,9 +18,7 @@
 
 
 // Global list of 3D meshes
-#define SHAPES_MAX (256)
-shape_t *shapes[SHAPES_MAX];
-int shape_count = 0;
+array_list_t *shape_list;
 
 
 shape_t *shape_new(int point_count) {
@@ -46,6 +45,7 @@ shape_t *shape_new(int point_count) {
 	shape->points = points;
 	shape->projected_points = proj_pts;
 	shape->is_closed = true;
+	shape->is_visible = true;
 	
 	// Colors
 	shape->line_color = COLOR_ABGR_WHITE;
@@ -134,10 +134,11 @@ void shape_update(shape_t *shape, double delta_time) {
 }
 
 void shape_draw(shape_t *shape) {
+	if (!shape->is_visible) return;
+	if (shape->point_count < 2) return;
+
 	set_line_color(shape->line_color);
 	set_fill_color(shape->fill_color);
-	
-	if (shape->point_count < 2) return;
 	
 	// Calculate transform matrix
 	mat3_t tr = mat3_get_identity();
@@ -173,24 +174,46 @@ void shape_draw(shape_t *shape) {
 #pragma mark -
 
 // Global list of 2d shapes
+void init_shape_list(void) {
+	shape_list = make_array_list(16);
+}
+
 void add_shape(shape_t *shape) {
-	if (shape_count < SHAPES_MAX) {
-		shapes[shape_count] = shape;
-		shape_count++;
-	} else {
-		fprintf(stderr, "Shapes array is full!\n");
+	if (shape_list) {
+		bool success = array_list_add(shape_list, shape);
+		if (!success) {
+			fprintf(stderr, "Unable to add mesh!\n");
+		}
+	}
+}
+
+void remove_shape(shape_t *shape) {
+	if (shape_list) {
+		bool success = array_list_remove(shape_list, shape);
+		if (!success) {
+			fprintf(stderr, "Unable to remove mesh!\n");
+		}
 	}
 }
 
 void remove_all_shapes(void) {
-	shape_count = 0;
+	// Caller is responsible for freeing memory
+	if (shape_list) {
+		array_list_remove_all(shape_list);
+	}
 }
 
 int get_shape_count(void) {
-	return shape_count;
+	if (shape_list) {
+		return array_list_length(shape_list);
+	}
+	return 0;
 }
 
 shape_t **get_shapes(void) {
-	return shapes;
+	if (shape_list) {
+		return (shape_t **)array_list_array(shape_list);
+	}
+	return NULL;
 }
 

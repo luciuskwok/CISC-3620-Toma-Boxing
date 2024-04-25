@@ -17,7 +17,7 @@
 #define FILE_SIGNATURE (0x494E4458) /* Spells out 'INDX' */
 
 
-image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int w, int h, bool flipped, uint32_t *palette, uint32_t palette_len) {
+image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int bpp, int w, int h, bool flipped, uint32_t *palette, uint32_t palette_len) {
 	// Create image_t
 	image_t *img = (image_t *)malloc(sizeof(image_t));
 	if (!img) {
@@ -39,7 +39,19 @@ image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int w, int h, bo
 		for (int x = 0; x < w; x++) {
 			int i = x + y * w;
 			int j = x + ( flipped? (h - y - 1) : y) * w;
-			pixels[j] = palette[bitmap[i]];
+			int pi = 0;
+			
+			if (bpp == 8) {
+				pi = bitmap[i];
+			} else if (bpp == 4) {
+				pi = bitmap[i/2];
+				if (i % 2 == 1) {
+					pi = pi & 0x0F;
+				} else {
+					pi = (pi % 0xF0) >> 4;
+				}
+			}
+			pixels[j] = palette[pi];
 		}
 	}
 
@@ -77,18 +89,18 @@ image_t *load_bmp_image(const char *file) {
 	}
 	fseek(in, 8, SEEK_CUR); // Skip FileSize, Reserved1, Reserved2
 	uint32_t BitmapOffset = read_uint32(in);
-	uint32_t BitmapHeader_Size = read_uint32(in);
-	if (BitmapHeader_Size != 40) { // Should be 40 for BMP Version 3
-		fprintf(stderr, "Unexpected BitmapHeader_Size for BMP Version 3 format.\n");
+	uint32_t BH_Size = read_uint32(in);
+	if (BH_Size != 40) { // Should be 40 for BMP Version 3
+		fprintf(stderr, "Unexpected BH_Size for BMP Version 3 format.\n");
 		return NULL;
 	}
-	int32_t BitmapHeader_Width = read_int32(in);
-	int32_t BitmapHeader_Height = read_int32(in);
-	uint16_t BitmapHeader_Planes = read_uint16(in);
-	uint16_t BitmapHeader_BitsPerPixel = read_uint16(in);
-	uint32_t BitmapHeader_Compression = read_uint32(in);
-	uint32_t BitmapHeader_SizeOfBitmap = read_uint32(in);
-	fseek(in, 16, SEEK_CUR); // Skip HorzResolution, VertResolution, BitmapHeader_ColorsUsed, ColorsImportant
+	int32_t BH_Width = read_int32(in);
+	int32_t BH_Height = read_int32(in);
+	uint16_t BH_Planes = read_uint16(in);
+	uint16_t BH_BitsPerPixel = read_uint16(in);
+	uint32_t BH_Compression = read_uint32(in);
+	uint32_t BH_SizeOfBitmap = read_uint32(in);
+	fseek(in, 16, SEEK_CUR); // Skip HorzResolution, VertResolution, BH_ColorsUsed, ColorsImportant
 	
 	// Debugging: write out header data
 	/*
@@ -102,16 +114,18 @@ image_t *load_bmp_image(const char *file) {
 	printf("  SizeOfBitmap = %d\n", BitmapHeader_SizeOfBitmap);
 	printf("  ColorsUsed = %d\n", BitmapHeader_ColorsUsed); */
 
-	if (BitmapHeader_Planes != 1 || BitmapHeader_BitsPerPixel != 8 || BitmapHeader_Compression != 0) {
+	if (BH_Planes != 1 ||
+		(BH_BitsPerPixel != 8 && BH_BitsPerPixel != 4) ||
+		BH_Compression != 0) {
 		fprintf(stderr, "Unsupported BMP bitmap format.\n");
 		return NULL;
 	}
 	
 	// Flipped coordinates
 	bool flipped = true;
-	if (BitmapHeader_Height < 0) {
+	if (BH_Height < 0) {
 		flipped = false;
-		BitmapHeader_Height = -BitmapHeader_Height;
+		BH_Height = -BH_Height;
 	}
 	
 	// Palette
@@ -133,18 +147,19 @@ image_t *load_bmp_image(const char *file) {
 	convert_bmp_palette_to_abgr(palette, palette_len);
 	
 	// Read bitmap data
-	uint8_t *bitmap = malloc(BitmapHeader_SizeOfBitmap);
+	uint8_t *bitmap = malloc(BH_SizeOfBitmap);
 	if (!bitmap) {
 		fprintf(stderr, "Unable to allocate pixels!\n");
 		return NULL;
 	}
-	if (!read_buffer(in, bitmap, BitmapHeader_SizeOfBitmap)) {
+	if (!read_buffer(in, bitmap, BH_SizeOfBitmap)) {
 		fprintf(stderr, "Unable to read pixels!\n");
 		return NULL;
 	}
 	
 	// Create image_t
-	image_t *img = create_abgr_image_from_indexed_bitmap(bitmap, BitmapHeader_Width, BitmapHeader_Height, flipped, palette, palette_len);
+	image_t *img = create_abgr_image_from_indexed_bitmap(bitmap, BH_BitsPerPixel,
+		BH_Width, BH_Height, flipped, palette, palette_len);
 
 	// Clean up
 	fclose(in);

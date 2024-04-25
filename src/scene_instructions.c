@@ -19,13 +19,14 @@
 // Globals
 mesh_t *mesh1 = NULL;
 mesh_t *mesh2 = NULL;
+image_t *instructions_image = NULL;
 
 
 void instructions_init(void) {
 	//mesh1 = mesh_create_diamond(4, 1.0f, 1.0f);
 	mesh1 = mesh_create_sphere(1);
 	mesh2 = mesh_create_cube();
-	
+	instructions_image = load_bmp_image("assets/instructions_background.bmp");
 }
 
 void instructions_start(void) {
@@ -90,12 +91,18 @@ void instructions_render(void) {
 	set_fill_color(COLOR_ABGR_BLACK);
 	fill_screen();
 
+	// Draw image
+	p.x = scr_w/2 - instructions_image->w/2;
+	p.y = scr_h/2 - instructions_image->h/2;
+	move_to(p);
+	draw_image(instructions_image);
+
 	// Draw meshes and shapes
 	draw_shapes();
 	draw_meshes();
 
 	// Colors
-	const uint32_t white = COLOR_ABGR_WHITE;
+	const uint32_t text = COLOR_ABGR_BLACK;
 	const uint32_t red = rgb_to_abgr(COLOR_RGB_RED);
 	
 	// Draw text
@@ -103,14 +110,14 @@ void instructions_render(void) {
 	p.x = scr_w / 2;
 	p.y = 8;
 	move_to(p);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_centered_text("Instructions", 2);
 	
 	// Body
 	p.x = scr_w / 2;
 	p.y = 32;
 	move_to(p);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_centered_text("Punch tomatoes to the beat!", 1);
 
 	// Controls
@@ -119,47 +126,47 @@ void instructions_render(void) {
 	p.x = left_margin;
 	p.y += line_height * 2;
 	move_to(p);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_text("Controls: ", 1);
 
 	p.y += line_height;
 	move_to(p);
 	set_fill_color(red);
 	atari_draw_text("A ", 1);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_text("Punch left", 1);
 	
 	p.y += line_height;
 	move_to(p);
 	set_fill_color(red);
 	atari_draw_text("D ", 1);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_text("Punch right", 1);
 	
 	p.y += line_height * 2;
 	move_to(p);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_text("Volume:", 1);
 	
 	p.y += line_height;
 	move_to(p);
 	set_fill_color(red);
 	atari_draw_text("< ", 1);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_text("Quieter", 1);
 	
 	p.y += line_height;
 	move_to(p);
 	set_fill_color(red);
 	atari_draw_text("> ", 1);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_text("Louder", 1);
 
 	p.y += line_height;
 	move_to(p);
 	set_fill_color(red);
 	atari_draw_text("M ", 1);
-	set_fill_color(white);
+	set_fill_color(text);
 	atari_draw_text("Mute", 1);
 
 	p.x = scr_w / 2;

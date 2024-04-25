@@ -20,6 +20,7 @@ typedef struct {
 typedef struct {
 	int face_count;
 	mesh_face_t *faces;
+	bool is_visible;
 	
 	// Colors
 	uint32_t line_color;

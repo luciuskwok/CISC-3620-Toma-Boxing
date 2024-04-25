@@ -24,7 +24,7 @@ shape_t *title_shape = NULL;
 
 
 void title_init(void) {
-	title_image = load_bmp_image("assets/title.bmp");
+	title_image = load_bmp_image("assets/title_background.bmp");
 }
 
 void set_scale_and_translate(shape_t *shape, float scale, float tx, float ty) {

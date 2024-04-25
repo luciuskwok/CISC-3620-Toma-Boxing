@@ -38,6 +38,7 @@ mesh_t *mesh_new(int face_count) {
 	
 	mesh->face_count = face_count;
 	mesh->faces = faces;
+	mesh->is_visible = true;
 	
 	// Colors
 	mesh->line_color = COLOR_ABGR_WHITE;
@@ -73,6 +74,8 @@ void mesh_update(mesh_t *mesh, double delta_time) {
 }
 
 void mesh_draw(mesh_t *mesh) {
+	if (!mesh->is_visible) return;
+	
 	vec3_t a3, b3, c3;
 	vec2_t a2, b2, c2;
 	vec3_t vab, vac, normal, camera_ray;

@@ -166,13 +166,7 @@ void run_game_loop(void) {
 	uint64_t elapsed_time = update_end_time - last_update_time;
 	if (elapsed_time < FRAME_TARGET_TIME) {
 		uint32_t delay_time = (uint32_t)(FRAME_TARGET_TIME - elapsed_time);
-		// uint64_t delay_start = SDL_GetTicks64();
 		SDL_Delay(delay_time);
-		// uint64_t delay_end = SDL_GetTicks64();
-//		uint32_t actual_delay_time = (uint32_t)(delay_end - delay_start);
-//		if (actual_delay_time > delay_time * 2) {
-//			fprintf(stdout, "Delay time: Request=%u, Actual=%ums.\n", delay_time, actual_delay_time);
-//		}
 	} else if (elapsed_time > 250){
 		fprintf(stdout, "Lag frame elapsed time: %llums.\n", elapsed_time);
 	}
