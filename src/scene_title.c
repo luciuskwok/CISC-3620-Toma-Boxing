@@ -69,24 +69,24 @@ void title_start(void) {
 	tomato_shapes_t t;
 	
 	t = create_tomato_shapes(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f);
-	add_shape(t.body);
-	add_shape(t.top);
+	shape_list_add(t.body);
+	shape_list_add(t.top);
 
 	t = create_tomato_shapes(vec2_make(-2.875f * grid, 1.5f * grid), 1.0f, 10.0f);
-	add_shape(t.body);
-	add_shape(t.top);
+	shape_list_add(t.body);
+	shape_list_add(t.top);
 
 	t = create_tomato_shapes(vec2_make(0.25f * grid, -1.5f * grid), 0.67f, 15.0f);
-	add_shape(t.body);
-	add_shape(t.top);
+	shape_list_add(t.body);
+	shape_list_add(t.top);
 
 	t = create_tomato_shapes(vec2_make(0.5f * grid, 1.25f * grid), 0.75f, 8.0f);
-	add_shape(t.body);
-	add_shape(t.top);
+	shape_list_add(t.body);
+	shape_list_add(t.top);
 
 	t = create_tomato_shapes(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f);
-	add_shape(t.body);
-	add_shape(t.top);
+	shape_list_add(t.body);
+	shape_list_add(t.top);
 
 }
 

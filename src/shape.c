@@ -174,11 +174,11 @@ void shape_draw(shape_t *shape) {
 #pragma mark -
 
 // Global list of 2d shapes
-void init_shape_list(void) {
+void shape_list_init(void) {
 	shape_list = make_array_list(16);
 }
 
-void add_shape(shape_t *shape) {
+void shape_list_add(shape_t *shape) {
 	if (shape_list) {
 		bool success = array_list_add(shape_list, shape);
 		if (!success) {
@@ -187,7 +187,7 @@ void add_shape(shape_t *shape) {
 	}
 }
 
-void remove_shape(shape_t *shape) {
+void shape_list_remove(shape_t *shape) {
 	if (shape_list) {
 		bool success = array_list_remove(shape_list, shape);
 		if (!success) {
@@ -196,21 +196,21 @@ void remove_shape(shape_t *shape) {
 	}
 }
 
-void remove_all_shapes(void) {
+void shape_list_remove_all(void) {
 	// Caller is responsible for freeing memory
 	if (shape_list) {
 		array_list_remove_all(shape_list);
 	}
 }
 
-int get_shape_count(void) {
+int shape_list_count(void) {
 	if (shape_list) {
 		return array_list_length(shape_list);
 	}
 	return 0;
 }
 
-shape_t **get_shapes(void) {
+shape_t **shape_list_array(void) {
 	if (shape_list) {
 		return (shape_t **)array_list_array(shape_list);
 	}

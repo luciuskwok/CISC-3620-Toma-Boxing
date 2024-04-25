@@ -47,12 +47,12 @@ void shape_draw(shape_t *shape);
 
 
 // Global list of 2d shapes
-void init_shape_list(void);
-void add_shape(shape_t *shape);
-void remove_shape(shape_t *shape);
-void remove_all_shapes(void);
-int get_shape_count(void);
-shape_t **get_shapes(void);
+void shape_list_init(void);
+void shape_list_add(shape_t *shape);
+void shape_list_remove(shape_t *shape);
+void shape_list_remove_all(void);
+int shape_list_count(void);
+shape_t **shape_list_array(void);
 
 
 #endif /* shape_h */

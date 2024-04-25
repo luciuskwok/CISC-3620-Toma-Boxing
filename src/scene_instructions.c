@@ -30,8 +30,8 @@ void instructions_init(void) {
 }
 
 void instructions_start(void) {
-	add_mesh(mesh1);
-	add_mesh(mesh2);
+	mesh_list_add(mesh1);
+	mesh_list_add(mesh2);
 	
 	const float rotationUnit = 1.0f * (float)M_PI / 180.0f;
 	

@@ -139,11 +139,11 @@ void mesh_reset_momentum(mesh_t *mesh) {
 
 #pragma mark - Global list of meshes
 
-void init_mesh_list(void) {
+void mesh_list_init(void) {
 	mesh_list = make_array_list(16);
 }
 
-void add_mesh(mesh_t *mesh) {
+void mesh_list_add(mesh_t *mesh) {
 	if (mesh_list) {
 		bool success = array_list_add(mesh_list, mesh);
 		if (!success) {
@@ -152,7 +152,7 @@ void add_mesh(mesh_t *mesh) {
 	}
 }
 
-void remove_mesh(mesh_t *mesh) {
+void mesh_list_remove(mesh_t *mesh) {
 	if (mesh_list) {
 		bool success = array_list_remove(mesh_list, mesh);
 		if (!success) {
@@ -161,21 +161,21 @@ void remove_mesh(mesh_t *mesh) {
 	}
 }
 
-void remove_all_meshes(void) {
+void mesh_list_remove_all(void) {
 	// Caller is responsible for freeing memory
 	if (mesh_list) {
 		array_list_remove_all(mesh_list);
 	}
 }
 
-int get_mesh_count(void) {
+int mesh_list_count(void) {
 	if (mesh_list) {
 		return array_list_length(mesh_list);
 	}
 	return 0;
 }
 
-mesh_t **get_meshes(void) {
+mesh_t **mesh_list_array(void) {
 	if (mesh_list) {
 		return (mesh_t **)array_list_array(mesh_list);
 	}

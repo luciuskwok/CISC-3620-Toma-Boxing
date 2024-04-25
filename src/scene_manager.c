@@ -16,8 +16,8 @@ SCENE_INDEX scene_index = SCENE_STARTUP;
 double scene_lifetime = 0.0;
 
 void init_scene_manager(void) {
-	init_mesh_list();
-	init_shape_list();
+	mesh_list_init();
+	shape_list_init();
 	title_init();
 	instructions_init();
 	gameplay_init();
@@ -29,8 +29,8 @@ SCENE_INDEX get_scene_index(void) {
 }
 
 void set_scene_index(SCENE_INDEX x) {
-	remove_all_meshes();
-	remove_all_shapes();
+	mesh_list_remove_all();
+	shape_list_remove_all();
 	
 	// Stop audio player
 	stop_music();
@@ -74,13 +74,13 @@ void update_scene(double delta_time) {
 			break;
 	}
 	
-	mesh_t **meshes = get_meshes();
-	for (int i = 0; i < get_mesh_count(); i++) {
+	mesh_t **meshes = mesh_list_array();
+	for (int i = 0; i < mesh_list_count(); i++) {
 		mesh_update(meshes[i], delta_time);
 	}
 	
-	shape_t **shapes = get_shapes();
-	for (int i = 0; i < get_shape_count(); i++) {
+	shape_t **shapes = shape_list_array();
+	for (int i = 0; i < shape_list_count(); i++) {
 		shape_update(shapes[i], delta_time);
 	}
 
@@ -107,15 +107,15 @@ void draw_scene(void) {
 }
 
 void draw_meshes(void) {
-	mesh_t **meshes = get_meshes();
-	for (int i = 0; i < get_mesh_count(); i++) {
+	mesh_t **meshes = mesh_list_array();
+	for (int i = 0; i < mesh_list_count(); i++) {
 		mesh_draw(meshes[i]);
 	}
 }
 
 void draw_shapes(void) {
-	shape_t **shapes = get_shapes();
-	for (int i = 0; i < get_shape_count(); i++) {
+	shape_t **shapes = shape_list_array();
+	for (int i = 0; i < shape_list_count(); i++) {
 		shape_draw(shapes[i]);
 	}
 }
