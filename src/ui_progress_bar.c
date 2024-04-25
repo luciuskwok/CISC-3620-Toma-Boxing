@@ -24,20 +24,22 @@ void draw_progress_bar(void) {
 	//int scr_h = get_screen_height();
 	rectangle_t r;
 	r.w = scr_w * 75 / 100;
-	r.h = 10;
+	r.h = 6;
 	r.x = (scr_w - r.w) / 2;
-	r.y = 0;
+	r.y = 4;
 
-	set_line_color(COLOR_ABGR_WHITE);
-	stroke_rect(r);
+	// Border
+	set_fill_color(color_set_alpha(COLOR_ABGR_BLACK, 127));
+	fill_rect(r);
 	
-	// Inset rect
-	r.w -= 2;
-	r.h -= 2;
-	r.x += 1;
-	r.y += 1;
+	// Empty area
+	r = inset_rect(r, 2, 2);
+	set_fill_color(color_set_alpha(COLOR_ABGR_WHITE, 127));
+	fill_rect(r);
+	
+	// Filled area
 	r.w = (int)( round((double)r.w * ui_progress_value) );
-	set_fill_color(rgb_to_abgr(COLOR_RGB_LIGHT_BLUE));
+	set_fill_color(rgb_to_abgr(COLOR_RGB_RED));
 	fill_rect(r);
 }
 

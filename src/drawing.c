@@ -32,7 +32,15 @@ vec2_t cursor;
 mat3_t view_transform_2d;
 mat4_t camera_transform_3d;
 
+#pragma mark - Rectangle
 
+rectangle_t inset_rect(rectangle_t r, int x, int y) {
+	r.w -= x * 2;
+	r.h -= y * 2;
+	r.x += x;
+	r.y += y;
+	return r;
+}
 
 #pragma mark - SDL Interface
 

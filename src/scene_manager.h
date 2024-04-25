@@ -22,6 +22,8 @@ typedef enum {
 	SCENE_RESULTS		/**< Results scene */
 } SCENE_INDEX;
 
+void init_scene_manager(void);
+
 SCENE_INDEX get_scene_index(void);
 void set_scene_index(SCENE_INDEX x);
 

@@ -50,7 +50,9 @@ void mesh_add_roll(mesh_t *mesh, float x);
 void mesh_add_yaw(mesh_t *mesh, float x);
 
 // Global list of meshes
+void init_mesh_list(void);
 void add_mesh(mesh_t *mesh);
+void remove_mesh(mesh_t *mesh);
 void remove_all_meshes(void);
 int get_mesh_count(void);
 mesh_t **get_meshes(void);

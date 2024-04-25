@@ -8,6 +8,7 @@
 #include "mesh.h"
 #include "color.h"
 #include "drawing.h"
+#include "array_list.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -15,9 +16,7 @@
 
 
 // Global list of 3D meshes
-#define MESHES_MAX (256)
-mesh_t *meshes[MESHES_MAX];
-int mesh_count = 0;
+array_list_t *mesh_list = NULL;
 
 mesh_face_t mesh_face_make(vec3_t a, vec3_t b, vec3_t c) {
 	mesh_face_t face = { a, b, c };
@@ -137,24 +136,45 @@ void mesh_reset_momentum(mesh_t *mesh) {
 
 #pragma mark - Global list of meshes
 
+void init_mesh_list(void) {
+	mesh_list = make_array_list(16);
+}
+
 void add_mesh(mesh_t *mesh) {
-	if (mesh_count < MESHES_MAX) {
-		meshes[mesh_count] = mesh;
-		mesh_count++;
-	} else {
-		fprintf(stderr, "Meshes array is full!\n");
+	if (mesh_list) {
+		bool success = array_list_add(mesh_list, mesh);
+		if (!success) {
+			fprintf(stderr, "Unable to add mesh!\n");
+		}
+	}
+}
+
+void remove_mesh(mesh_t *mesh) {
+	if (mesh_list) {
+		bool success = array_list_remove(mesh_list, mesh);
+		if (!success) {
+			fprintf(stderr, "Unable to remove mesh!\n");
+		}
 	}
 }
 
 void remove_all_meshes(void) {
 	// Caller is responsible for freeing memory
-	mesh_count = 0;
+	if (mesh_list) {
+		array_list_remove_all(mesh_list);
+	}
 }
 
 int get_mesh_count(void) {
-	return mesh_count;
+	if (mesh_list) {
+		return array_list_length(mesh_list);
+	}
+	return 0;
 }
 
 mesh_t **get_meshes(void) {
-	return meshes;
+	if (mesh_list) {
+		return (mesh_t **)array_list_array(mesh_list);
+	}
+	return NULL;
 }

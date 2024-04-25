@@ -187,10 +187,7 @@ int main(int argc, const char * argv[]) {
 	if (!atari_text_init()) return 0;
 
 	// Init all scenes
-	title_init();
-	instructions_init();
-	gameplay_init();
-	results_init();
+	init_scene_manager();
 	
 	set_scene_index(SCENE_TITLE);
 	last_update_time = SDL_GetTicks64();

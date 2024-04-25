@@ -15,6 +15,13 @@
 SCENE_INDEX scene_index = SCENE_STARTUP;
 double scene_lifetime = 0.0;
 
+void init_scene_manager(void) {
+	init_mesh_list();
+	title_init();
+	instructions_init();
+	gameplay_init();
+	results_init();
+}
 
 SCENE_INDEX get_scene_index(void) {
 	return scene_index;
