@@ -91,6 +91,11 @@ void gameplay_update(double delta_time) {
 			sequencer_update(last_music_position, position);
 			last_music_position = position;
 		}
+	} else {
+		// Advance to results scene if song has played through
+		if (last_music_position > 0.0) {
+			set_scene_index(SCENE_RESULTS);
+		}
 	}
 	set_progress_value(fraction);
 }

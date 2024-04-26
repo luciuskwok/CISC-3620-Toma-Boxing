@@ -103,7 +103,8 @@ void instructions_render(void) {
 	draw_meshes();
 
 	// Colors
-	const uint32_t text = COLOR_ABGR_BLACK;
+	const uint32_t text1_color = COLOR_ABGR_BLACK;
+	const uint32_t text2_color = rgb_to_abgr(COLOR_RGB_GRAY_20);
 	const uint32_t red = rgb_to_abgr(COLOR_RGB_RED);
 	
 	// Draw text
@@ -111,14 +112,14 @@ void instructions_render(void) {
 	p.x = scr_w / 2;
 	p.y = 8;
 	move_to(p);
-	set_fill_color_abgr(text);
+	set_fill_color_abgr(text1_color);
 	atari_draw_centered_text("Instructions", 2);
 	
 	// Body
 	p.x = scr_w / 2;
 	p.y = 32;
 	move_to(p);
-	set_fill_color_abgr(text);
+	set_fill_color_abgr(text1_color);
 	atari_draw_centered_text("Punch tomatoes to the beat!", 1);
 
 	// Controls
@@ -127,13 +128,16 @@ void instructions_render(void) {
 	p.x = left_margin;
 	p.y += line_height * 2;
 	move_to(p);
-	set_fill_color_abgr(text);
 	set_key_text_color(red);
+	set_fill_color_abgr(text1_color);
 	draw_key_text_line(NULL, "Controls:");
+	set_fill_color_abgr(text2_color);
 	draw_key_text_line("A", "punch left");
 	draw_key_text_line("D", "punch right");
 	draw_key_text_line(NULL, NULL);
+	set_fill_color_abgr(text1_color);
 	draw_key_text_line(NULL, "Music:");
+	set_fill_color_abgr(text2_color);
 	draw_key_text_line("<", "softer");
 	draw_key_text_line(">", "louder");
 	draw_key_text_line("M", "mute");
@@ -141,6 +145,7 @@ void instructions_render(void) {
 	p.x = scr_w / 2;
 	p.y = scr_h - 16;
 	move_to(p);
+	set_fill_color_abgr(text1_color);
 	atari_draw_centered_text("Press Space to Play", 1);
 }
 
