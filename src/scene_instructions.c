@@ -122,53 +122,21 @@ void instructions_render(void) {
 	atari_draw_centered_text("Punch tomatoes to the beat!", 1);
 
 	// Controls
-	const int line_height = 12;
-	int left_margin = scr_w / 4 + 16;
+	const int line_height = 10;
+	int left_margin = scr_w / 2 - 50;
 	p.x = left_margin;
 	p.y += line_height * 2;
 	move_to(p);
 	set_fill_color_abgr(text);
-	atari_draw_text("Controls: ", 1);
-
-	p.y += line_height;
-	move_to(p);
-	set_fill_color_abgr(red);
-	atari_draw_text("A ", 1);
-	set_fill_color_abgr(text);
-	atari_draw_text("Punch left", 1);
-	
-	p.y += line_height;
-	move_to(p);
-	set_fill_color_abgr(red);
-	atari_draw_text("D ", 1);
-	set_fill_color_abgr(text);
-	atari_draw_text("Punch right", 1);
-	
-	p.y += line_height * 2;
-	move_to(p);
-	set_fill_color_abgr(text);
-	atari_draw_text("Volume:", 1);
-	
-	p.y += line_height;
-	move_to(p);
-	set_fill_color_abgr(red);
-	atari_draw_text("< ", 1);
-	set_fill_color_abgr(text);
-	atari_draw_text("Quieter", 1);
-	
-	p.y += line_height;
-	move_to(p);
-	set_fill_color_abgr(red);
-	atari_draw_text("> ", 1);
-	set_fill_color_abgr(text);
-	atari_draw_text("Louder", 1);
-
-	p.y += line_height;
-	move_to(p);
-	set_fill_color_abgr(red);
-	atari_draw_text("M ", 1);
-	set_fill_color_abgr(text);
-	atari_draw_text("Mute", 1);
+	set_key_text_color(red);
+	draw_key_text_line(NULL, "Controls:");
+	draw_key_text_line("A", "punch left");
+	draw_key_text_line("D", "punch right");
+	draw_key_text_line(NULL, NULL);
+	draw_key_text_line(NULL, "Music:");
+	draw_key_text_line("<", "softer");
+	draw_key_text_line(">", "louder");
+	draw_key_text_line("M", "mute");
 
 	p.x = scr_w / 2;
 	p.y = scr_h - 16;

@@ -56,7 +56,7 @@ void title_init(void) {
 	title_image = load_bmp_image("assets/title_background.bmp");
 	
 	// Create tomato shapes that rotate
-	tomato_list = make_array_list(16);
+	tomato_list = array_list_make(16);
 	const float grid = 0.2f;
 		
 	tomato_shapes_t t;

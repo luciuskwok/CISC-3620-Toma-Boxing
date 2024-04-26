@@ -2,6 +2,7 @@
 
 #include "atari_text.h"
 #include "drawing.h"
+#include "color.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,6 +12,7 @@
 // Globals
 uint8_t *atari_font = NULL;
 size_t atari_font_len = 0;
+uint32_t key_text_color = COLOR_ABGR_BLACK;
 
 
 bool atari_text_init(void) {
@@ -87,6 +89,34 @@ void atari_draw_shadowed_text(const char* s, int scale, uint32_t shadow_color) {
 	move_to(cursor);
 	set_fill_color_abgr(fill);
 	atari_draw_text(s, scale);
+}
+
+void draw_key_text_line(const char *key, const char *text) {
+	const int line_height = 10;
+	const uint32_t text_color = get_fill_color();
+	
+	vec2_t p = get_cursor();
+	if (key) {
+		set_fill_color_abgr(key_text_color);
+		atari_draw_text(key, 1);
+	}
+	if (key && text) {
+		// Half space
+		vec2_t q = get_cursor();
+		q.x += 4;
+		move_to(q);
+	}
+	if (text) {
+		set_fill_color_abgr(text_color);
+		atari_draw_text(text, 1);
+	}
+	
+	p.y += line_height;
+	move_to(p);
+}
+
+void set_key_text_color(uint32_t c) {
+	key_text_color = c;
 }
 
 #pragma mark -

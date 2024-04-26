@@ -48,6 +48,7 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 				// Punch right
 				return true;
 			case SDLK_ESCAPE:
+			case SDLK_p:
 				// Pause game
 				set_scene_paused(!paused);
 				pause_music(!paused);
@@ -110,7 +111,7 @@ void gameplay_render(void) {
 	draw_progress_bar();
 	
 	// Draw remaining time text
-	set_fill_color_abgr(color_set_alpha(COLOR_ABGR_WHITE, 127));
+	set_fill_color_rgba(COLOR_RGB_WHITE, 127);
 	if (time_remaining >= 0.0) {
 		int seconds = (int)ceil(time_remaining);
 		int minutes = seconds / 60;
@@ -124,8 +125,6 @@ void gameplay_render(void) {
 	}
 
 	// Draw text
-	set_fill_color_abgr(COLOR_ABGR_WHITE);
-
 	p.x = scr_w / 2 - 21 * 4;
 	p.y = 12;
 	move_to(p);
@@ -150,6 +149,36 @@ void gameplay_render(void) {
 	
 	// Draw pause menu
 	if (get_scene_paused()) {
-		// TODO
+		
+		rectangle_t text_rect;
+		text_rect.w = 15 * 8;
+		text_rect.h = 9 * 10;
+		text_rect.x = scr_w/2 - 15 * 4;
+		text_rect.y = scr_h/2 - 4 * 9;
+		vec2_t text_origin = vec2_make(text_rect.x, text_rect.y);
+		text_rect = inset_rect(text_rect, -4, -4);
+		
+		// Draw box
+		set_fill_color_rgba(COLOR_RGB_BLACK, 192);
+		fill_rect(text_rect);
+		set_line_color_rgba(COLOR_RGB_WHITE, 192);
+		stroke_rect(text_rect);
+		
+		// Draw text
+		move_to(text_origin);
+		set_fill_color_rgba(COLOR_RGB_WHITE, 255);
+		draw_key_text_line(NULL, "Pause Menu");
+		set_key_text_color(rgba_to_abgr(COLOR_RGB_RED, 255));
+		set_fill_color_rgba(COLOR_RGB_GRAY_80, 255);
+		draw_key_text_line("Esc", "unpause");
+		draw_key_text_line("R", "restart song");
+		draw_key_text_line("Q", "quit to title");
+		draw_key_text_line(NULL, NULL);
+		set_fill_color_rgba(COLOR_RGB_WHITE, 255);
+		draw_key_text_line(NULL, "Music");
+		set_fill_color_rgba(COLOR_RGB_GRAY_80, 255);
+		draw_key_text_line("<", "softer");
+		draw_key_text_line(">", "louder");
+		draw_key_text_line("M", "mute");
 	}
 }

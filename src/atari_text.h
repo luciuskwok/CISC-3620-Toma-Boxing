@@ -14,6 +14,9 @@ void atari_draw_centered_text(const char* s, int scale);
 void atari_draw_right_justified_text(const char* s, int scale);
 void atari_draw_shadowed_text(const char* s, int scale, uint32_t shadow_color);
 
+void draw_key_text_line(const char *key, const char *text);
+void set_key_text_color(uint32_t c);
+
 void atari_draw_char(char c, int x, int y, int scale);
 void atari_draw_test_text(void);
 

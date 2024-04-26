@@ -8,7 +8,7 @@
 #include "array_list.h"
 #include <stdlib.h>
 
-array_list_t *make_array_list(int initial_capacity) {
+array_list_t *array_list_make(int initial_capacity) {
 	array_list_t *a = malloc(sizeof(array_list_t));
 	if (!a) return NULL;
 	
@@ -24,7 +24,7 @@ array_list_t *make_array_list(int initial_capacity) {
 	return a;
 }
 
-void destroy_array_list(array_list_t *a) {
+void array_list_destroy(array_list_t *a) {
 	free(a->array);
 	free(a);
 }

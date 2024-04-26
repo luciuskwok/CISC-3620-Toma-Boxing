@@ -21,8 +21,8 @@ bool is_scene_paused = false;
 
 void init_scene_manager(void) {
 	// Create array lists
-	shape_list = make_array_list(16);
-	mesh_list = make_array_list(16);
+	shape_list = array_list_make(16);
+	mesh_list = array_list_make(16);
 	if (!shape_list || !mesh_list) {
 		fprintf(stderr, "Could not increase size of array_list.\n");
 	}
