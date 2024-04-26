@@ -50,12 +50,4 @@ void mesh_add_pitch(mesh_t *mesh, float x);
 void mesh_add_roll(mesh_t *mesh, float x);
 void mesh_add_yaw(mesh_t *mesh, float x);
 
-// Global list of meshes
-void mesh_list_init(void);
-void mesh_list_add(mesh_t *mesh);
-void mesh_list_remove(mesh_t *mesh);
-void mesh_list_remove_all(void);
-int mesh_list_count(void);
-mesh_t **mesh_list_array(void);
-
 #endif /* mesh_h */

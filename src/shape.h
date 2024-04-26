@@ -45,14 +45,4 @@ shape_t *create_star_shape(int points, float indent);
 void shape_update(shape_t *shape, double delta_time);
 void shape_draw(shape_t *shape);
 
-
-// Global list of 2d shapes
-void shape_list_init(void);
-void shape_list_add(shape_t *shape);
-void shape_list_remove(shape_t *shape);
-void shape_list_remove_all(void);
-int shape_list_count(void);
-shape_t **shape_list_array(void);
-
-
 #endif /* shape_h */

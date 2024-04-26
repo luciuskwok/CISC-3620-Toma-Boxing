@@ -16,11 +16,6 @@
 #include <math.h>
 
 
-
-// Global list of 3D meshes
-array_list_t *shape_list;
-
-
 shape_t *shape_new(int point_count) {
 	shape_t *shape = malloc(sizeof(shape_t));
 	if (!shape) {
@@ -169,51 +164,5 @@ void shape_draw(shape_t *shape) {
 			line_to(pp[0]);
 		}
 	}
-}
-
-#pragma mark -
-
-// Global list of 2d shapes
-void shape_list_init(void) {
-	shape_list = make_array_list(16);
-}
-
-void shape_list_add(shape_t *shape) {
-	if (shape_list) {
-		bool success = array_list_add(shape_list, shape);
-		if (!success) {
-			fprintf(stderr, "Unable to add mesh!\n");
-		}
-	}
-}
-
-void shape_list_remove(shape_t *shape) {
-	if (shape_list) {
-		bool success = array_list_remove(shape_list, shape);
-		if (!success) {
-			fprintf(stderr, "Unable to remove mesh!\n");
-		}
-	}
-}
-
-void shape_list_remove_all(void) {
-	// Caller is responsible for freeing memory
-	if (shape_list) {
-		array_list_remove_all(shape_list);
-	}
-}
-
-int shape_list_count(void) {
-	if (shape_list) {
-		return array_list_length(shape_list);
-	}
-	return 0;
-}
-
-shape_t **shape_list_array(void) {
-	if (shape_list) {
-		return (shape_t **)array_list_array(shape_list);
-	}
-	return NULL;
 }
 

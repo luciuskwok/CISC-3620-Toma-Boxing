@@ -11,26 +11,16 @@
 #include "drawing.h"
 #include "image.h"
 #include "scene_manager.h"
-
+#include "array_list.h"
 #include "mesh.h"
 #include "shape.h"
 
 
 // Globals
 image_t *title_image = NULL;
-shape_t *title_shape = NULL;
+array_list_t *tomato_list = NULL;
 
 #define RAD_DEG ((float)M_PI / 180.0f)
-
-
-void title_init(void) {
-	title_image = load_bmp_image("assets/title_background.bmp");
-}
-
-void set_scale_and_translate(shape_t *shape, float scale, float tx, float ty) {
-	shape->scale = vec2_make(scale, scale);
-	shape->position = vec2_make(tx, ty);
-}
 
 // Return type for create_tomato_shapes()
 typedef struct {
@@ -62,76 +52,50 @@ tomato_shapes_t create_tomato_shapes(vec2_t position, float scale, float speed) 
 	return t;
 }
 
-void title_start(void) {
+void title_init(void) {
+	title_image = load_bmp_image("assets/title_background.bmp");
+	
+	// Create tomato shapes that rotate
+	tomato_list = make_array_list(16);
 	const float grid = 0.2f;
 		
-	// Create tomato shapes that rotate
 	tomato_shapes_t t;
 	
 	t = create_tomato_shapes(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f);
-	shape_list_add(t.body);
-	shape_list_add(t.top);
+	array_list_add(tomato_list, t.body);
+	array_list_add(tomato_list, t.top);
 
 	t = create_tomato_shapes(vec2_make(-2.875f * grid, 1.5f * grid), 1.0f, 10.0f);
-	shape_list_add(t.body);
-	shape_list_add(t.top);
+	array_list_add(tomato_list, t.body);
+	array_list_add(tomato_list, t.top);
 
 	t = create_tomato_shapes(vec2_make(0.25f * grid, -1.5f * grid), 0.67f, 15.0f);
-	shape_list_add(t.body);
-	shape_list_add(t.top);
+	array_list_add(tomato_list, t.body);
+	array_list_add(tomato_list, t.top);
 
 	t = create_tomato_shapes(vec2_make(0.5f * grid, 1.25f * grid), 0.75f, 8.0f);
-	shape_list_add(t.body);
-	shape_list_add(t.top);
+	array_list_add(tomato_list, t.body);
+	array_list_add(tomato_list, t.top);
 
 	t = create_tomato_shapes(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f);
-	shape_list_add(t.body);
-	shape_list_add(t.top);
+	array_list_add(tomato_list, t.body);
+	array_list_add(tomato_list, t.top);
+}
 
+void title_start(void) {
+	shape_t **s = (shape_t **)array_list_array(tomato_list);
+	int n = array_list_length(tomato_list);
+	for (int i=0; i<n; i++) {
+		scene_add_shape(s[i]);
+	}
 }
 
 bool title_handle_keyboard(SDL_Event event) {
-	const float rad_deg = (float)M_PI / 180.0f;
-	const float angle = 5.0f * rad_deg;
-	const float move = 1.0f / 32.0f;
-	
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
 			case SDLK_SPACE:
 				// Go to instructions scene
 				set_scene_index(SCENE_INSTRUCTIONS);
-				return true;
-			case SDLK_q:
-				if (title_shape) {
-					title_shape->rotation -= angle;
-					printf("Rotation: %1.0f\n", title_shape->rotation / rad_deg);
-				}
-				return true;
-			case SDLK_e:
-				if (title_shape) {
-					title_shape->rotation += angle;
-					printf("Rotation: %1.0f\n", title_shape->rotation / rad_deg);
-				}
-				return true;
-			case SDLK_w:
-				if (title_shape) {
-					title_shape->position = vec2_add(title_shape->position, vec2_make(0.0f, -move));
-				}
-				return true;
-			case SDLK_s:
-				if (title_shape) {
-					title_shape->position = vec2_add(title_shape->position, vec2_make(0.0f, move));
-				}
-				return true;
-			case SDLK_a:
-				if (title_shape) {
-					title_shape->position = vec2_add(title_shape->position, vec2_make(-move, 0.0f));
-				}
-				return true;
-			case SDLK_d:
-				if (title_shape) {
-					title_shape->position = vec2_add(title_shape->position, vec2_make(move, 0.0f));
-				}
 				return true;
 		}
 	}

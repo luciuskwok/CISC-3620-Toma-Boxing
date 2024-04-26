@@ -7,21 +7,44 @@
 
 #include "scene_manager.h"
 #include "audio_player.h"
-#include "mesh.h"
-#include "shape.h"
+#include "array_list.h"
+#include <stdio.h>
 
 
 // Globals
 SCENE_INDEX scene_index = SCENE_STARTUP;
 double scene_lifetime = 0.0;
+array_list_t *shape_list;
+array_list_t *mesh_list;
+
 
 void init_scene_manager(void) {
-	mesh_list_init();
-	shape_list_init();
+	// Create array lists
+	shape_list = make_array_list(16);
+	mesh_list = make_array_list(16);
+	if (!shape_list || !mesh_list) {
+		fprintf(stderr, "Could not increase size of array_list.\n");
+	}
+	
+	// Init all scenes
 	title_init();
 	instructions_init();
 	gameplay_init();
 	results_init();
+}
+
+void scene_add_mesh(mesh_t *mesh) {
+	bool success = array_list_add(mesh_list, mesh);
+	if (!success) {
+		fprintf(stderr, "Could not add to mesh_list.\n");
+	}
+}
+
+void scene_add_shape(shape_t *shape) {
+	bool success = array_list_add(shape_list, shape);
+	if (!success) {
+		fprintf(stderr, "Could not add to shape_list.\n");
+	}
 }
 
 SCENE_INDEX get_scene_index(void) {
@@ -29,8 +52,8 @@ SCENE_INDEX get_scene_index(void) {
 }
 
 void set_scene_index(SCENE_INDEX x) {
-	mesh_list_remove_all();
-	shape_list_remove_all();
+	array_list_remove_all(shape_list);
+	array_list_remove_all(mesh_list);
 	
 	// Stop audio player
 	stop_music();
@@ -74,14 +97,16 @@ void update_scene(double delta_time) {
 			break;
 	}
 	
-	mesh_t **meshes = mesh_list_array();
-	for (int i = 0; i < mesh_list_count(); i++) {
-		mesh_update(meshes[i], delta_time);
+	mesh_t **m = (mesh_t **)array_list_array(mesh_list);
+	int mn = array_list_length(mesh_list);
+	for (int i = 0; i < mn; i++) {
+		mesh_update(m[i], delta_time);
 	}
 	
-	shape_t **shapes = shape_list_array();
-	for (int i = 0; i < shape_list_count(); i++) {
-		shape_update(shapes[i], delta_time);
+	shape_t **s = (shape_t **)array_list_array(shape_list);
+	int sn = array_list_length(shape_list);
+	for (int i = 0; i < sn; i++) {
+		shape_update(s[i], delta_time);
 	}
 
 	scene_lifetime += delta_time;
@@ -107,16 +132,18 @@ void draw_scene(void) {
 }
 
 void draw_meshes(void) {
-	mesh_t **meshes = mesh_list_array();
-	for (int i = 0; i < mesh_list_count(); i++) {
-		mesh_draw(meshes[i]);
+	mesh_t **m = (mesh_t **)array_list_array(mesh_list);
+	int mn = array_list_length(mesh_list);
+	for (int i = 0; i < mn; i++) {
+		mesh_draw(m[i]);
 	}
 }
 
 void draw_shapes(void) {
-	shape_t **shapes = shape_list_array();
-	for (int i = 0; i < shape_list_count(); i++) {
-		shape_draw(shapes[i]);
+	shape_t **s = (shape_t **)array_list_array(shape_list);
+	int sn = array_list_length(shape_list);
+	for (int i = 0; i < sn; i++) {
+		shape_draw(s[i]);
 	}
 }
 

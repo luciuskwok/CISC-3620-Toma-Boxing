@@ -15,9 +15,6 @@
 #include <stdio.h>
 
 
-// Global list of 3D meshes
-array_list_t *mesh_list = NULL;
-
 mesh_face_t mesh_face_make(vec3_t a, vec3_t b, vec3_t c) {
 	mesh_face_t face = { a, b, c };
 	return face;
@@ -135,49 +132,3 @@ void mesh_reset_momentum(mesh_t *mesh) {
 	mesh->angular_momentum = vec3_zero();
 }
 
-
-
-#pragma mark - Global list of meshes
-
-void mesh_list_init(void) {
-	mesh_list = make_array_list(16);
-}
-
-void mesh_list_add(mesh_t *mesh) {
-	if (mesh_list) {
-		bool success = array_list_add(mesh_list, mesh);
-		if (!success) {
-			fprintf(stderr, "Unable to add mesh!\n");
-		}
-	}
-}
-
-void mesh_list_remove(mesh_t *mesh) {
-	if (mesh_list) {
-		bool success = array_list_remove(mesh_list, mesh);
-		if (!success) {
-			fprintf(stderr, "Unable to remove mesh!\n");
-		}
-	}
-}
-
-void mesh_list_remove_all(void) {
-	// Caller is responsible for freeing memory
-	if (mesh_list) {
-		array_list_remove_all(mesh_list);
-	}
-}
-
-int mesh_list_count(void) {
-	if (mesh_list) {
-		return array_list_length(mesh_list);
-	}
-	return 0;
-}
-
-mesh_t **mesh_list_array(void) {
-	if (mesh_list) {
-		return (mesh_t **)array_list_array(mesh_list);
-	}
-	return NULL;
-}

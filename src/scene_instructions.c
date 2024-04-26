@@ -30,9 +30,6 @@ void instructions_init(void) {
 }
 
 void instructions_start(void) {
-	mesh_list_add(mesh1);
-	mesh_list_add(mesh2);
-	
 	const float rotationUnit = 1.0f * (float)M_PI / 180.0f;
 	
 	// Diamond
@@ -49,6 +46,10 @@ void instructions_start(void) {
 	
 	// Set translation momentum & gravity
 	mesh2->gravity = true;
+	
+	// Add meshes to scene
+	scene_add_mesh(mesh1);
+	scene_add_mesh(mesh2);
 }
 
 bool instructions_handle_keyboard(SDL_Event event) {

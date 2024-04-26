@@ -12,6 +12,8 @@
 #include "scene_instructions.h"
 #include "scene_gameplay.h"
 #include "scene_results.h"
+#include "mesh.h"
+#include "shape.h"
 
 // Game Scenes
 typedef enum {
@@ -23,6 +25,8 @@ typedef enum {
 } SCENE_INDEX;
 
 void init_scene_manager(void);
+void scene_add_mesh(mesh_t *mesh);
+void scene_add_shape(shape_t *shape);
 
 SCENE_INDEX get_scene_index(void);
 void set_scene_index(SCENE_INDEX x);
