@@ -113,3 +113,12 @@ uint32_t rgb_to_abgr(uint32_t x) {
 	uint32_t b = (x & 0x000000FF) << 16;
 	return 0xFF000000 | b | g | r;
 }
+
+uint32_t rgba_to_abgr(uint32_t hex, uint32_t alpha) {
+	// Convert color from RGB hex code to ABGR format
+	uint32_t r = (hex & 0x00FF0000) >> 16;
+	uint32_t g = (hex & 0x0000FF00);
+	uint32_t b = (hex & 0x000000FF) << 16;
+	uint32_t a = alpha << 24;
+	return a | b | g | r;
+}

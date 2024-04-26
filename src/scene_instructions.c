@@ -89,7 +89,7 @@ void instructions_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	set_fill_color(COLOR_ABGR_BLACK);
+	set_fill_color_abgr(COLOR_ABGR_BLACK);
 	fill_screen();
 
 	// Draw image
@@ -111,14 +111,14 @@ void instructions_render(void) {
 	p.x = scr_w / 2;
 	p.y = 8;
 	move_to(p);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_centered_text("Instructions", 2);
 	
 	// Body
 	p.x = scr_w / 2;
 	p.y = 32;
 	move_to(p);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_centered_text("Punch tomatoes to the beat!", 1);
 
 	// Controls
@@ -127,47 +127,47 @@ void instructions_render(void) {
 	p.x = left_margin;
 	p.y += line_height * 2;
 	move_to(p);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_text("Controls: ", 1);
 
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(red);
+	set_fill_color_abgr(red);
 	atari_draw_text("A ", 1);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_text("Punch left", 1);
 	
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(red);
+	set_fill_color_abgr(red);
 	atari_draw_text("D ", 1);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_text("Punch right", 1);
 	
 	p.y += line_height * 2;
 	move_to(p);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_text("Volume:", 1);
 	
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(red);
+	set_fill_color_abgr(red);
 	atari_draw_text("< ", 1);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_text("Quieter", 1);
 	
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(red);
+	set_fill_color_abgr(red);
 	atari_draw_text("> ", 1);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_text("Louder", 1);
 
 	p.y += line_height;
 	move_to(p);
-	set_fill_color(red);
+	set_fill_color_abgr(red);
 	atari_draw_text("M ", 1);
-	set_fill_color(text);
+	set_fill_color_abgr(text);
 	atari_draw_text("Mute", 1);
 
 	p.x = scr_w / 2;

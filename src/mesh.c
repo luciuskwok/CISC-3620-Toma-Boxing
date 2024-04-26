@@ -81,8 +81,8 @@ void mesh_draw(mesh_t *mesh) {
 	const int point_w = 5;
 	
 	// Color
-	set_line_color(mesh->line_color);
-	set_fill_color(mesh->point_color);
+	set_line_color_abgr(mesh->line_color);
+	set_fill_color_abgr(mesh->point_color);
 	
 	// Tranformation matrix
 	mat4_t tr = mat4_get_identity();

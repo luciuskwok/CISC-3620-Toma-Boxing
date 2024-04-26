@@ -131,11 +131,11 @@ void title_render(void) {
 	p.x = scr_w / 2 - (10 * 8);
 	p.y = scr_h - 28;
 	move_to(p);
-	set_fill_color(COLOR_ABGR_WHITE);
+	set_fill_color_abgr(COLOR_ABGR_WHITE);
 	atari_draw_shadowed_text("Press ", 1, shadow_color);
-	set_fill_color(rgb_to_abgr((t >= 0.5)? COLOR_RGB_LIME : COLOR_RGB_DARK_RED));
+	set_fill_color_abgr(rgb_to_abgr((t >= 0.5)? COLOR_RGB_LIME : COLOR_RGB_DARK_RED));
 	atari_draw_shadowed_text("Space ", 1, shadow_color);
-	set_fill_color(COLOR_ABGR_WHITE);
+	set_fill_color_abgr(COLOR_ABGR_WHITE);
 	atari_draw_shadowed_text("to Start", 1, shadow_color);
 
 	// Test font

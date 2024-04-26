@@ -29,8 +29,10 @@ void render_to_screen(void);
 // Drawing 2D
 void fill_screen(void);
 
-void set_line_color(uint32_t color);
-void set_fill_color(uint32_t color);
+void set_line_color_abgr(uint32_t color);
+void set_line_color_rgba(uint32_t color, uint8_t alpha);
+void set_fill_color_abgr(uint32_t color);
+void set_fill_color_rgba(uint32_t color, uint8_t alpha);
 
 void move_to(vec2_t a);
 void line_to(vec2_t a);

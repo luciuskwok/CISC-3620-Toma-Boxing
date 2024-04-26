@@ -132,8 +132,8 @@ void shape_draw(shape_t *shape) {
 	if (!shape->is_visible) return;
 	if (shape->point_count < 2) return;
 
-	set_line_color(shape->line_color);
-	set_fill_color(shape->fill_color);
+	set_line_color_abgr(shape->line_color);
+	set_fill_color_abgr(shape->fill_color);
 	
 	// Calculate transform matrix
 	mat3_t tr = mat3_get_identity();

@@ -80,12 +80,12 @@ void atari_draw_shadowed_text(const char* s, int scale, uint32_t shadow_color) {
 	// Draw shadow below
 	vec2_t shadow_position = { cursor.x + 1, cursor.y + 1 };
 	move_to(shadow_position);
-	set_fill_color(shadow_color);
+	set_fill_color_abgr(shadow_color);
 	atari_draw_text(s, scale);
 	
 	// Draw normal text on top
 	move_to(cursor);
-	set_fill_color(fill);
+	set_fill_color_abgr(fill);
 	atari_draw_text(s, scale);
 }
 

@@ -123,7 +123,7 @@ void draw_volume_overlay(void) {
 	int scr_h = get_screen_height();
 	
 	// Draw text
-	set_fill_color(rgb_to_abgr(COLOR_RGB_DARK_GRAY));
+	set_fill_color_rgba(COLOR_RGB_DARK_GRAY, 255);
 	p.x = 2;
 	p.y = scr_h - 10;
 	move_to(p);

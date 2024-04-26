@@ -43,11 +43,11 @@ void results_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 	
-	set_fill_color(COLOR_ABGR_BLACK);
+	set_fill_color_abgr(COLOR_ABGR_BLACK);
 	fill_screen();
 	
 	// Draw text
-	set_fill_color(COLOR_ABGR_WHITE);
+	set_fill_color_abgr(COLOR_ABGR_WHITE);
 	
 	const int left_margin = scr_w / 2 + 16;
 	const int top_margin = 24;
@@ -59,7 +59,7 @@ void results_render(void) {
 	
 	// Left column: labels
 	const int line_height = 12;
-	set_fill_color(rgb_to_abgr(COLOR_RGB_PINK));
+	set_fill_color_rgba(COLOR_RGB_PINK, 255);
 	p.y = top_margin + title_spacing;
 	move_to(p);
 	atari_draw_text("Great", 1);
@@ -82,7 +82,7 @@ void results_render(void) {
 	// Right column: alues
 	p.x = left_margin + 14 * 8;
 	p.y = top_margin + title_spacing;
-	set_fill_color(rgb_to_abgr(COLOR_RGB_LIME));
+	set_fill_color_rgba(COLOR_RGB_LIME, 255);
 	move_to(p);
 	atari_draw_right_justified_text("123", 1);
 	p.y += line_height;
@@ -104,7 +104,7 @@ void results_render(void) {
 	p.x = scr_w / 2;
 	p.y = scr_h - 16;
 	move_to(p);
-	set_fill_color(COLOR_ABGR_WHITE);
+	set_fill_color_abgr(COLOR_ABGR_WHITE);
 	atari_draw_centered_text("Press Space to Return to Title", 1);
 	
 	// Draw meshes and shapes

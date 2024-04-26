@@ -92,7 +92,7 @@ bool init_screen(int width, int height, int scale) {
 		fprintf(stderr, "malloc() failed!\n");
 		return false;
 	}
-	set_fill_color(COLOR_ABGR_BLACK);
+	set_fill_color_abgr(COLOR_ABGR_BLACK);
 	fill_screen();
 	
 	// Set up the renderer
@@ -134,12 +134,20 @@ void fill_screen(void) {
 	}
 }
 
-void set_line_color(uint32_t color) {
+void set_line_color_abgr(uint32_t color) {
 	line_color = color;
 }
 
-void set_fill_color(uint32_t color) {
+void set_line_color_rgba(uint32_t color, uint8_t alpha) {
+	line_color = rgba_to_abgr(color, alpha);
+}
+
+void set_fill_color_abgr(uint32_t color) {
 	fill_color = color;
+}
+
+void set_fill_color_rgba(uint32_t color, uint8_t alpha) {
+	fill_color = rgba_to_abgr(color, alpha);
 }
 
 void move_to(vec2_t a) {

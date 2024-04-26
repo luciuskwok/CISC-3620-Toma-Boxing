@@ -29,17 +29,17 @@ void draw_progress_bar(void) {
 	r.y = 4;
 
 	// Border
-	set_fill_color(color_set_alpha(COLOR_ABGR_BLACK, 127));
+	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
 	fill_rect(r);
 	
 	// Empty area
 	r = inset_rect(r, 2, 2);
-	set_fill_color(color_set_alpha(COLOR_ABGR_WHITE, 127));
+	set_fill_color_rgba(COLOR_RGB_WHITE, 127);
 	fill_rect(r);
 	
 	// Filled area
 	r.w = (int)( round((double)r.w * ui_progress_value) );
-	set_fill_color(rgb_to_abgr(COLOR_RGB_RED));
+	set_fill_color_rgba(COLOR_RGB_RED, 255);
 	fill_rect(r);
 }
 
