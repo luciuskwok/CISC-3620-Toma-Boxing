@@ -18,11 +18,12 @@
 
 
 // Globals
-image_t *track_image = NULL;
 double time_remaining = -1.0;
+uint32_t background_color = COLOR_ABGR_BLACK;
+
 
 void gameplay_init(void) {
-	track_image = load_bmp_image("assets/track.bmp");
+	
 }
 
 void gameplay_start(void) {
@@ -88,17 +89,8 @@ void gameplay_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	set_fill_color(COLOR_ABGR_BLACK);
+	set_fill_color(background_color);
 	fill_screen();
-
-	// Draw 2 tracks
-	p.x = scr_w / 4 - track_image->w / 2;
-	p.y = scr_h - track_image->h;
-	move_to(p);
-//	draw_image(track_image);
-	p.x = scr_w * 3 / 4 - track_image->w / 2;
-	move_to(p);
-//	draw_image(track_image);
 	
 	// Draw meshes and shapes
 	draw_meshes();
