@@ -16,6 +16,7 @@ SCENE_INDEX scene_index = SCENE_STARTUP;
 double scene_lifetime = 0.0;
 array_list_t *shape_list;
 array_list_t *mesh_list;
+bool is_scene_paused = false;
 
 
 void init_scene_manager(void) {
@@ -57,7 +58,10 @@ void set_scene_index(SCENE_INDEX x) {
 	
 	// Stop audio player
 	stop_music();
-	
+		
+	// Unpause
+	is_scene_paused = false;
+
 	scene_index = x;
 	switch (scene_index) {
 		case SCENE_TITLE:
@@ -97,16 +101,18 @@ void update_scene(double delta_time) {
 			break;
 	}
 	
-	mesh_t **m = (mesh_t **)array_list_array(mesh_list);
-	int mn = array_list_length(mesh_list);
-	for (int i = 0; i < mn; i++) {
-		mesh_update(m[i], delta_time);
-	}
-	
-	shape_t **s = (shape_t **)array_list_array(shape_list);
-	int sn = array_list_length(shape_list);
-	for (int i = 0; i < sn; i++) {
-		shape_update(s[i], delta_time);
+	if (!is_scene_paused) {
+		mesh_t **m = (mesh_t **)array_list_array(mesh_list);
+		int mn = array_list_length(mesh_list);
+		for (int i = 0; i < mn; i++) {
+			mesh_update(m[i], delta_time);
+		}
+		
+		shape_t **s = (shape_t **)array_list_array(shape_list);
+		int sn = array_list_length(shape_list);
+		for (int i = 0; i < sn; i++) {
+			shape_update(s[i], delta_time);
+		}
 	}
 
 	scene_lifetime += delta_time;
@@ -149,4 +155,12 @@ void draw_shapes(void) {
 
 double get_scene_lifetime(void) {
 	return scene_lifetime;
+}
+
+void set_scene_paused(bool state) {
+	is_scene_paused = state;
+}
+
+bool get_scene_paused(void) {
+	return is_scene_paused;
 }

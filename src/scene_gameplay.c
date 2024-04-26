@@ -19,49 +19,50 @@
 
 // Globals
 double time_remaining = -1.0;
+double last_music_position = 0.0;
 uint32_t background_color = COLOR_ABGR_BLACK;
 
 
 void gameplay_init(void) {
-	
+	// Create all the meshes and shapes that will be used in this scene.
 }
 
 void gameplay_start(void) {
-	
 	time_remaining = -1.0;
+	last_music_position = 0.0;
 	
 	// Start playing music
 	start_music();
+	set_scene_paused(false);
 }
 
 bool gameplay_handle_keyboard(SDL_Event event) {
+	bool paused = get_scene_paused();
+	
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
-			case SDLK_0:
-				return true;
-			case SDLK_e:
-				return true;
-			case SDLK_q:
-				return true;
-			case SDLK_w:
-				return true;
-			case SDLK_s:
-				return true;
 			case SDLK_a:
+				// Punch left
 				return true;
 			case SDLK_d:
+				// Punch right
 				return true;
-			case SDLK_SPACE:
+			case SDLK_ESCAPE:
+				// Pause game
+				set_scene_paused(!paused);
+				pause_music(!paused);
 				return true;
-			case SDLK_p:
+			case SDLK_q:
+				// Quit to title if paused
+				if (paused) set_scene_index(SCENE_TITLE);
 				return true;
-			case SDLK_o:
-				return true;
-			case SDLK_i:
+			case SDLK_r:
+				// Restart song if paused
+				if (paused) gameplay_start();
 				return true;
 			case SDLK_l:
-				// Go to results scene
-				set_scene_index(SCENE_RESULTS);
+				// Skip to results scene if paused
+				if (paused) set_scene_index(SCENE_RESULTS);
 				return true;
 		}
 	}
@@ -69,7 +70,14 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 	return false;
 }
 
+void sequencer_update(double previous_time, double current_time) {
+	
+}
+
 void gameplay_update(double delta_time) {
+	// Do not update if paused
+	if (get_scene_paused()) return;
+
 	// Update song progress bar
 	double fraction = 0.0;
 	time_remaining = -1.0;
@@ -79,6 +87,8 @@ void gameplay_update(double delta_time) {
 			double position = get_music_position();
 			time_remaining = total - position;
 			fraction = position / total;
+			sequencer_update(last_music_position, position);
+			last_music_position = position;
 		}
 	}
 	set_progress_value(fraction);
@@ -137,4 +147,9 @@ void gameplay_render(void) {
 	atari_draw_text("D", 1);
 	set_fill_color_rgba(COLOR_RGB_WHITE, 255);
 	atari_draw_text(":Punch", 1);
+	
+	// Draw pause menu
+	if (get_scene_paused()) {
+		// TODO
+	}
 }

@@ -38,4 +38,7 @@ void draw_shapes(void);
 
 double get_scene_lifetime(void);
 
+void set_scene_paused(bool state);
+bool get_scene_paused(void);
+
 #endif /* scene_manager_h */

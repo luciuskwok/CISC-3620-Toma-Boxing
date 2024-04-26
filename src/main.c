@@ -82,18 +82,6 @@ void process_keyboard_input(void) {
 				// Exit program
 				is_running = false;
 				break;
-			case SDLK_p:
-				// Start audio player
-				start_music();
-				break;
-			case SDLK_o:
-				// Pause/Unpause audio player
-				pause_music(!is_music_paused());
-				break;
-			case SDLK_i:
-				// Stop audio player
-				stop_music();
-				break;
 			case SDLK_m:
 				// Mute toggle
 				set_music_muted(!is_music_muted());
