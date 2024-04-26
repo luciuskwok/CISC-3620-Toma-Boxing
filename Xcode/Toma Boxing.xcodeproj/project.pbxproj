@@ -28,7 +28,6 @@
 		E07856622BBA23F500C31E16 /* track.bmp in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07856612BBA230100C31E16 /* track.bmp */; };
 		E07856652BBC84B300C31E16 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = E07856642BBC84B300C31E16 /* mesh.c */; };
 		E07856682BBCBF4700C31E16 /* shape.c in Sources */ = {isa = PBXBuildFile; fileRef = E07856672BBCBF4700C31E16 /* shape.c */; };
-		E07E0A592BB60BF800BD3D4E /* file_io.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A582BB60BF800BD3D4E /* file_io.c */; };
 		E07E0A622BB6340F00BD3D4E /* scene_title.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A612BB6340F00BD3D4E /* scene_title.c */; };
 		E07E0A652BB6370700BD3D4E /* scene_instructions.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A642BB6370700BD3D4E /* scene_instructions.c */; };
 		E07E0A682BB6371B00BD3D4E /* scene_gameplay.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A672BB6371B00BD3D4E /* scene_gameplay.c */; };
@@ -102,8 +101,6 @@
 		E07856642BBC84B300C31E16 /* mesh.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mesh.c; sourceTree = "<group>"; };
 		E07856662BBCBF4700C31E16 /* shape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shape.h; sourceTree = "<group>"; };
 		E07856672BBCBF4700C31E16 /* shape.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = shape.c; sourceTree = "<group>"; };
-		E07E0A572BB60BF800BD3D4E /* file_io.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = file_io.h; sourceTree = "<group>"; };
-		E07E0A582BB60BF800BD3D4E /* file_io.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = file_io.c; sourceTree = "<group>"; };
 		E07E0A602BB6340F00BD3D4E /* scene_title.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scene_title.h; sourceTree = "<group>"; };
 		E07E0A612BB6340F00BD3D4E /* scene_title.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = scene_title.c; sourceTree = "<group>"; };
 		E07E0A632BB6370700BD3D4E /* scene_instructions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = scene_instructions.h; sourceTree = "<group>"; };
@@ -150,8 +147,6 @@
 				E00F801F2BB132A000D78335 /* drawing.c */,
 				E040D2892BB356EF00FDBF10 /* image.h */,
 				E040D28A2BB356EF00FDBF10 /* image.c */,
-				E07E0A572BB60BF800BD3D4E /* file_io.h */,
-				E07E0A582BB60BF800BD3D4E /* file_io.c */,
 				E00F800F2BB1302100D78335 /* matrix.h */,
 				E00F800E2BB1302100D78335 /* matrix.c */,
 				E07856632BBC84B300C31E16 /* mesh.h */,
@@ -296,7 +291,6 @@
 				E07E0A6E2BB63CD500BD3D4E /* scene_manager.c in Sources */,
 				E00F80202BB132A000D78335 /* drawing.c in Sources */,
 				E00F80152BB1302100D78335 /* color.c in Sources */,
-				E07E0A592BB60BF800BD3D4E /* file_io.c in Sources */,
 				E07E0A6B2BB637B700BD3D4E /* scene_results.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

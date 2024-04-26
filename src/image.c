@@ -7,15 +7,56 @@
 
 #include "image.h"
 #include "drawing.h"
-#include "file_io.h"
 #include "vector.h"
 
 #include <SDL2/SDL.h>
 #include <stdio.h>
 
 // Constants
-#define FILE_SIGNATURE (0x494E4458) /* Spells out 'INDX' */
 
+#pragma mark - File I/O
+
+uint32_t read_uint32(FILE *file) {
+	uint32_t x = 0;
+	fread(&x, sizeof(x), 1, file);
+	return x;
+}
+
+uint16_t read_uint16(FILE *file) {
+	uint16_t x = 0;
+	fread(&x, sizeof(x), 1, file);
+	return x;
+}
+
+uint8_t read_uint8(FILE *file) {
+	uint8_t x = 0;
+	fread(&x, sizeof(x), 1, file);
+	return x;
+}
+
+int32_t read_int32(FILE *file) {
+	int32_t x = 0;
+	fread(&x, sizeof(x), 1, file);
+	return x;
+}
+
+int16_t read_int16(FILE *file) {
+	int16_t x = 0;
+	fread(&x, sizeof(x), 1, file);
+	return x;
+}
+
+int8_t read_int8(FILE *file) {
+	int8_t x = 0;
+	fread(&x, sizeof(x), 1, file);
+	return x;
+}
+
+bool read_buffer(FILE *file, void *buf, size_t buf_len) {
+	return fread(buf, buf_len, 1, file) > 0;
+}
+
+#pragma mark - Image I/O
 
 image_t *create_abgr_image_from_indexed_bitmap(uint8_t *bitmap, int bpp, int w, int h, bool flipped, uint32_t *palette, uint32_t palette_len) {
 	// Create image_t
@@ -173,6 +214,8 @@ void free_image(image_t *image) {
 	free(image->pixels);
 	free(image);
 }
+
+#pragma mark - Image Drawing
 
 void draw_image(image_t *image) {
 	vec2_t cursor = get_cursor();
