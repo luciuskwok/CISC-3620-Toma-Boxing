@@ -22,34 +22,14 @@ array_list_t *tomato_list = NULL;
 
 #define RAD_DEG ((float)M_PI / 180.0f)
 
-// Return type for create_tomato_shapes()
-typedef struct {
-	shape_t *body;
-	shape_t *top;
-} tomato_shapes_t;
 
-tomato_shapes_t create_tomato_shapes(vec2_t position, float scale, float speed) {
-	tomato_shapes_t t;
-	
-	// Tomato body
-	const float body_scale = 1.0f/7.0f * scale;
-	t.body = create_polygon_shape(15);
-	t.body->angular_momentum = speed * RAD_DEG;
-	t.body->scale = vec2_make(body_scale, body_scale);
-	t.body->position = position;
-	t.body->line_color = COLOR_ABGR_WHITE;
-	t.body->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_RED);
-	
-	// Tomato leaves
-	const float top_scale = 1.0f/13.0f * scale;
-	t.top = create_star_shape(5, 0.25f);
-	t.top->angular_momentum = speed * RAD_DEG;
-	t.top->scale = vec2_make(top_scale, top_scale);
-	t.top->position = position;
-	t.top->line_color = 0;
-	t.top->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_GREEN);
-	
-	return t;
+shape_t *title_tomato(vec2_t position, float scale, float speed) {
+	scale = 1.0f/7.0f * scale;
+	shape_t *s = create_tomato_shape();
+	s->angular_momentum = speed * RAD_DEG;
+	s->scale = vec2_make(scale, scale);
+	s->position = position;
+	return s;
 }
 
 void title_init(void) {
@@ -59,27 +39,11 @@ void title_init(void) {
 	tomato_list = array_list_make(16);
 	const float grid = 0.2f;
 		
-	tomato_shapes_t t;
-	
-	t = create_tomato_shapes(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f);
-	array_list_add(tomato_list, t.body);
-	array_list_add(tomato_list, t.top);
-
-	t = create_tomato_shapes(vec2_make(-2.875f * grid, 1.5f * grid), 1.0f, 10.0f);
-	array_list_add(tomato_list, t.body);
-	array_list_add(tomato_list, t.top);
-
-	t = create_tomato_shapes(vec2_make(0.25f * grid, -1.5f * grid), 0.67f, 15.0f);
-	array_list_add(tomato_list, t.body);
-	array_list_add(tomato_list, t.top);
-
-	t = create_tomato_shapes(vec2_make(0.5f * grid, 1.25f * grid), 0.75f, 8.0f);
-	array_list_add(tomato_list, t.body);
-	array_list_add(tomato_list, t.top);
-
-	t = create_tomato_shapes(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f);
-	array_list_add(tomato_list, t.body);
-	array_list_add(tomato_list, t.top);
+	array_list_add(tomato_list, title_tomato(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f));
+	array_list_add(tomato_list, title_tomato(vec2_make(-2.875f * grid, 1.5f * grid), 1.0f, 10.0f));
+	array_list_add(tomato_list, title_tomato(vec2_make(0.25f * grid, -1.5f * grid), 0.67f, 15.0f));
+	array_list_add(tomato_list, title_tomato(vec2_make(0.5f * grid, 1.25f * grid), 0.75f, 8.0f));
+	array_list_add(tomato_list, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
 }
 
 void title_start(void) {

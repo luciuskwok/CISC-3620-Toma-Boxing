@@ -148,8 +148,10 @@ void draw_meshes(void) {
 void draw_shapes(void) {
 	shape_t **s = (shape_t **)shape_list->array;
 	int sn = shape_list->length;
+	mat3_t transform = mat3_get_identity();
+
 	for (int i = 0; i < sn; i++) {
-		shape_draw(s[i]);
+		shape_draw(s[i], transform);
 	}
 }
 

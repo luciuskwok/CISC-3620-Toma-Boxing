@@ -10,6 +10,8 @@
 
 #include "matrix.h"
 #include "vector.h"
+#include "array_list.h"
+
 #include <stdbool.h>
 
 
@@ -18,11 +20,13 @@ typedef struct {
 } mesh_face_t;
 
 typedef struct {
+	// Geometry
 	int face_count;
 	mesh_face_t *faces;
-	bool is_visible;
+	array_list_t *children;
 	
-	// Colors
+	// Visuals
+	bool is_visible;
 	uint32_t line_color;
 	uint32_t point_color;
 	

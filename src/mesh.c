@@ -35,9 +35,10 @@ mesh_t *mesh_new(int face_count) {
 	
 	mesh->face_count = face_count;
 	mesh->faces = faces;
-	mesh->is_visible = true;
+	mesh->children = NULL;
 	
-	// Colors
+	// Visuals
+	mesh->is_visible = true;
 	mesh->line_color = COLOR_ABGR_WHITE;
 	mesh->point_color = COLOR_ABGR_WHITE;
 	
@@ -52,11 +53,29 @@ mesh_t *mesh_new(int face_count) {
 }
 
 void mesh_destroy(mesh_t *mesh) {
+	if (mesh->children) {
+		mesh_t **a = (mesh_t **)mesh->children->array;
+		int n = mesh->children->length;
+		for (int i=0; i<n; i++) {
+			mesh_destroy(a[i]);
+		}
+		array_list_destroy(mesh->children);
+	}
+
 	free(mesh->faces);
 	free(mesh);
 }
 
 void mesh_update(mesh_t *mesh, double delta_time) {
+	// Update children
+	if (mesh->children) {
+		mesh_t **a = (mesh_t **)mesh->children->array;
+		int n = mesh->children->length;
+		for (int i=0; i<n; i++) {
+			mesh_update(a[i], delta_time);
+		}
+	}
+
 	// Update posiiton & rotation
 	float dt = (float)delta_time;
 	

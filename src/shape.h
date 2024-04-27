@@ -8,20 +8,23 @@
 #ifndef shape_h
 #define shape_h
 
-#include <stdbool.h>
-
 #include "matrix.h"
 #include "vector.h"
+#include "array_list.h"
+
+#include <stdbool.h>
 
 
 typedef struct {
+	// Geometry
 	int point_count;
 	vec2_t *points;
 	vec2_t *projected_points;
 	bool is_closed;
-	bool is_visible;
+	array_list_t *children;
 	
-	// Colors
+	// Visuals
+	bool is_visible;
 	uint32_t line_color;
 	uint32_t fill_color;
 	
@@ -41,8 +44,9 @@ void shape_destroy(shape_t *shape);
 shape_t *create_rectangle_shape(float w, float h);
 shape_t *create_polygon_shape(int sides);
 shape_t *create_star_shape(int points, float indent);
+shape_t *create_tomato_shape(void);
 
 void shape_update(shape_t *shape, double delta_time);
-void shape_draw(shape_t *shape);
+void shape_draw(shape_t *shape, mat3_t transform);
 
 #endif /* shape_h */
