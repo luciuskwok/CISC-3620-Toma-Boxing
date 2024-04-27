@@ -83,8 +83,8 @@ void title_init(void) {
 }
 
 void title_start(void) {
-	shape_t **s = (shape_t **)array_list_array(tomato_list);
-	int n = array_list_length(tomato_list);
+	shape_t **s = (shape_t **)tomato_list->array;
+	int n = tomato_list->length;
 	for (int i=0; i<n; i++) {
 		scene_add_shape(s[i]);
 	}

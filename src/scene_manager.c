@@ -102,14 +102,14 @@ void update_scene(double delta_time) {
 	}
 	
 	if (!is_scene_paused) {
-		mesh_t **m = (mesh_t **)array_list_array(mesh_list);
-		int mn = array_list_length(mesh_list);
+		mesh_t **m = (mesh_t **)mesh_list->array;
+		int mn = mesh_list->length;
 		for (int i = 0; i < mn; i++) {
 			mesh_update(m[i], delta_time);
 		}
 		
-		shape_t **s = (shape_t **)array_list_array(shape_list);
-		int sn = array_list_length(shape_list);
+		shape_t **s = (shape_t **)shape_list->array;
+		int sn = shape_list->length;
 		for (int i = 0; i < sn; i++) {
 			shape_update(s[i], delta_time);
 		}
@@ -138,16 +138,16 @@ void draw_scene(void) {
 }
 
 void draw_meshes(void) {
-	mesh_t **m = (mesh_t **)array_list_array(mesh_list);
-	int mn = array_list_length(mesh_list);
+	mesh_t **m = (mesh_t **)mesh_list->array;
+	int mn = mesh_list->length;
 	for (int i = 0; i < mn; i++) {
 		mesh_draw(m[i]);
 	}
 }
 
 void draw_shapes(void) {
-	shape_t **s = (shape_t **)array_list_array(shape_list);
-	int sn = array_list_length(shape_list);
+	shape_t **s = (shape_t **)shape_list->array;
+	int sn = shape_list->length;
 	for (int i = 0; i < sn; i++) {
 		shape_draw(s[i]);
 	}

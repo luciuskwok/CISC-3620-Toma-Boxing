@@ -21,8 +21,6 @@ void array_list_destroy(array_list_t *a);
 bool array_list_add(array_list_t *a, void *element);
 bool array_list_remove(array_list_t *a, void *element);
 void array_list_remove_all(array_list_t *a);
-int array_list_length(array_list_t *a);
-void **array_list_array(array_list_t *a);
 
 
 #endif /* array_list_h */

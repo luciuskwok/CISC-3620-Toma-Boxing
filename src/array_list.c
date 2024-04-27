@@ -69,11 +69,3 @@ bool array_list_remove(array_list_t *a, void *element) {
 void array_list_remove_all(array_list_t *a) {
 	a->length = 0;
 }
-
-int array_list_length(array_list_t *a) {
-	return a->length;
-}
-
-void **array_list_array(array_list_t *a) {
-	return a->array;
-}
