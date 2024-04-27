@@ -73,8 +73,6 @@ void shape_destroy(shape_t *shape) {
 	free(shape);
 }
 
-#pragma mark -
-
 bool shape_add_child(shape_t *shape, shape_t *child) {
 	if (!shape->children) {
 		shape->children = array_list_make(4);

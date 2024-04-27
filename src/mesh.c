@@ -66,6 +66,16 @@ void mesh_destroy(mesh_t *mesh) {
 	free(mesh);
 }
 
+bool mesh_add_child(mesh_t *mesh, mesh_t *child) {
+	if (!mesh->children) {
+		mesh->children = array_list_make(4);
+		if (!mesh->children) return false;
+	}
+	return array_list_add(mesh->children, child);
+}
+
+#pragma mark -
+
 void mesh_update(mesh_t *mesh, double delta_time) {
 	// Update children
 	if (mesh->children) {
@@ -89,7 +99,7 @@ void mesh_update(mesh_t *mesh, double delta_time) {
 	mesh->lifetime += delta_time;
 }
 
-void mesh_draw(mesh_t *mesh) {
+void mesh_draw(mesh_t *mesh, mat4_t transform) {
 	if (!mesh->is_visible) return;
 	
 	vec3_t a3, b3, c3;
@@ -104,17 +114,16 @@ void mesh_draw(mesh_t *mesh) {
 	set_fill_color_abgr(mesh->point_color);
 	
 	// Tranformation matrix
-	mat4_t tr = mat4_get_identity();
-	tr = mat4_translate(tr, mesh->position);
-	tr = mat4_apply_euler_angles(tr, mesh->rotation);
-	tr = mat4_scale(tr, mesh->scale);
+	transform = mat4_translate(transform, mesh->position);
+	transform = mat4_apply_euler_angles(transform, mesh->rotation);
+	transform = mat4_scale(transform, mesh->scale);
 	
 	for (int i = 0; i < mesh->face_count; i++) {
 		mesh_face_t face = mesh->faces[i];
 		
-		a3 = vec3_mat4_multiply(face.a, tr);
-		b3 = vec3_mat4_multiply(face.b, tr);
-		c3 = vec3_mat4_multiply(face.c, tr);
+		a3 = vec3_mat4_multiply(face.a, transform);
+		b3 = vec3_mat4_multiply(face.b, transform);
+		c3 = vec3_mat4_multiply(face.c, transform);
 		
 		// Backface culling
 		vab = vec3_sub(b3, a3);
@@ -141,10 +150,18 @@ void mesh_draw(mesh_t *mesh) {
 			fill_centered_rect((int)c2.x, (int)c2.y, point_w, point_w);
 		}
 	}
+	
+	// Draw children
+	if (mesh->children) {
+		mesh_t **a = (mesh_t **)mesh->children->array;
+		int n = mesh->children->length;
+		for (int i=0; i<n; i++) {
+			mesh_draw(a[i], transform);
+		}
+	}
 }
 
-
-#pragma mark - Momentum
+#pragma mark -
 
 void mesh_reset_momentum(mesh_t *mesh) {
 	mesh->linear_momentum = vec3_zero();

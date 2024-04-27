@@ -140,8 +140,9 @@ void draw_scene(void) {
 void draw_meshes(void) {
 	mesh_t **m = (mesh_t **)mesh_list->array;
 	int mn = mesh_list->length;
+	mat4_t transform = mat4_get_identity();
 	for (int i = 0; i < mn; i++) {
-		mesh_draw(m[i]);
+		mesh_draw(m[i], transform);
 	}
 }
 
