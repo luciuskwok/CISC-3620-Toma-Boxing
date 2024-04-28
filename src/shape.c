@@ -227,10 +227,89 @@ shape_t *create_tomato_side_shape(void) {
 	return body;
 }
 
+const int microphone_points_len = 7;
+vec2_t microphone_points[microphone_points_len] = {
+	{50, 97},
+	{61, 84},
+	{83, 80},
+	{82, 93},
+	{78, 104},
+	{70, 279},
+	{55, 280}
+};
+
+const int microphone_upper_line_points_len = 5;
+vec2_t microphone_upper_line_points[microphone_upper_line_points_len] = {
+	{22, 104},
+	{40, 104},
+	{50, 101},
+	{60, 104},
+	{78, 104}
+};
+
+const int microphone_lower_band_points_len = 6;
+vec2_t microphone_lower_band_points[microphone_lower_band_points_len] = {
+	{50, 250},
+	{62, 256},
+	{71, 251},
+	{71, 241},
+	{63, 245},
+	{50, 240}
+};
 
 shape_t *create_microphone_shape(void) {
-	// TODO: implement create_microphone_shape
-	return NULL;
+	shape_t *base = create_tomato_side_shape();
+	if (!base) return NULL;
+	
+	// Transform for points
+	mat3_t tr = mat3_identity();
+	tr = mat3_scale(tr, vec2_make(0.01f, 0.01f));
+	tr = mat3_translate(tr, vec2_make(-50, -60));
+	
+	mat3_t mirror = mat3_identity();
+	mirror = mat3_scale(mirror, vec2_make(-1.0f, 1.0f));
+
+	// Microphone shape
+	shape_t *mic = shape_new(microphone_points_len * 2);
+	if (mic) {
+		mic->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_SIDE_OUTLINE);
+		mic->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_TOP_PINK);
+		int n = microphone_points_len * 2;
+		for (int i=0; i<microphone_points_len; i++) {
+			vec2_t pt = vec2_mat3_multiply(microphone_points[i], tr);
+			mic->points[i] = pt;
+			mic->points[n - i - 1] = vec2_mat3_multiply(pt, mirror);
+		}
+		shape_add_child(base, mic);
+	}
+	
+	// Microphone upper line
+	shape_t *upper_line = shape_new(microphone_upper_line_points_len);
+	if (upper_line) {
+		upper_line->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_SIDE_FILL);
+		upper_line->fill_color = 0;
+		upper_line->is_closed = false;
+		for (int i=0; i<microphone_upper_line_points_len; i++) {
+			upper_line->points[i] = vec2_mat3_multiply(microphone_upper_line_points[i], tr);
+		}
+		shape_add_child(base, upper_line);
+	}
+	
+	// Microphone lower band
+	shape_t *lower_band = shape_new(microphone_lower_band_points_len * 2);
+	if (lower_band) {
+		lower_band->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_OUTLINE);
+		lower_band->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_FILL);
+		int n = microphone_lower_band_points_len * 2;
+		for (int i=0; i<microphone_lower_band_points_len; i++) {
+			vec2_t pt = vec2_mat3_multiply(microphone_lower_band_points[i], tr);
+			lower_band->points[i] = pt;
+			lower_band->points[n - i - 1] = vec2_mat3_multiply(pt, mirror);
+		}
+		shape_add_child(base, lower_band);
+	}
+	
+	return base;
 }
 
 shape_t *create_toemaniac_shape(void) {

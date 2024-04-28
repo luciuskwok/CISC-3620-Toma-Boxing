@@ -53,8 +53,8 @@ void title_init(void) {
 	//array_list_add(title_shapes, test1);
 
 	// Testing: create shapes being tested
-	shape_t *test2 = create_tomato_side_shape();
-	test2->scale = vec2_make(0.4f, 0.4f);
+	shape_t *test2 = create_microphone_shape();
+	test2->scale = vec2_make(0.25f, 0.25f);
 	test2->angular_momentum = 5.0f * RAD_DEG;
 	array_list_add(title_shapes, test2);
 }
