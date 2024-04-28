@@ -155,6 +155,53 @@ shape_t *create_tomato_shape(void) {
 	return body;
 }
 
+shape_t *create_heart_shape(void) {
+	const int sides = 32;
+	shape_t *s = shape_new(sides);
+	if (!s) return NULL;
+	s->is_closed = true;
+	vec2_t *p = s->points;
+	
+	// Make pinch points
+	p[0] = vec2_make(0.0f, 1.0f);
+	p[sides/2] = vec2_make(0.0f, 0.0f);
+	
+	// Make symmetrical spiral points
+	int n = sides / 2;
+	for (int i = 1; i < n; i++) {
+		float angle = -1.125f + (float)(M_PI * 1.125) * i / n;
+		float x0 = 0.3f;
+		float y0 = 0.15f;
+		float len = 0.333f;
+		float x1 = x0 + cosf(angle) * len;
+		float y1 = y0 - sinf(angle) * len;
+		
+		p[i].x = x1;
+		p[i].y = y1;
+		p[sides - i].x = -x1;
+		p[sides - i].y = y1;
+	}
+	
+	return s;
+}
+
+shape_t *create_microphone_shape(void) {
+	return NULL;
+}
+
+shape_t *create_envelope_shape(void) {
+	return NULL;
+}
+
+shape_t *create_crescent_moon_shape(void) {
+	return NULL;
+}
+
+shape_t *create_toemaniac_shape(void) {
+	return NULL;
+}
+
+
 #pragma mark -
 
 void shape_update(shape_t *shape, double delta_time) {

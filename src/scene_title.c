@@ -18,7 +18,7 @@
 
 // Globals
 image_t *title_image = NULL;
-array_list_t *tomato_list = NULL;
+array_list_t *title_shapes = NULL;
 
 #define RAD_DEG ((float)M_PI / 180.0f)
 
@@ -36,19 +36,26 @@ void title_init(void) {
 	title_image = load_bmp_image("assets/title_background.bmp");
 	
 	// Create tomato shapes that rotate
-	tomato_list = array_list_make(16);
+	title_shapes = array_list_make(16);
 	const float grid = 0.2f;
 		
-	array_list_add(tomato_list, title_tomato(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f));
-	array_list_add(tomato_list, title_tomato(vec2_make(-2.875f * grid, 1.5f * grid), 1.0f, 10.0f));
-	array_list_add(tomato_list, title_tomato(vec2_make(0.25f * grid, -1.5f * grid), 0.67f, 15.0f));
-	array_list_add(tomato_list, title_tomato(vec2_make(0.5f * grid, 1.25f * grid), 0.75f, 8.0f));
-	array_list_add(tomato_list, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(-2.875f * grid, 1.5f * grid), 1.0f, 10.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(0.25f * grid, -1.5f * grid), 0.67f, 15.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(0.5f * grid, 1.25f * grid), 0.75f, 8.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
+	
+	// Testing: create shapes being tested
+	shape_t *test = create_heart_shape();
+	test->fill_color = rgba_to_abgr(COLOR_RGB_PINK, 127);
+	test->line_color = rgba_to_abgr(COLOR_RGB_WHITE, 255);
+	test->scale = vec2_make(0.48f, 0.48f);
+	array_list_add(title_shapes, test);
 }
 
 void title_start(void) {
-	shape_t **s = (shape_t **)tomato_list->array;
-	int n = tomato_list->length;
+	shape_t **s = (shape_t **)title_shapes->array;
+	int n = title_shapes->length;
 	for (int i=0; i<n; i++) {
 		scene_add_shape(s[i]);
 	}
