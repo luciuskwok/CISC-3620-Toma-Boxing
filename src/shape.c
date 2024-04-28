@@ -15,6 +15,8 @@
 #include <stdio.h>
 #include <math.h>
 
+#define RADIANF ((float)(M_PI * 2.0))
+
 
 shape_t *shape_new(int point_count) {
 	shape_t *shape = malloc(sizeof(shape_t));
@@ -131,7 +133,7 @@ shape_t *create_star_shape(int points, float indent) {
 	return s;
 }
 
-shape_t *create_tomato_shape(void) {
+shape_t *create_tomato_top_shape(void) {
 	// Tomato body
 	shape_t *body = create_polygon_shape(15);
 	if (!body) return NULL;
@@ -167,19 +169,17 @@ shape_t *create_heart_shape(void) {
 	p[sides/2] = vec2_make(0.0f, 0.0f);
 	
 	// Make symmetrical spiral points
+	const float x0 = 0.325f;
+	const float y0 = 0.125f;
+	const float len = 0.333f;
 	int n = sides / 2;
 	for (int i = 1; i < n; i++) {
-		float angle = -1.125f + (float)(M_PI * 1.125) * i / n;
-		float x0 = 0.3f;
-		float y0 = 0.15f;
-		float len = 0.333f;
+		float angle = RADIANF * ((float)i / (float)n * 0.625f - 0.125f);
 		float x1 = x0 + cosf(angle) * len;
 		float y1 = y0 - sinf(angle) * len;
 		
-		p[i].x = x1;
-		p[i].y = y1;
-		p[sides - i].x = -x1;
-		p[sides - i].y = y1;
+		p[i] = vec2_make(x1, y1);
+		p[sides - i] = vec2_make(-x1, y1);
 	}
 	
 	return s;
@@ -194,6 +194,28 @@ shape_t *create_envelope_shape(void) {
 }
 
 shape_t *create_crescent_moon_shape(void) {
+	const int sides = 32;
+	shape_t *s = shape_new(sides);
+	if (!s) return NULL;
+	s->is_closed = true;
+	vec2_t *p = s->points;
+	
+	// Trace two circles through 3/4 of a circle
+	const float inner_offset = 0.25f;
+	const float inner_radius = 0.775f;
+	int n = sides / 2;
+	for (int i = 0; i < n; i++) {
+		float angle = RADIANF * ((float)i / (float)(n - 1) * 0.75f + 0.125f);
+		
+		p[i].x = cosf(angle);
+		p[i].y = -sinf(angle);
+		
+		int j = sides - i - 1;
+		p[j].x = cosf(angle) * inner_radius + inner_offset;
+		p[j].y = -sinf(angle) * inner_radius;
+	}
+	
+	return s;
 	return NULL;
 }
 

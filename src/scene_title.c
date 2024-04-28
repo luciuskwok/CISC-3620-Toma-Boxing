@@ -25,7 +25,7 @@ array_list_t *title_shapes = NULL;
 
 shape_t *title_tomato(vec2_t position, float scale, float speed) {
 	scale = 1.0f/7.0f * scale;
-	shape_t *s = create_tomato_shape();
+	shape_t *s = create_tomato_top_shape();
 	s->angular_momentum = speed * RAD_DEG;
 	s->scale = vec2_make(scale, scale);
 	s->position = position;
@@ -46,11 +46,18 @@ void title_init(void) {
 	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
 	
 	// Testing: create shapes being tested
-	shape_t *test = create_heart_shape();
-	test->fill_color = rgba_to_abgr(COLOR_RGB_PINK, 127);
-	test->line_color = rgba_to_abgr(COLOR_RGB_WHITE, 255);
-	test->scale = vec2_make(0.48f, 0.48f);
-	array_list_add(title_shapes, test);
+	shape_t *test1 = create_heart_shape();
+	test1->fill_color = rgba_to_abgr(COLOR_RGB_PINK, 127);
+	test1->line_color = rgba_to_abgr(COLOR_RGB_WHITE, 255);
+	test1->scale = vec2_make(0.48f, 0.48f);
+	//array_list_add(title_shapes, test1);
+
+	// Testing: create shapes being tested
+	shape_t *test2 = create_crescent_moon_shape();
+	test2->fill_color = rgba_to_abgr(COLOR_RGB_PINK, 127);
+	test2->line_color = rgba_to_abgr(COLOR_RGB_WHITE, 255);
+	test2->scale = vec2_make(0.48f, 0.48f);
+	array_list_add(title_shapes, test2);
 }
 
 void title_start(void) {

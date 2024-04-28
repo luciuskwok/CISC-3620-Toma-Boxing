@@ -45,7 +45,7 @@ shape_t *create_rectangle_shape(float w, float h);
 shape_t *create_polygon_shape(int sides);
 shape_t *create_star_shape(int points, float indent);
 
-shape_t *create_tomato_shape(void);
+shape_t *create_tomato_top_shape(void);
 shape_t *create_heart_shape(void);
 shape_t *create_microphone_shape(void);
 shape_t *create_envelope_shape(void);
