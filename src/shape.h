@@ -42,16 +42,17 @@ shape_t *shape_new(int point_count);
 void shape_destroy(shape_t *shape);
 
 shape_t *create_rectangle_shape(float w, float h);
-shape_t *create_polygon_shape(int sides);
-shape_t *create_star_shape(int points, float indent);
+shape_t *create_polygon_shape(int sides, float radius);
+shape_t *create_star_shape(int points, float radius, float indent);
 
 shape_t *create_tomato_top_shape(void);
-shape_t *create_heart_shape(void);
+shape_t *create_tomato_side_shape(void);
 shape_t *create_microphone_shape(void);
-shape_t *create_envelope_shape(uint32_t line_color, uint32_t fill_color);
-shape_t *create_crescent_moon_shape(void);
-
 shape_t *create_toemaniac_shape(void);
+
+shape_t *create_heart_shape(void);
+shape_t *create_crescent_moon_shape(void);
+shape_t *create_envelope_shape(uint32_t line_color, uint32_t fill_color);
 
 void shape_update(shape_t *shape, double delta_time);
 void shape_draw(shape_t *shape, mat3_t transform);

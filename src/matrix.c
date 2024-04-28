@@ -10,7 +10,7 @@
 
 #pragma mark - 2D Matrix
 
-mat3_t mat3_get_identity(void) {
+mat3_t mat3_identity(void) {
 	mat3_t m;
 	m.m[0][0] = 1; m.m[0][1] = 0; m.m[0][2] = 0;
 	m.m[1][0] = 0; m.m[1][1] = 1; m.m[1][2] = 0;
@@ -69,7 +69,7 @@ vec2_t vec2_mat3_multiply(const vec2_t v, const mat3_t m) {
 
 #pragma mark - 3D Matrix
 
-mat4_t mat4_get_identity(void) {
+mat4_t mat4_identity(void) {
 	mat4_t m;
 	m.m[0][0] = 1; m.m[0][1] = 0; m.m[0][2] = 0; m.m[0][3] = 0;
 	m.m[1][0] = 0; m.m[1][1] = 1; m.m[1][2] = 0; m.m[1][3] = 0;

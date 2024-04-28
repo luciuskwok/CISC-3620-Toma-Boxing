@@ -46,16 +46,17 @@ void title_init(void) {
 	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
 	
 	// Testing: create shapes being tested
-	shape_t *test1 = create_envelope_shape(rgba_to_abgr(COLOR_RGB_TOMATO_RED, 255), rgba_to_abgr(0xFAEAEB, 255));
+	shape_t *test1 = create_envelope_shape(rgba_to_abgr(COLOR_RGB_TOMATO_TOP_PINK, 255), rgba_to_abgr(0xFAEAEB, 255));
 	test1->scale = vec2_make(0.75f, 0.75f);
-	array_list_add(title_shapes, test1);
+	//test1->angular_momentum = 1.0f;
+	//test1->linear_momentum = vec2_make(-0.125f, -0.25f);
+	//array_list_add(title_shapes, test1);
 
 	// Testing: create shapes being tested
-	shape_t *test2 = create_crescent_moon_shape();
-	test2->line_color = rgba_to_abgr(COLOR_RGB_WHITE, 255);
-	test2->fill_color = rgba_to_abgr(COLOR_RGB_PINK, 127);
-	test2->scale = vec2_make(0.48f, 0.48f);
-	//array_list_add(title_shapes, test2);
+	shape_t *test2 = create_tomato_side_shape();
+	test2->scale = vec2_make(0.4f, 0.4f);
+	test2->angular_momentum = 5.0f * RAD_DEG;
+	array_list_add(title_shapes, test2);
 }
 
 void title_start(void) {

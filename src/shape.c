@@ -102,7 +102,7 @@ shape_t *create_rectangle_shape(float w, float h) {
 	return s;
 }
 
-shape_t *create_polygon_shape(int sides) {
+shape_t *create_polygon_shape(int sides, float radius) {
 	/* Creates a n-sided polygon starting from (1, 0) and going clockwise,
 	   assuming a coordinate system with positive y is down.
 	 */
@@ -112,13 +112,13 @@ shape_t *create_polygon_shape(int sides) {
 	vec2_t *p = s->points;
 	for (int i = 0; i < sides; i++) {
 		float angle = (float)(M_PI * 2.0) * i / sides;
-		p[i].x = cosf(angle);
-		p[i].y = sinf(angle);
+		p[i].x = cosf(angle) * radius;
+		p[i].y = sinf(angle) * radius;
 	}
 	return s;
 }
 
-shape_t *create_star_shape(int points, float indent) {
+shape_t *create_star_shape(int points, float radius, float indent) {
 	int n = points * 2;
 	shape_t *s = shape_new(n);
 	if (!s) return NULL;
@@ -126,7 +126,7 @@ shape_t *create_star_shape(int points, float indent) {
 	vec2_t *p = s->points;
 	for (int i = 0; i < n; i++) {
 		float a = (float)(M_PI * 2.0) * i / n;
-		float d = (i % 2 == 0)? 1.0f : indent;
+		float d = radius * (i % 2 == 0? 1.0f : indent);
 		p[i].x = cosf(a) * d;
 		p[i].y = sinf(a) * d;
 	}
@@ -135,26 +135,107 @@ shape_t *create_star_shape(int points, float indent) {
 
 shape_t *create_tomato_top_shape(void) {
 	// Tomato body
-	shape_t *body = create_polygon_shape(15);
+	shape_t *body = create_polygon_shape(15, 1.0f);
 	if (!body) return NULL;
 	body->line_color = COLOR_ABGR_WHITE;
-	body->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_RED);
+	body->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_TOP_PINK);
 	
 	// Tomato top or leaves
 	const float top_scale = 7.0f/13.0f;
-	shape_t *top = create_star_shape(5, 0.25f);
+	shape_t *top = create_star_shape(5, 1.0f, 0.25f);
 	if (!top) {
 		shape_destroy(body);
 		return NULL;
 	}
 	top->scale = vec2_make(top_scale, top_scale);
 	top->line_color = 0;
-	top->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_GREEN);
+	top->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_TOP_GREEN);
 	
 	// Add top to body
 	shape_add_child(body, top);
 	
 	return body;
+}
+
+const int tomato_leaves_points_len = 19;
+vec2_t tomato_leaves_points[tomato_leaves_points_len] = {
+	{50, 16},
+	{62, 16},
+	{67, 19},
+	{64, 21},
+	{53, 23},
+	{59, 25},
+	{64, 29},
+	{63, 31},
+	{58, 31},
+	{50, 26},
+	
+	{46 ,29},
+	{42, 32},
+	{39, 30},
+	{41, 26},
+	{45, 22},
+	{32, 24},
+	{29, 21},
+	{38, 17},
+	{46, 16}
+};
+
+const int tomato_stem_points_len = 4;
+vec2_t tomato_stem_points[tomato_stem_points_len] = {
+	{47, 18},
+	{41, 6},
+	{49, 5},
+	{51, 18}
+};
+
+shape_t *create_tomato_side_shape(void) {
+	// Tomato body
+	shape_t *body = create_polygon_shape(32, 0.4f);
+	if (!body) return NULL;
+	body->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_SIDE_OUTLINE);
+	body->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_SIDE_FILL);
+	
+	// Transform for leaves and stem
+	mat3_t tr = mat3_identity();
+	tr = mat3_scale(tr, vec2_make(0.01f, 0.01f));
+	tr = mat3_translate(tr, vec2_make(-50, -60));
+	
+	// Leaves
+	shape_t *leaves = shape_new(tomato_leaves_points_len);
+	if (leaves) {
+		leaves->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_OUTLINE);
+		leaves->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_FILL);
+		for (int i=0; i<tomato_leaves_points_len; i++) {
+			leaves->points[i] = vec2_mat3_multiply(tomato_leaves_points[i], tr);
+		}
+		shape_add_child(body, leaves);
+	}
+	
+	// Stem
+	shape_t *stem = shape_new(tomato_stem_points_len);
+	if (stem) {
+		stem->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_OUTLINE);
+		stem->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_FILL);
+		stem->is_closed = false;
+		for (int i=0; i<tomato_stem_points_len; i++) {
+			stem->points[i] = vec2_mat3_multiply(tomato_stem_points[i], tr);
+		}
+		shape_add_child(body, stem);
+	}
+
+	return body;
+}
+
+
+shape_t *create_microphone_shape(void) {
+	// TODO: implement create_microphone_shape
+	return NULL;
+}
+
+shape_t *create_toemaniac_shape(void) {
+	// TODO: implement create_microphone_shape
+	return NULL;
 }
 
 shape_t *create_heart_shape(void) {
@@ -183,10 +264,6 @@ shape_t *create_heart_shape(void) {
 	}
 	
 	return s;
-}
-
-shape_t *create_microphone_shape(void) {
-	return NULL;
 }
 
 shape_t *create_envelope_shape(uint32_t line_color, uint32_t fill_color) {
@@ -234,10 +311,6 @@ shape_t *create_crescent_moon_shape(void) {
 	}
 	
 	return s;
-	return NULL;
-}
-
-shape_t *create_toemaniac_shape(void) {
 	return NULL;
 }
 
