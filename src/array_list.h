@@ -16,7 +16,7 @@ typedef struct {
 	void **array;
 } array_list_t;
 
-array_list_t *array_list_make(int initial_capacity);
+array_list_t *array_list_new(int initial_capacity);
 void array_list_destroy(array_list_t *a);
 bool array_list_add(array_list_t *a, void *element);
 bool array_list_remove(array_list_t *a, void *element);

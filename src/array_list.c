@@ -8,7 +8,7 @@
 #include "array_list.h"
 #include <stdlib.h>
 
-array_list_t *array_list_make(int initial_capacity) {
+array_list_t *array_list_new(int initial_capacity) {
 	array_list_t *a = malloc(sizeof(array_list_t));
 	if (!a) return NULL;
 	

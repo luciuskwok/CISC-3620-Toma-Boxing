@@ -48,7 +48,7 @@ shape_t *create_star_shape(int points, float indent);
 shape_t *create_tomato_top_shape(void);
 shape_t *create_heart_shape(void);
 shape_t *create_microphone_shape(void);
-shape_t *create_envelope_shape(void);
+shape_t *create_envelope_shape(uint32_t line_color, uint32_t fill_color);
 shape_t *create_crescent_moon_shape(void);
 
 shape_t *create_toemaniac_shape(void);

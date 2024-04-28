@@ -36,7 +36,7 @@ void title_init(void) {
 	title_image = load_bmp_image("assets/title_background.bmp");
 	
 	// Create tomato shapes that rotate
-	title_shapes = array_list_make(16);
+	title_shapes = array_list_new(16);
 	const float grid = 0.2f;
 		
 	array_list_add(title_shapes, title_tomato(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f));
@@ -46,18 +46,16 @@ void title_init(void) {
 	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
 	
 	// Testing: create shapes being tested
-	shape_t *test1 = create_heart_shape();
-	test1->fill_color = rgba_to_abgr(COLOR_RGB_PINK, 127);
-	test1->line_color = rgba_to_abgr(COLOR_RGB_WHITE, 255);
-	test1->scale = vec2_make(0.48f, 0.48f);
-	//array_list_add(title_shapes, test1);
+	shape_t *test1 = create_envelope_shape(rgba_to_abgr(COLOR_RGB_TOMATO_RED, 255), rgba_to_abgr(0xFAEAEB, 255));
+	test1->scale = vec2_make(0.75f, 0.75f);
+	array_list_add(title_shapes, test1);
 
 	// Testing: create shapes being tested
 	shape_t *test2 = create_crescent_moon_shape();
-	test2->fill_color = rgba_to_abgr(COLOR_RGB_PINK, 127);
 	test2->line_color = rgba_to_abgr(COLOR_RGB_WHITE, 255);
+	test2->fill_color = rgba_to_abgr(COLOR_RGB_PINK, 127);
 	test2->scale = vec2_make(0.48f, 0.48f);
-	array_list_add(title_shapes, test2);
+	//array_list_add(title_shapes, test2);
 }
 
 void title_start(void) {

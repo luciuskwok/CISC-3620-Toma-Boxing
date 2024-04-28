@@ -77,7 +77,7 @@ void shape_destroy(shape_t *shape) {
 
 bool shape_add_child(shape_t *shape, shape_t *child) {
 	if (!shape->children) {
-		shape->children = array_list_make(4);
+		shape->children = array_list_new(4);
 		if (!shape->children) return false;
 	}
 	return array_list_add(shape->children, child);
@@ -189,8 +189,26 @@ shape_t *create_microphone_shape(void) {
 	return NULL;
 }
 
-shape_t *create_envelope_shape(void) {
-	return NULL;
+shape_t *create_envelope_shape(uint32_t line_color, uint32_t fill_color) {
+	shape_t *s = create_rectangle_shape(1.0f, 0.6f);
+	if (!s) return NULL;
+	s->line_color = line_color;
+	s->fill_color = fill_color;
+	
+	// Add line for flap
+	shape_t *flap = shape_new(3);
+	flap->is_closed = false;
+	flap->line_color = line_color;
+	flap->fill_color = 0;
+	vec2_t *p = flap->points;
+	p[0] = vec2_make(-0.5f, -0.3f);
+	p[1] = vec2_make(0.0f, 0.0f);
+	p[2] = vec2_make(0.5f, -0.3f);
+	shape_add_child(s, flap);
+	
+	// Add tomato sticker
+	
+	return s;
 }
 
 shape_t *create_crescent_moon_shape(void) {

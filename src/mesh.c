@@ -68,7 +68,7 @@ void mesh_destroy(mesh_t *mesh) {
 
 bool mesh_add_child(mesh_t *mesh, mesh_t *child) {
 	if (!mesh->children) {
-		mesh->children = array_list_make(4);
+		mesh->children = array_list_new(4);
 		if (!mesh->children) return false;
 	}
 	return array_list_add(mesh->children, child);
