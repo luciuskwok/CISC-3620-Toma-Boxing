@@ -14,23 +14,59 @@
 #include "mesh.h"
 #include "mesh_creation.h"
 #include "scene_manager.h"
+#include "sequencer.h"
 #include "ui_progress_bar.h"
 
 
 // Globals
 double time_remaining = -1.0;
 double last_music_position = 0.0;
-uint32_t background_color = COLOR_ABGR_BLACK;
+
+// Scene objects and parameters
+gameplay_t *g_gameplay = NULL;
 
 
 void gameplay_init(void) {
-	// Create all the meshes and shapes that will be used in this scene.
+	g_gameplay = malloc(sizeof(gameplay_t));
+	if (!g_gameplay) {
+		fprintf(stderr, "Could not allocate memory for g_gameplay!\n");
+		return;
+	}
+	g_gameplay->bg_color = COLOR_ABGR_BLACK;
+
+	// Allocate memory to hold all the meshes and shapes that will be used in this scene.
+	g_gameplay->shapes = array_list_new(256);
+	if (!g_gameplay->shapes) {
+		fprintf(stderr, "Could not allocate memory for shapes!\n");
+		return;
+	}
+	g_gameplay->meshes = array_list_new(256);
+	if (!g_gameplay->meshes) {
+		fprintf(stderr, "Could not allocate memory for meshes!\n");
+		return;
+	}
+	
 }
 
 void gameplay_start(void) {
 	time_remaining = -1.0;
 	last_music_position = 0.0;
 	
+	// Add shapes and meshes to list of objects in scene
+	shape_t **s = (shape_t **)g_gameplay->shapes->array;
+	int sn = g_gameplay->shapes->length;
+	for (int i=0; i<sn; i++) {
+		scene_add_shape(s[i]);
+	}
+	mesh_t **m = (mesh_t **)g_gameplay->meshes->array;
+	int mn = g_gameplay->meshes->length;
+	for (int i=0; i<mn; i++) {
+		scene_add_mesh(m[i]);
+	}
+	
+	// Restart sequencer
+	sequencer_start(g_gameplay);
+
 	// Start playing music
 	start_music();
 	set_scene_paused(false);
@@ -71,10 +107,6 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 	return false;
 }
 
-void sequencer_update(double previous_time, double current_time) {
-	
-}
-
 void gameplay_update(double delta_time) {
 	// Do not update if paused
 	if (get_scene_paused()) return;
@@ -88,7 +120,7 @@ void gameplay_update(double delta_time) {
 			double position = get_music_position();
 			time_remaining = total - position;
 			fraction = position / total;
-			sequencer_update(last_music_position, position);
+			sequencer_update(g_gameplay, last_music_position, position);
 			last_music_position = position;
 		}
 	} else {
@@ -105,7 +137,7 @@ void gameplay_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	set_fill_color_abgr(background_color);
+	set_fill_color_abgr(g_gameplay->bg_color);
 	fill_screen();
 	
 	// Draw meshes and shapes

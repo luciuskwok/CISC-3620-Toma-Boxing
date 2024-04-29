@@ -8,9 +8,18 @@
 #ifndef scene_gameplay_h
 #define scene_gameplay_h
 
+#include "array_list.h"
+
 #include <SDL2/SDL.h>
 #include <stdbool.h>
 #include <stdint.h>
+
+// Scene parameters
+typedef struct {
+	uint32_t bg_color;
+	array_list_t *shapes;
+	array_list_t *meshes;
+} gameplay_t;
 
 void gameplay_init(void);
 void gameplay_start(void);

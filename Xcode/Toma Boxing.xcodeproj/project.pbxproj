@@ -35,6 +35,7 @@
 		E07E0A712BB67C3100BD3D4E /* ui_progress_bar.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A702BB67C3100BD3D4E /* ui_progress_bar.c */; };
 		E07E0A732BB68AEF00BD3D4E /* title_background.bmp in Copy Assets */ = {isa = PBXBuildFile; fileRef = E07E0A722BB68AE000BD3D4E /* title_background.bmp */; };
 		E08486112BD8B81600747F30 /* custom_font in Copy Assets */ = {isa = PBXBuildFile; fileRef = E08486102BD8B80400747F30 /* custom_font */; };
+		E0A923F22BE02DEF005C14B9 /* sequencer.c in Sources */ = {isa = PBXBuildFile; fileRef = E0A923F12BE02DEF005C14B9 /* sequencer.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -112,6 +113,8 @@
 		E07E0A702BB67C3100BD3D4E /* ui_progress_bar.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ui_progress_bar.c; sourceTree = "<group>"; };
 		E07E0A722BB68AE000BD3D4E /* title_background.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = title_background.bmp; sourceTree = "<group>"; };
 		E08486102BD8B80400747F30 /* custom_font */ = {isa = PBXFileReference; lastKnownFileType = file; path = custom_font; sourceTree = "<group>"; };
+		E0A923F02BE02DEF005C14B9 /* sequencer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = sequencer.h; sourceTree = "<group>"; };
+		E0A923F12BE02DEF005C14B9 /* sequencer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = sequencer.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +159,8 @@
 				E07E0A642BB6370700BD3D4E /* scene_instructions.c */,
 				E07E0A662BB6371B00BD3D4E /* scene_gameplay.h */,
 				E07E0A672BB6371B00BD3D4E /* scene_gameplay.c */,
+				E0A923F02BE02DEF005C14B9 /* sequencer.h */,
+				E0A923F12BE02DEF005C14B9 /* sequencer.c */,
 				E07E0A692BB637B700BD3D4E /* scene_results.h */,
 				E07E0A6A2BB637B700BD3D4E /* scene_results.c */,
 				E07E0A6C2BB63CD500BD3D4E /* scene_manager.h */,
@@ -271,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E00F802C2BB1CDE500D78335 /* audio_player.c in Sources */,
+				E0A923F22BE02DEF005C14B9 /* sequencer.c in Sources */,
 				E040D28B2BB356EF00FDBF10 /* image.c in Sources */,
 				E00F80192BB1302100D78335 /* vector.c in Sources */,
 				E07E0A652BB6370700BD3D4E /* scene_instructions.c in Sources */,
