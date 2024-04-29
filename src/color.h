@@ -10,11 +10,11 @@
 
 #include <stdint.h>
 
-// ABGR color constants
+// ABGR color
 #define COLOR_ABGR_BLACK 	(0xFF000000)
 #define COLOR_ABGR_WHITE 	(0xFFFFFFFF)
 
-// RGB color constants
+// RGB color
 #define COLOR_RGB_BLACK 		(0x000000)
 #define COLOR_RGB_WHITE 		(0xFFFFFF)
 #define COLOR_RGB_GRAY 			(0x888888)
@@ -23,21 +23,6 @@
 #define COLOR_RGB_RED 			(0xFF0000)
 #define COLOR_RGB_GREEN 		(0x00FF00)
 #define COLOR_RGB_BLUE 			(0x0000FF)
-
-#define COLOR_RGB_PINK 			(0xEA8193)
-#define COLOR_RGB_LIME 			(0x99E550)
-#define COLOR_RGB_LIGHT_BLUE 	(0x8888FF)
-
-#define COLOR_RGB_TOMATO_TOP_PINK (0xF68598)
-#define COLOR_RGB_TOMATO_TOP_GREEN (0xD7E87F)
-
-#define COLOR_RGB_DARK_GREEN 	(0x65A97C)
-#define COLOR_RGB_DARK_RED 		(0xff5260)
-
-#define COLOR_RGB_TOMATO_SIDE_FILL (0xff5260)
-#define COLOR_RGB_TOMATO_SIDE_OUTLINE (0x73030D)
-#define COLOR_RGB_TOMATO_LEAF_OUTLINE (0x65a97c)
-#define COLOR_RGB_TOMATO_LEAF_FILL (0xbcf845)
 
 #define COLOR_RGB_GRAY_90		(0xE5E5E5)
 #define COLOR_RGB_GRAY_80		(0xCCCCCC)
@@ -48,6 +33,23 @@
 #define COLOR_RGB_GRAY_30		(0x4C4C4C)
 #define COLOR_RGB_GRAY_20		(0x333333)
 #define COLOR_RGB_GRAY_10		(0x191919)
+
+// Toma color palette from title background
+#define COLOR_RGB_OUTLINE 		(0x68283C)
+#define COLOR_RGB_SKIN_1 		(0xFAE6DC)
+#define COLOR_RGB_SKIN_2 		(0xF5A9A5)
+#define COLOR_RGB_PINK_1 		(0xFFCFD0)
+#define COLOR_RGB_PINK_2 		(0xFEB7BA)
+#define COLOR_RGB_PINK_3 		(0xF27F84)
+#define COLOR_RGB_RED_1 		(0xFF5260)
+#define COLOR_RGB_RED_2 		(0xFE7D92)
+#define COLOR_RGB_RED_3 		(0xCB5D73)
+#define COLOR_RGB_GREEN_1 		(0xDDFB8A)
+#define COLOR_RGB_GREEN_2		(0x8FE2B7)
+#define COLOR_RGB_GREEN_3 		(0x809B88)
+#define COLOR_RGB_GREEN_4 		(0x65A97C)
+#define COLOR_RGB_WHITE_3 		(0xBBC5E1)
+#define COLOR_RGB_WHITE_2 		(0xF7F0F4)
 
 /* More colors
 	Light pink bkgnd:	#FAE4E2

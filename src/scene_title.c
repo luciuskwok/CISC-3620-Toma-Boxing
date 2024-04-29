@@ -46,7 +46,7 @@ void title_init(void) {
 	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
 	
 	// Testing: create shapes being tested
-	shape_t *test1 = create_envelope_shape(rgba_to_abgr(COLOR_RGB_TOMATO_TOP_PINK, 255), rgba_to_abgr(0xFAEAEB, 255));
+	shape_t *test1 = create_envelope_shape(rgba_to_abgr(COLOR_RGB_PINK_1, 255), rgba_to_abgr(0xFAEAEB, 255));
 	test1->scale = vec2_make(0.75f, 0.75f);
 	//test1->angular_momentum = 1.0f;
 	//test1->linear_momentum = vec2_make(-0.125f, -0.25f);
@@ -110,7 +110,7 @@ void title_render(void) {
 	move_to(p);
 	set_fill_color_abgr(COLOR_ABGR_WHITE);
 	atari_draw_shadowed_text("Press ", 1, shadow_color);
-	set_fill_color_abgr(rgb_to_abgr((t >= 0.5)? COLOR_RGB_LIME : COLOR_RGB_DARK_RED));
+	set_fill_color_abgr(rgb_to_abgr((t >= 0.5)? COLOR_RGB_GREEN_1 : COLOR_RGB_RED_1));
 	atari_draw_shadowed_text("Space ", 1, shadow_color);
 	set_fill_color_abgr(COLOR_ABGR_WHITE);
 	atari_draw_shadowed_text("to Start", 1, shadow_color);

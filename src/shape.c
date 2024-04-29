@@ -24,23 +24,28 @@ shape_t *shape_new(int point_count) {
 		fprintf(stderr, "Unable to allocate shape!\n");
 		return NULL;
 	}
-	vec2_t *points = malloc(sizeof(vec2_t) * (size_t)point_count);
-	if (!points) {
-		fprintf(stderr, "Unable to allocate shape points!\n");
-		free(shape);
-		return NULL;
-	}
-	vec2_t *proj_pts = malloc(sizeof(vec2_t) * (size_t)point_count);
-	if (!proj_pts) {
-		fprintf(stderr, "Unable to allocate shape points!\n");
-		free(shape);
-		free(points);
-		return NULL;
+	if (point_count > 0) {
+		vec2_t *points = malloc(sizeof(vec2_t) * (size_t)point_count);
+		if (!points) {
+			fprintf(stderr, "Unable to allocate shape points!\n");
+			free(shape);
+			return NULL;
+		}
+		shape->points = points;
+
+		vec2_t *proj_pts = malloc(sizeof(vec2_t) * (size_t)point_count);
+		if (!proj_pts) {
+			fprintf(stderr, "Unable to allocate shape points!\n");
+			free(shape);
+			free(points);
+			return NULL;
+		}
+		shape->projected_points = proj_pts;
+	} else {
+		shape->points = shape->projected_points = NULL;
 	}
 	
 	shape->point_count = point_count;
-	shape->points = points;
-	shape->projected_points = proj_pts;
 	shape->is_closed = true;
 	shape->children = NULL;
 	
@@ -70,8 +75,8 @@ void shape_destroy(shape_t *shape) {
 		array_list_destroy(shape->children);
 	}
 	
-	free(shape->points);
-	free(shape->projected_points);
+	if (shape->points) free(shape->points);
+	if (shape->projected_points) free(shape->projected_points);
 	free(shape);
 }
 
@@ -138,7 +143,7 @@ shape_t *create_tomato_top_shape(void) {
 	shape_t *body = create_polygon_shape(15, 1.0f);
 	if (!body) return NULL;
 	body->line_color = COLOR_ABGR_WHITE;
-	body->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_TOP_PINK);
+	body->fill_color = rgb_to_abgr(COLOR_RGB_PINK_3);
 	
 	// Tomato top or leaves
 	const float top_scale = 7.0f/13.0f;
@@ -149,7 +154,7 @@ shape_t *create_tomato_top_shape(void) {
 	}
 	top->scale = vec2_make(top_scale, top_scale);
 	top->line_color = 0;
-	top->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_TOP_GREEN);
+	top->fill_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
 	
 	// Add top to body
 	shape_add_child(body, top);
@@ -193,8 +198,8 @@ shape_t *create_tomato_side_shape(void) {
 	// Tomato body
 	shape_t *body = create_polygon_shape(32, 0.4f);
 	if (!body) return NULL;
-	body->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_SIDE_OUTLINE);
-	body->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_SIDE_FILL);
+	body->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	body->fill_color = rgb_to_abgr(COLOR_RGB_RED_1);
 	
 	// Transform for leaves and stem
 	mat3_t tr = mat3_identity();
@@ -204,8 +209,8 @@ shape_t *create_tomato_side_shape(void) {
 	// Leaves
 	shape_t *leaves = shape_new(tomato_leaves_points_len);
 	if (leaves) {
-		leaves->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_OUTLINE);
-		leaves->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_FILL);
+		leaves->line_color = rgb_to_abgr(COLOR_RGB_GREEN_3);
+		leaves->fill_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
 		for (int i=0; i<tomato_leaves_points_len; i++) {
 			leaves->points[i] = vec2_mat3_multiply(tomato_leaves_points[i], tr);
 		}
@@ -215,8 +220,8 @@ shape_t *create_tomato_side_shape(void) {
 	// Stem
 	shape_t *stem = shape_new(tomato_stem_points_len);
 	if (stem) {
-		stem->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_OUTLINE);
-		stem->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_FILL);
+		stem->line_color = rgb_to_abgr(COLOR_RGB_GREEN_3);
+		stem->fill_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
 		stem->is_closed = false;
 		for (int i=0; i<tomato_stem_points_len; i++) {
 			stem->points[i] = vec2_mat3_multiply(tomato_stem_points[i], tr);
@@ -272,8 +277,8 @@ shape_t *create_microphone_shape(void) {
 	// Microphone shape
 	shape_t *mic = shape_new(microphone_points_len * 2);
 	if (mic) {
-		mic->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_SIDE_OUTLINE);
-		mic->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_TOP_PINK);
+		mic->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+		mic->fill_color = rgb_to_abgr(COLOR_RGB_PINK_1);
 		int n = microphone_points_len * 2;
 		for (int i=0; i<microphone_points_len; i++) {
 			vec2_t pt = vec2_mat3_multiply(microphone_points[i], tr);
@@ -286,7 +291,7 @@ shape_t *create_microphone_shape(void) {
 	// Microphone upper line
 	shape_t *upper_line = shape_new(microphone_upper_line_points_len);
 	if (upper_line) {
-		upper_line->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_SIDE_FILL);
+		upper_line->line_color = rgb_to_abgr(COLOR_RGB_RED_3);
 		upper_line->fill_color = 0;
 		upper_line->is_closed = false;
 		for (int i=0; i<microphone_upper_line_points_len; i++) {
@@ -298,8 +303,8 @@ shape_t *create_microphone_shape(void) {
 	// Microphone lower band
 	shape_t *lower_band = shape_new(microphone_lower_band_points_len * 2);
 	if (lower_band) {
-		lower_band->line_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_OUTLINE);
-		lower_band->fill_color = rgb_to_abgr(COLOR_RGB_TOMATO_LEAF_FILL);
+		lower_band->line_color = rgb_to_abgr(COLOR_RGB_GREEN_3);
+		lower_band->fill_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
 		int n = microphone_lower_band_points_len * 2;
 		for (int i=0; i<microphone_lower_band_points_len; i++) {
 			vec2_t pt = vec2_mat3_multiply(microphone_lower_band_points[i], tr);
@@ -425,7 +430,7 @@ void shape_draw(shape_t *shape, mat3_t transform) {
 	transform = mat3_rotate(transform, shape->rotation);
 	transform = mat3_scale(transform, shape->scale);
 
-	if (shape->point_count >= 2) {
+	if (shape->point_count >= 2 && shape->points && shape->projected_points) {
 		set_line_color_abgr(shape->line_color);
 		set_fill_color_abgr(shape->fill_color);
 		

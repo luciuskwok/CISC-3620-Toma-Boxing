@@ -59,7 +59,7 @@ void results_render(void) {
 	
 	// Left column: labels
 	const int line_height = 12;
-	set_fill_color_rgba(COLOR_RGB_PINK, 255);
+	set_fill_color_rgba(COLOR_RGB_PINK_1, 255);
 	p.y = top_margin + title_spacing;
 	move_to(p);
 	atari_draw_text("Great", 1);
@@ -82,7 +82,7 @@ void results_render(void) {
 	// Right column: alues
 	p.x = left_margin + 14 * 8;
 	p.y = top_margin + title_spacing;
-	set_fill_color_rgba(COLOR_RGB_LIME, 255);
+	set_fill_color_rgba(COLOR_RGB_GREEN_1, 255);
 	move_to(p);
 	atari_draw_right_justified_text("123", 1);
 	p.y += line_height;

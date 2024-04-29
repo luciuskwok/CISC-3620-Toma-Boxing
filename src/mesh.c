@@ -26,15 +26,19 @@ mesh_t *mesh_new(int face_count) {
 		fprintf(stderr, "Unable to allocate mesh!\n");
 		return NULL;
 	}
-	mesh_face_t *faces = malloc(sizeof(mesh_face_t) * (size_t)face_count);
-	if (!faces) {
-		fprintf(stderr, "Unable to allocate mesh faces!\n");
-		free(mesh);
-		return NULL;
+	if (face_count > 0) {
+		mesh_face_t *faces = malloc(sizeof(mesh_face_t) * (size_t)face_count);
+		if (!faces) {
+			fprintf(stderr, "Unable to allocate mesh faces!\n");
+			free(mesh);
+			return NULL;
+		}
+		mesh->faces = faces;
+	} else {
+		mesh->faces = NULL;
 	}
 	
 	mesh->face_count = face_count;
-	mesh->faces = faces;
 	mesh->children = NULL;
 	
 	// Visuals
@@ -62,7 +66,7 @@ void mesh_destroy(mesh_t *mesh) {
 		array_list_destroy(mesh->children);
 	}
 
-	free(mesh->faces);
+	if (mesh->faces) free(mesh->faces);
 	free(mesh);
 }
 
@@ -102,52 +106,54 @@ void mesh_update(mesh_t *mesh, double delta_time) {
 void mesh_draw(mesh_t *mesh, mat4_t transform) {
 	if (!mesh->is_visible) return;
 	
-	vec3_t a3, b3, c3;
-	vec2_t a2, b2, c2;
-	vec3_t vab, vac, normal, camera_ray;
-	float dot_normal_camera;
-	const vec3_t camera_pos = get_camera_position();
-	const int point_w = 5;
-	
-	// Color
-	set_line_color_abgr(mesh->line_color);
-	set_fill_color_abgr(mesh->point_color);
-	
-	// Tranformation matrix
-	transform = mat4_translate(transform, mesh->position);
-	transform = mat4_apply_euler_angles(transform, mesh->rotation);
-	transform = mat4_scale(transform, mesh->scale);
-	
-	for (int i = 0; i < mesh->face_count; i++) {
-		mesh_face_t face = mesh->faces[i];
+	if (mesh->face_count > 0 && mesh->faces) {
+		vec3_t a3, b3, c3;
+		vec2_t a2, b2, c2;
+		vec3_t vab, vac, normal, camera_ray;
+		float dot_normal_camera;
+		const vec3_t camera_pos = get_camera_position();
+		const int point_w = 5;
 		
-		a3 = vec3_mat4_multiply(face.a, transform);
-		b3 = vec3_mat4_multiply(face.b, transform);
-		c3 = vec3_mat4_multiply(face.c, transform);
+		// Color
+		set_line_color_abgr(mesh->line_color);
+		set_fill_color_abgr(mesh->point_color);
 		
-		// Backface culling
-		vab = vec3_sub(b3, a3);
-		vac = vec3_sub(c3, a3);
-		normal = vec3_cross(vab, vac);
-		camera_ray = vec3_sub(a3, camera_pos);
-		dot_normal_camera = vec3_dot(camera_ray, normal);
+		// Tranformation matrix
+		transform = mat4_translate(transform, mesh->position);
+		transform = mat4_apply_euler_angles(transform, mesh->rotation);
+		transform = mat4_scale(transform, mesh->scale);
 		
-		if (dot_normal_camera > 0.0) {
-			// Project to 2D
-			a2 = perspective_project_point(a3);
-			b2 = perspective_project_point(b3);
-			c2 = perspective_project_point(c3);
+		for (int i = 0; i < mesh->face_count; i++) {
+			mesh_face_t face = mesh->faces[i];
 			
-			// Lines
-			move_to(a2);
-			line_to(b2);
-			line_to(c2);
-			line_to(a2);
+			a3 = vec3_mat4_multiply(face.a, transform);
+			b3 = vec3_mat4_multiply(face.b, transform);
+			c3 = vec3_mat4_multiply(face.c, transform);
 			
-			// Points
-			fill_centered_rect((int)a2.x, (int)a2.y, point_w, point_w);
-			fill_centered_rect((int)b2.x, (int)b2.y, point_w, point_w);
-			fill_centered_rect((int)c2.x, (int)c2.y, point_w, point_w);
+			// Backface culling
+			vab = vec3_sub(b3, a3);
+			vac = vec3_sub(c3, a3);
+			normal = vec3_cross(vab, vac);
+			camera_ray = vec3_sub(a3, camera_pos);
+			dot_normal_camera = vec3_dot(camera_ray, normal);
+			
+			if (dot_normal_camera > 0.0) {
+				// Project to 2D
+				a2 = perspective_project_point(a3);
+				b2 = perspective_project_point(b3);
+				c2 = perspective_project_point(c3);
+				
+				// Lines
+				move_to(a2);
+				line_to(b2);
+				line_to(c2);
+				line_to(a2);
+				
+				// Points
+				fill_centered_rect((int)a2.x, (int)a2.y, point_w, point_w);
+				fill_centered_rect((int)b2.x, (int)b2.y, point_w, point_w);
+				fill_centered_rect((int)c2.x, (int)c2.y, point_w, point_w);
+			}
 		}
 	}
 	
