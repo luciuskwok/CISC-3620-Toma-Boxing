@@ -24,7 +24,7 @@
 		E04CAC892BACB5570015EC5E /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 		E04CAC8D2BACB9FD0015EC5E /* SDL2.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = E04CAC872BACB5480015EC5E /* SDL2.framework */; };
 		E074B1452BDABADF0075A254 /* array_list.c in Sources */ = {isa = PBXBuildFile; fileRef = E074B1442BDABADF0075A254 /* array_list.c */; };
-		E074B1472BDACFBB0075A254 /* instructions_background.bmp in Copy Assets */ = {isa = PBXBuildFile; fileRef = E074B1462BDACFA60075A254 /* instructions_background.bmp */; };
+		E074B1472BDACFBB0075A254 /* basic_background.bmp in Copy Assets */ = {isa = PBXBuildFile; fileRef = E074B1462BDACFA60075A254 /* basic_background.bmp */; };
 		E07856652BBC84B300C31E16 /* mesh.c in Sources */ = {isa = PBXBuildFile; fileRef = E07856642BBC84B300C31E16 /* mesh.c */; };
 		E07856682BBCBF4700C31E16 /* shape.c in Sources */ = {isa = PBXBuildFile; fileRef = E07856672BBCBF4700C31E16 /* shape.c */; };
 		E07E0A622BB6340F00BD3D4E /* scene_title.c in Sources */ = {isa = PBXBuildFile; fileRef = E07E0A612BB6340F00BD3D4E /* scene_title.c */; };
@@ -45,7 +45,7 @@
 			dstSubfolderSpec = 16;
 			files = (
 				E08486112BD8B81600747F30 /* custom_font in Copy Assets */,
-				E074B1472BDACFBB0075A254 /* instructions_background.bmp in Copy Assets */,
+				E074B1472BDACFBB0075A254 /* basic_background.bmp in Copy Assets */,
 				E07E0A732BB68AEF00BD3D4E /* title_background.bmp in Copy Assets */,
 				E00F80292BB1CD4700D78335 /* Toma - All Night Radio.ogg in Copy Assets */,
 			);
@@ -93,7 +93,7 @@
 		E04CAC872BACB5480015EC5E /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL2.framework; sourceTree = "<group>"; };
 		E074B1432BDABADF0075A254 /* array_list.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = array_list.h; sourceTree = "<group>"; };
 		E074B1442BDABADF0075A254 /* array_list.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = array_list.c; sourceTree = "<group>"; };
-		E074B1462BDACFA60075A254 /* instructions_background.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = instructions_background.bmp; sourceTree = "<group>"; };
+		E074B1462BDACFA60075A254 /* basic_background.bmp */ = {isa = PBXFileReference; lastKnownFileType = image.bmp; path = basic_background.bmp; sourceTree = "<group>"; };
 		E07856632BBC84B300C31E16 /* mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
 		E07856642BBC84B300C31E16 /* mesh.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = mesh.c; sourceTree = "<group>"; };
 		E07856662BBCBF4700C31E16 /* shape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = shape.h; sourceTree = "<group>"; };
@@ -176,7 +176,7 @@
 			children = (
 				E08486102BD8B80400747F30 /* custom_font */,
 				E07E0A722BB68AE000BD3D4E /* title_background.bmp */,
-				E074B1462BDACFA60075A254 /* instructions_background.bmp */,
+				E074B1462BDACFA60075A254 /* basic_background.bmp */,
 				E00F80272BB1CD2E00D78335 /* Toma - All Night Radio.ogg */,
 			);
 			name = assets;

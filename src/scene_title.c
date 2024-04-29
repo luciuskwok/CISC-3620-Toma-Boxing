@@ -17,7 +17,6 @@
 
 
 // Globals
-image_t *title_image = NULL;
 array_list_t *title_shapes = NULL;
 
 #define RAD_DEG ((float)M_PI / 180.0f)
@@ -33,8 +32,6 @@ shape_t *title_tomato(vec2_t position, float scale, float speed) {
 }
 
 void title_init(void) {
-	title_image = load_bmp_image("assets/title_background.bmp");
-	
 	// Create tomato shapes that rotate
 	title_shapes = array_list_new(16);
 	const float grid = 0.2f;
@@ -46,17 +43,10 @@ void title_init(void) {
 	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
 	
 	// Testing: create shapes being tested
-	shape_t *test1 = create_envelope_shape(rgba_to_abgr(COLOR_RGB_PINK_1, 255), rgba_to_abgr(0xFAEAEB, 255));
-	test1->scale = vec2_make(0.75f, 0.75f);
-	//test1->angular_momentum = 1.0f;
-	//test1->linear_momentum = vec2_make(-0.125f, -0.25f);
-	//array_list_add(title_shapes, test1);
-
-	// Testing: create shapes being tested
-	shape_t *test2 = create_microphone_shape();
-	test2->scale = vec2_make(0.25f, 0.25f);
-	test2->angular_momentum = 5.0f * RAD_DEG;
-	array_list_add(title_shapes, test2);
+//	shape_t *test2 = create_microphone_shape();
+//	test2->scale = vec2_make(0.25f, 0.25f);
+//	test2->angular_momentum = 5.0f * RAD_DEG;
+//	array_list_add(title_shapes, test2);
 }
 
 void title_start(void) {
@@ -88,11 +78,11 @@ void title_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	// Draw image
-	p.x = scr_w/2 - title_image->w/2;
-	p.y = scr_h/2 - title_image->h/2;
+	// Draw background
+	p.x = scr_w/2 - image_title_background->w/2;
+	p.y = scr_h/2 - image_title_background->h/2;
 	move_to(p);
-	draw_image(title_image);
+	draw_image(image_title_background);
 	
 	// Draw meshes and shapes
 	draw_meshes();

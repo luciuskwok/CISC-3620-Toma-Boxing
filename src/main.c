@@ -15,10 +15,10 @@
 #include "audio_player.h"
 #include "color.h"
 #include "drawing.h"
+#include "image.h"
 #include "matrix.h"
-#include "vector.h"
-
 #include "scene_manager.h"
+#include "vector.h"
 
 #include <SDL2/SDL.h>
 #ifdef __EMSCRIPTEN__
@@ -169,7 +169,8 @@ int main(int argc, const char * argv[]) {
 	if (!atari_text_init()) return 0;
 
 	// Init all scenes
-	init_scene_manager();
+	image_init();
+	scene_manager_init();
 	
 	set_scene_index(SCENE_TITLE);
 	last_update_time = SDL_GetTicks64();

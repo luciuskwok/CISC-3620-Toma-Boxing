@@ -43,24 +43,27 @@ void results_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 	
-	set_fill_color_abgr(COLOR_ABGR_BLACK);
-	fill_screen();
-	
-	// Draw text
-	set_fill_color_abgr(COLOR_ABGR_WHITE);
-	
-	const int left_margin = scr_w / 2 + 16;
-	const int top_margin = 24;
-	const int title_spacing = 32;
-	p.x = left_margin;
-	p.y = top_margin;
+	// Background
+	p.x = scr_w/2 - image_basic_background->w/2;
+	p.y = scr_h/2 - image_basic_background->h/2;
 	move_to(p);
-	atari_draw_text("Results", 2);
+	draw_image(image_basic_background);
+
+	// Title
+	set_fill_color_rgba(COLOR_RGB_OUTLINE, 255);
+	move_to(vec2_make(scr_w / 2, 24));
+	atari_draw_centered_text("Results", 2);
+
+	// Table
+	const int table_width = 14 * 8;
+	const int left_margin = (scr_w - table_width) / 2;
+	const int top_margin = 48;
 	
 	// Left column: labels
 	const int line_height = 12;
-	set_fill_color_rgba(COLOR_RGB_PINK_1, 255);
-	p.y = top_margin + title_spacing;
+	set_fill_color_rgba(COLOR_RGB_RED_1, 255);
+	p.x = left_margin;
+	p.y = top_margin;
 	move_to(p);
 	atari_draw_text("Great", 1);
 	p.y += line_height;
@@ -80,9 +83,9 @@ void results_render(void) {
 	atari_draw_text("Score", 1);
 	
 	// Right column: alues
-	p.x = left_margin + 14 * 8;
-	p.y = top_margin + title_spacing;
-	set_fill_color_rgba(COLOR_RGB_GREEN_1, 255);
+	p.x = left_margin + table_width;
+	p.y = top_margin;
+	set_fill_color_rgba(COLOR_RGB_GREEN_3, 255);
 	move_to(p);
 	atari_draw_right_justified_text("123", 1);
 	p.y += line_height;
@@ -104,7 +107,7 @@ void results_render(void) {
 	p.x = scr_w / 2;
 	p.y = scr_h - 16;
 	move_to(p);
-	set_fill_color_abgr(COLOR_ABGR_WHITE);
+	set_fill_color_rgba(COLOR_RGB_OUTLINE, 255);
 	atari_draw_centered_text("Press Space to Return to Title", 1);
 	
 	// Draw meshes and shapes

@@ -18,6 +18,11 @@ typedef struct {
 	int h;
 } image_t;
 
+// Global images
+extern image_t *image_title_background;
+extern image_t *image_basic_background;
+
+void image_init(void);
 image_t *load_bmp_image(const char *file);
 
 void free_image(image_t *image);

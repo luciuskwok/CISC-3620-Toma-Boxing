@@ -14,6 +14,17 @@
 
 // Constants
 
+// Globals
+image_t *image_title_background = NULL;
+image_t *image_basic_background = NULL;
+
+void image_init(void) {
+	image_title_background = load_bmp_image("assets/title_background.bmp");
+	if (!image_title_background) fprintf(stderr, "image_title_background could not be loaded!\n");
+	image_basic_background = load_bmp_image("assets/basic_background.bmp");
+	if (!image_basic_background) fprintf(stderr, "image_basic_background could not be loaded!\n");
+}
+
 #pragma mark - File I/O
 
 uint32_t read_uint32(FILE *file) {

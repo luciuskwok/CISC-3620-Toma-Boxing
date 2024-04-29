@@ -19,7 +19,7 @@ array_list_t *mesh_list;
 bool is_scene_paused = false;
 
 
-void init_scene_manager(void) {
+void scene_manager_init(void) {
 	// Create array lists
 	shape_list = array_list_new(16);
 	mesh_list = array_list_new(16);

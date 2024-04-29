@@ -19,14 +19,12 @@
 // Globals
 mesh_t *mesh1 = NULL;
 mesh_t *mesh2 = NULL;
-image_t *instructions_image = NULL;
 
 
 void instructions_init(void) {
 	//mesh1 = mesh_create_diamond(4, 1.0f, 1.0f);
 	mesh1 = mesh_create_sphere(1);
 	mesh2 = mesh_create_cube();
-	instructions_image = load_bmp_image("assets/instructions_background.bmp");
 }
 
 void instructions_start(void) {
@@ -89,14 +87,11 @@ void instructions_render(void) {
 	int scr_w = get_screen_width();
 	int scr_h = get_screen_height();
 
-	set_fill_color_abgr(COLOR_ABGR_BLACK);
-	fill_screen();
-
-	// Draw image
-	p.x = scr_w/2 - instructions_image->w/2;
-	p.y = scr_h/2 - instructions_image->h/2;
+	// Draw backgroujd
+	p.x = scr_w/2 - image_basic_background->w/2;
+	p.y = scr_h/2 - image_basic_background->h/2;
 	move_to(p);
-	draw_image(instructions_image);
+	draw_image(image_basic_background);
 
 	// Draw meshes and shapes
 	draw_shapes();

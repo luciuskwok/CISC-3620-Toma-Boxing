@@ -24,7 +24,7 @@ typedef enum {
 	SCENE_RESULTS		/**< Results scene */
 } SCENE_INDEX;
 
-void init_scene_manager(void);
+void scene_manager_init(void);
 void scene_add_mesh(mesh_t *mesh);
 void scene_add_shape(shape_t *shape);
 
