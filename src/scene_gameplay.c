@@ -168,17 +168,17 @@ void gameplay_render(void) {
 	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
 	atari_draw_text("Toma - All Night Radio", 1);
 
-	p.x = scr_w - 9 * 8 - 4;
-	p.y = scr_h - 10;
-	move_to(p);
-	set_fill_color_rgba(COLOR_RGB_RED, 127);
-	atari_draw_text("A", 1);
-	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
-	atari_draw_text("/", 1);
-	set_fill_color_rgba(COLOR_RGB_RED, 127);
-	atari_draw_text("D", 1);
-	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
-	atari_draw_text(":Punch", 1);
+//	p.x = scr_w - 9 * 8 - 4;
+//	p.y = scr_h - 10;
+//	move_to(p);
+//	set_fill_color_rgba(COLOR_RGB_RED, 127);
+//	atari_draw_text("A", 1);
+//	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
+//	atari_draw_text("/", 1);
+//	set_fill_color_rgba(COLOR_RGB_RED, 127);
+//	atari_draw_text("D", 1);
+//	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
+//	atari_draw_text(":Punch", 1);
 	
 	// Draw pause menu
 	if (get_scene_paused()) {

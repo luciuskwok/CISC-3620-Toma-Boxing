@@ -327,7 +327,7 @@ shape_t *create_heart_shape(void) {
 	p[0] = vec2_make(0.0f, 1.0f);
 	p[sides/2] = vec2_make(0.0f, 0.0f);
 	
-	// Make symmetrical spiral points
+	// Make symmetrical arcs of circles
 	const float x0 = 0.325f;
 	const float y0 = 0.125f;
 	const float len = 0.333f;

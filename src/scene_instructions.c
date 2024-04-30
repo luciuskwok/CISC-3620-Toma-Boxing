@@ -115,7 +115,8 @@ void instructions_render(void) {
 	p.y = 32;
 	move_to(p);
 	set_fill_color_abgr(text1_color);
-	atari_draw_centered_text("Punch tomatoes to the beat!", 1);
+//	atari_draw_centered_text("Punch tomatoes to the beat!", 1);
+	atari_draw_centered_text("Sit back and watch the show!", 1);
 
 	// Controls
 	const int line_height = 10;
@@ -124,12 +125,12 @@ void instructions_render(void) {
 	p.y += line_height * 2;
 	move_to(p);
 	set_key_text_color(red);
-	set_fill_color_abgr(text1_color);
-	draw_key_text_line(NULL, "Controls:");
-	set_fill_color_abgr(text2_color);
-	draw_key_text_line("A", "punch left");
-	draw_key_text_line("D", "punch right");
-	draw_key_text_line(NULL, NULL);
+//	set_fill_color_abgr(text1_color);
+//	draw_key_text_line(NULL, "Controls:");
+//	set_fill_color_abgr(text2_color);
+//	draw_key_text_line("A", "punch left");
+//	draw_key_text_line("D", "punch right");
+//	draw_key_text_line(NULL, NULL);
 	set_fill_color_abgr(text1_color);
 	draw_key_text_line(NULL, "Music:");
 	set_fill_color_abgr(text2_color);
