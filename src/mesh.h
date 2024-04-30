@@ -44,6 +44,8 @@ mesh_face_t mesh_face_make(vec3_t a, vec3_t b, vec3_t c);
 
 mesh_t *mesh_new(int face_count);
 void mesh_destroy(mesh_t *mesh);
+bool mesh_add_child(mesh_t *mesh, mesh_t *child);
+void mesh_set_children_color(mesh_t *mesh, uint32_t line, uint32_t point);
 
 void mesh_update(mesh_t *mesh, double delta_time);
 void mesh_draw(mesh_t *mesh, mat4_t transform);
@@ -53,5 +55,6 @@ void mesh_add_linear_momentum(mesh_t *mesh, vec3_t momentum);
 void mesh_add_pitch(mesh_t *mesh, float x);
 void mesh_add_roll(mesh_t *mesh, float x);
 void mesh_add_yaw(mesh_t *mesh, float x);
+
 
 #endif /* mesh_h */

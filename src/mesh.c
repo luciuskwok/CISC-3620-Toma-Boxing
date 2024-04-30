@@ -78,6 +78,19 @@ bool mesh_add_child(mesh_t *mesh, mesh_t *child) {
 	return array_list_add(mesh->children, child);
 }
 
+void mesh_set_children_color(mesh_t *mesh, uint32_t line, uint32_t point) {
+	mesh->line_color = line;
+	mesh->point_color = point;
+
+	if (mesh->children) {
+		mesh_t **a = (mesh_t **)mesh->children->array;
+		int n = mesh->children->length;
+		for (int i=0; i<n; i++) {
+			mesh_set_children_color(a[i], line, point);
+		}
+	}
+}
+
 #pragma mark -
 
 void mesh_update(mesh_t *mesh, double delta_time) {
@@ -106,6 +119,11 @@ void mesh_update(mesh_t *mesh, double delta_time) {
 void mesh_draw(mesh_t *mesh, mat4_t transform) {
 	if (!mesh->is_visible) return;
 	
+	// Tranformation matrix
+	transform = mat4_translate(transform, mesh->position);
+	transform = mat4_apply_euler_angles(transform, mesh->rotation);
+	transform = mat4_scale(transform, mesh->scale);
+
 	if (mesh->face_count > 0 && mesh->faces) {
 		vec3_t a3, b3, c3;
 		vec2_t a2, b2, c2;
@@ -117,11 +135,6 @@ void mesh_draw(mesh_t *mesh, mat4_t transform) {
 		// Color
 		set_line_color_abgr(mesh->line_color);
 		set_fill_color_abgr(mesh->point_color);
-		
-		// Tranformation matrix
-		transform = mat4_translate(transform, mesh->position);
-		transform = mat4_apply_euler_angles(transform, mesh->rotation);
-		transform = mat4_scale(transform, mesh->scale);
 		
 		for (int i = 0; i < mesh->face_count; i++) {
 			mesh_face_t face = mesh->faces[i];
@@ -144,15 +157,19 @@ void mesh_draw(mesh_t *mesh, mat4_t transform) {
 				c2 = perspective_project_point(c3);
 				
 				// Lines
-				move_to(a2);
-				line_to(b2);
-				line_to(c2);
-				line_to(a2);
+				if (mesh->line_color != 0) {
+					move_to(a2);
+					line_to(b2);
+					line_to(c2);
+					line_to(a2);
+				}
 				
 				// Points
-				fill_centered_rect((int)a2.x, (int)a2.y, point_w, point_w);
-				fill_centered_rect((int)b2.x, (int)b2.y, point_w, point_w);
-				fill_centered_rect((int)c2.x, (int)c2.y, point_w, point_w);
+				if (mesh->point_color != 0) {
+					fill_centered_rect((int)a2.x, (int)a2.y, point_w, point_w);
+					fill_centered_rect((int)b2.x, (int)b2.y, point_w, point_w);
+					fill_centered_rect((int)c2.x, (int)c2.y, point_w, point_w);
+				}
 			}
 		}
 	}

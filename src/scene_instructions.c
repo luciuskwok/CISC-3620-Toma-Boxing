@@ -23,24 +23,28 @@ mesh_t *mesh2 = NULL;
 
 void instructions_init(void) {
 	//mesh1 = mesh_create_diamond(4, 1.0f, 1.0f);
-	mesh1 = mesh_create_sphere(1);
+	
+	// Testing: mesh character
+	mesh1 = mesh_create_3d_character('2');
+
+	// mesh1 = mesh_create_sphere(1);
 	mesh2 = mesh_create_cube();
 }
 
 void instructions_start(void) {
-	const float rotationUnit = 1.0f * (float)M_PI / 180.0f;
+	const float deg = (float)M_PI / 180.0f;
 	
-	// Diamond
+	// Character
 	mesh1->position = vec3_make(2.5, 0, 0);
 	mesh1->linear_momentum = vec3_zero();
 	mesh1->rotation = vec3_zero();
-	mesh1->angular_momentum = vec3_make(0, rotationUnit, 0.125f * rotationUnit);
+	mesh1->angular_momentum = vec3_make(0, 0.5f * deg, 0.0f * deg);
 
 	// Bouncing cube
 	mesh2->position = vec3_make(-2.5, 0, 0);
 	mesh2->linear_momentum = vec3_zero();
 	mesh2->rotation = vec3_zero();
-	mesh2->angular_momentum = vec3_make(0, -2 * rotationUnit, rotationUnit);
+	mesh2->angular_momentum = vec3_make(0, -2 * deg, deg);
 	
 	// Set translation momentum & gravity
 	mesh2->gravity = true;
@@ -71,10 +75,8 @@ void instructions_update(double delta_time) {
 	uint32_t line_color = color_from_hsv(hue, 1.0, 1.0, 0.5);
 	uint32_t point_color = color_from_hsv((hue + 60) % 360, 1.0, 1.0, 0.5);
 	
-	mesh1->line_color = line_color;
-	mesh2->line_color = line_color;
-	mesh1->point_color = point_color;
-	mesh2->point_color = point_color;
+	mesh_set_children_color(mesh1, line_color, 0);
+	mesh_set_children_color(mesh2, line_color, point_color);
 	
 	// Reset momentum when cube hits bottom
 	if (mesh2->position.y < -1.0f) {

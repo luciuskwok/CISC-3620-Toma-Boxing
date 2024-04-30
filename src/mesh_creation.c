@@ -6,6 +6,7 @@
 //
 
 #include "mesh_creation.h"
+#include "atari_text.h"
 #include "color.h"
 #include "drawing.h"
 #include "matrix.h"
@@ -85,7 +86,8 @@ mesh_t *mesh_create_cube(void) {
 #pragma mark - Diamond/Pyramid
 
 vec2_t coordinates_for_side(int i, int n) {
-	float angle = 2.0f * (float)M_PI * (float)(i) / (float)n;
+	const float radian = (float)(2.0 * M_PI);
+	float angle = radian * (float)i / (float)n;
 	vec2_t v;
 	v.x = cosf(angle);
 	v.y = sinf(angle);
@@ -241,4 +243,32 @@ mesh_t *mesh_create_sphere(int subdivisions) {
 	}
 	
 	return mesh;
+}
+
+#pragma mark -
+
+mesh_t *mesh_create_3d_character(char c) {
+	mesh_t *group = mesh_new(0);
+	atari_char_data_t d = atari_get_char_data(c);
+	const float thickness = 1.0f / 32.0f;
+	const float eighth = 1.0f / 8.0f;
+	const float fourth = 1.0f / 4.0f;
+	const float dx = -fourth * 3.5f;
+	const float dy = -fourth * 3.5f;
+
+	for (int i=0; i<8; i++) {
+		uint8_t x = d.a[i];
+		for (int j=0; j<8; j++) {
+			if (x & 1) {
+				mesh_t *block = mesh_create_cube();
+				block->scale = vec3_make(eighth, eighth, thickness);
+				block->position = vec3_make((float)j * fourth + dx, -(float)i * fourth - dy, 0);
+				block->point_color = 0;
+				mesh_add_child(group, block);
+			}
+			x = x >> 1;
+		}
+	}
+	
+	return group;
 }

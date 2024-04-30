@@ -147,3 +147,14 @@ void atari_draw_test_text(void) {
 	}
 }
 
+atari_char_data_t atari_get_char_data(char c) {
+	const int n = (int)atari_font_len / 8;
+	atari_char_data_t d = {0};
+
+	c = c % n;
+	for (int i = 0; i < 8; i++) {
+		d.a[i] = atari_font[c * 8 + i];
+	}
+	return d;
+}
+

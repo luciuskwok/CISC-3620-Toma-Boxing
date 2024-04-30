@@ -17,4 +17,7 @@ mesh_t *mesh_create_diamond(int sides, float top, float bottom);
 mesh_t *mesh_create_icosahedron(void);
 mesh_t *mesh_create_sphere(int subdivisions);
 
+// 3D Text
+mesh_t *mesh_create_3d_character(char c);
+
 #endif /* MESH_CUBE_H */
