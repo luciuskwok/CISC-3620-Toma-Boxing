@@ -13,7 +13,7 @@
 
 #pragma mark - Data
 
-#define SONG_DURATION (205.0)
+#define SONG_DURATION (205.897)
 
 // Background color timeline
 typedef struct {

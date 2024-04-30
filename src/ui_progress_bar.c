@@ -26,7 +26,7 @@ void draw_progress_bar(void) {
 	r.w = scr_w * 75 / 100;
 	r.h = 6;
 	r.x = (scr_w - r.w) / 2;
-	r.y = 4;
+	r.y = 3;
 
 	// Border
 	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
