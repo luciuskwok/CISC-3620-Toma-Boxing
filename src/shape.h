@@ -19,7 +19,6 @@ typedef struct {
 	// Geometry
 	int point_count;
 	vec2_t *points;
-	vec2_t *projected_points;
 	bool is_closed;
 	array_list_t *children;
 	

@@ -26,6 +26,12 @@ bool init_screen(int width, int height, int scale);
 void destroy_screen(void);
 void render_to_screen(void);
 
+
+// Transform 2D
+extern mat3_t view_transform_2d;
+extern mat4_t camera_transform_3d;
+
+
 // Drawing 2D
 void fill_screen(void);
 
@@ -44,7 +50,6 @@ void fill_triangle(vec2_t a, vec2_t b, vec2_t c);
 void fill_polygon(vec2_t *points, int n);
 
 void set_pixel(int x, int y, uint32_t color);
-vec2_t apply_view_transform_2d(vec2_t point);
 
 vec2_t get_cursor(void);
 uint32_t get_line_color(void);

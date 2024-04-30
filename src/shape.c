@@ -18,6 +18,10 @@
 #define RADIANF ((float)(M_PI * 2.0))
 
 
+const int projected_points_capacity = 256;
+vec2_t projected_points[projected_points_capacity];
+
+
 shape_t *shape_new(int point_count) {
 	shape_t *shape = malloc(sizeof(shape_t));
 	if (!shape) {
@@ -32,17 +36,8 @@ shape_t *shape_new(int point_count) {
 			return NULL;
 		}
 		shape->points = points;
-
-		vec2_t *proj_pts = malloc(sizeof(vec2_t) * (size_t)point_count);
-		if (!proj_pts) {
-			fprintf(stderr, "Unable to allocate shape points!\n");
-			free(shape);
-			free(points);
-			return NULL;
-		}
-		shape->projected_points = proj_pts;
 	} else {
-		shape->points = shape->projected_points = NULL;
+		shape->points = NULL;
 	}
 	
 	shape->point_count = point_count;
@@ -76,7 +71,6 @@ void shape_destroy(shape_t *shape) {
 	}
 	
 	if (shape->points) free(shape->points);
-	if (shape->projected_points) free(shape->projected_points);
 	free(shape);
 }
 
@@ -430,25 +424,27 @@ void shape_draw(shape_t *shape, mat3_t transform) {
 	transform = mat3_rotate(transform, shape->rotation);
 	transform = mat3_scale(transform, shape->scale);
 
-	if (shape->point_count >= 2 && shape->points && shape->projected_points) {
+	if (shape->point_count >= 2 && shape->points) {
 		set_line_color_abgr(shape->line_color);
 		set_fill_color_abgr(shape->fill_color);
 		
 		// Apply transforms
-		vec2_t *pp = shape->projected_points;
-		for (int i = 0; i < shape->point_count; i++) {
-			pp[i] = apply_view_transform_2d(vec2_mat3_multiply(shape->points[i], transform));
+		int n = shape->point_count < projected_points_capacity? shape->point_count : projected_points_capacity;
+		vec2_t *pp = projected_points;
+		for (int i = 0; i < n; i++) {
+			vec2_t pt = vec2_mat3_multiply(shape->points[i], transform);
+			pp[i] = vec2_mat3_multiply(pt, view_transform_2d);
 		}
 		
 		// Fill
-		if (shape->fill_color != 0 && shape->point_count >= 3) {
-			fill_polygon(pp, shape->point_count);
+		if (shape->fill_color != 0 && n >= 3) {
+			fill_polygon(pp, n);
 		}
 		
 		// Stroke
 		if (shape->line_color != 0) {
 			move_to(pp[0]);
-			for (int i = 1; i < shape->point_count; i++) {
+			for (int i = 1; i < n; i++) {
 				line_to(pp[i]);
 			}
 			if (shape->is_closed) {

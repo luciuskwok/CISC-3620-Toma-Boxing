@@ -337,10 +337,6 @@ void fill_polygon(vec2_t *points, int n) {
 	}
 }
 
-vec2_t apply_view_transform_2d(vec2_t point) {
-	return vec2_mat3_multiply(point, view_transform_2d);
-}
-
 #pragma mark - Getters
 
 vec2_t get_cursor(void) { return cursor; }
