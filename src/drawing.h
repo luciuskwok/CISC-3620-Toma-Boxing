@@ -4,6 +4,8 @@
 //
 //  Created by Lucius Kwok on 3/24/24.
 //
+// Note that this program uses a left-handed, y-up coordinate system.
+// This means that +x = right, +y = up, +z = into screen.
 
 #ifndef drawing_h
 #define drawing_h

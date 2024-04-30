@@ -8,9 +8,9 @@
 #ifndef sequencer_h
 #define sequencer_h
 
-#include <stdio.h>
 #include "scene_gameplay.h"
 
+void sequencer_init(gameplay_t *scene);
 void sequencer_start(gameplay_t *scene);
 void sequencer_update(gameplay_t *scene, double previous_time, double current_time);
 

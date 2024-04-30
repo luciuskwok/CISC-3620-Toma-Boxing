@@ -25,23 +25,23 @@ void instructions_init(void) {
 	//mesh1 = mesh_create_diamond(4, 1.0f, 1.0f);
 	
 	// Testing: mesh character
-	mesh1 = mesh_create_3d_character('2');
+	mesh1 = mesh_create_3d_character('a');
 
-	// mesh1 = mesh_create_sphere(1);
-	mesh2 = mesh_create_cube();
+	mesh2 = mesh_create_sphere(2);
+	//mesh2 = mesh_create_cube();
 }
 
 void instructions_start(void) {
 	const float deg = (float)M_PI / 180.0f;
 	
 	// Character
-	mesh1->position = vec3_make(2.5, 0, 0);
+	mesh1->position = vec3_make(-2.5, 0, 0);
 	mesh1->linear_momentum = vec3_zero();
 	mesh1->rotation = vec3_zero();
 	mesh1->angular_momentum = vec3_make(0, 0.5f * deg, 0.0f * deg);
 
-	// Bouncing cube
-	mesh2->position = vec3_make(-2.5, 0, 0);
+	// Bouncing sphere
+	mesh2->position = vec3_make(2.5, 0, 0);
 	mesh2->linear_momentum = vec3_zero();
 	mesh2->rotation = vec3_zero();
 	mesh2->angular_momentum = vec3_make(0, -2 * deg, deg);

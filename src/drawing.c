@@ -46,14 +46,13 @@ rectangle_t inset_rect(rectangle_t r, int x, int y) {
 
 void init_projection(void) {
 	// Set default view transform to center on and scale to screen
-	view_transform_2d = mat3_identity();
-	view_transform_2d = mat3_translate(view_transform_2d, vec2_make(screen_w / 2, screen_h / 2));
+	view_transform_2d = mat3_translate(mat3_identity(), vec2_make(screen_w / 2, screen_h / 2));
 	float scale2d = screen_h;
-	view_transform_2d = mat3_scale(view_transform_2d, vec2_make(scale2d, scale2d));
+	view_transform_2d = mat3_scale(view_transform_2d, vec2_make(scale2d, -scale2d));
 	
-	// Set default camera transform to -5 units
-	camera_transform_3d = mat4_identity();
-	camera_transform_3d = mat4_translate(camera_transform_3d, vec3_make(0, 0, -5));
+	// Set default camera transform to z + 5 units.
+	// Positive Z corresponds to further into the picture plane.
+	camera_transform_3d = mat4_translate(mat4_identity(), vec3_make(0, 0, 5));
 }
 
 bool init_screen(int width, int height, int scale) {

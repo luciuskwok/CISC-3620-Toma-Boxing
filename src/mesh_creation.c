@@ -253,8 +253,8 @@ mesh_t *mesh_create_3d_character(char c) {
 	const float thickness = 1.0f / 32.0f;
 	const float eighth = 1.0f / 8.0f;
 	const float fourth = 1.0f / 4.0f;
-	const float dx = -fourth * 3.5f;
-	const float dy = -fourth * 3.5f;
+	const float dx = fourth * 3.5f;
+	const float dy = fourth * 3.5f;
 
 	for (int i=0; i<8; i++) {
 		uint8_t x = d.a[i];
@@ -262,7 +262,7 @@ mesh_t *mesh_create_3d_character(char c) {
 			if (x & 1) {
 				mesh_t *block = mesh_create_cube();
 				block->scale = vec3_make(eighth, eighth, thickness);
-				block->position = vec3_make((float)j * fourth + dx, -(float)i * fourth - dy, 0);
+				block->position = vec3_make(dx - (float)j * fourth, dy - (float)i * fourth, 0);
 				block->point_color = 0;
 				mesh_add_child(group, block);
 			}

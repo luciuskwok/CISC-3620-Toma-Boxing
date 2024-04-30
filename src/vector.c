@@ -102,6 +102,13 @@ float vec3_length(vec3_t v) {
     return sqrtf(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
+vec2_t vec3_to_vec2(vec3_t a) {
+	vec2_t b;
+	b.x = a.x;
+	b.y = a.y;
+	return b;
+}
+
 #pragma mark - Products
 
 vec3_t vec3_cross(vec3_t a, vec3_t b) {

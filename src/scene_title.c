@@ -38,10 +38,10 @@ void title_init(void) {
 	const float grid = 0.2f;
 		
 	array_list_add(title_shapes, title_tomato(vec2_make(-3.5f * grid, 0), 0.5f, 5.0f));
-	array_list_add(title_shapes, title_tomato(vec2_make(-2.875f * grid, 1.5f * grid), 1.0f, 10.0f));
-	array_list_add(title_shapes, title_tomato(vec2_make(0.25f * grid, -1.5f * grid), 0.67f, 15.0f));
-	array_list_add(title_shapes, title_tomato(vec2_make(0.5f * grid, 1.25f * grid), 0.75f, 8.0f));
-	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(-2.875f * grid, -1.5f * grid), 1.0f, 10.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(0.25f * grid, 1.5f * grid), 0.67f, 15.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(0.5f * grid, -1.25f * grid), 0.75f, 8.0f));
+	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, -1.0f * grid), 1.25f, 9.0f));
 	
 	// Testing: create shapes being tested
 	//shape_t *test = create_heart_shape();
