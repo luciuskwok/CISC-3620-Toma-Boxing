@@ -46,6 +46,7 @@ shape_t *shape_new(int initial_capacity) {
 	shape->is_visible = true;
 	shape->line_color = COLOR_ABGR_WHITE;
 	shape->fill_color = COLOR_ABGR_WHITE;
+	shape->opacity = 1.0f;
 	
 	// Physics
 	shape->scale = vec2_identity();
@@ -110,7 +111,7 @@ point_list_t *create_circle_arc_points(vec2_t center, float radius, float start_
 			float angle = (float)i / (float)n * angle_range + start_angle;
 			vec2_t pt;
 			pt.x = center.x + cosf(angle) * radius;
-			pt.y = center.y - sinf(angle) * radius;
+			pt.y = center.y + sinf(angle) * radius;
 			point_list_add(pl, pt);
 		}
 	}
@@ -169,10 +170,10 @@ shape_t *create_heart_shape(void) {
 	s->is_closed = true;
 	
 	// Make bottom point
-	shape_add_point(s, vec2_make(0.0f, 0.75f));
+	shape_add_point(s, vec2_make(0.0f, -0.75f));
 	
 	// Make symmetrical arcs of circles
-	vec2_t center = { .x = 0.325f, .y = -0.125f };
+	vec2_t center = { .x = 0.325f, .y = 0.125f };
 	float start_angle = RADIANF * -0.125f;
 	float end_angle = RADIANF * 0.5f;
 	point_list_t *arc = create_circle_arc_points(center, 0.333f, start_angle, end_angle, 15);
@@ -426,15 +427,17 @@ shape_t *create_toemaniac_shape(void) {
 	return NULL;
 }
 
-shape_t *create_envelope_shape(void) {
+shape_t *create_envelope_shape(uint32_t line_color) {
 	shape_t *s = create_rectangle_shape(1.0f, 0.6f);
 	if (!s) return NULL;
+	s->line_color = line_color;
 	
 	// Add line for flap
 	shape_t *flap = shape_new(3);
 	if (flap) {
 		flap->is_closed = false;
 		flap->fill_color = 0;
+		flap->line_color = line_color;
 		shape_add_point(flap, vec2_make(-0.5f, -0.3f));
 		shape_add_point(flap, vec2_make(0.0f, 0.0f));
 		shape_add_point(flap, vec2_make(0.5f, -0.3f));
@@ -496,18 +499,25 @@ void shape_update(shape_t *shape, double delta_time) {
 	shape->lifetime += delta_time;
 }
 
-void shape_draw(shape_t *shape, mat3_t transform) {
+void shape_draw(shape_t *shape) {
+	shape_draw_recursive(shape, mat3_identity(), 1.0f);
+}
+
+void shape_draw_recursive(shape_t *shape, mat3_t transform, float opacity) {
 	if (!shape->is_visible) return;
 	
 	// Calculate transform matrix
 	transform = mat3_translate(transform, shape->position);
 	transform = mat3_rotate(transform, shape->rotation);
 	transform = mat3_scale(transform, shape->scale);
+	
+	// Calculate opacity
+	opacity = opacity * shape->opacity;
 
 	if (shape->points) {
 		if (shape->points->length >= 2) {
-			set_line_color_abgr(shape->line_color);
-			set_fill_color_abgr(shape->fill_color);
+			set_line_color_abgr(color_mul_opacity(shape->line_color, opacity));
+			set_fill_color_abgr(color_mul_opacity(shape->fill_color, opacity));
 			
 			// Apply transforms
 			int n = shape->points->length < projected_points_capacity? shape->points->length : projected_points_capacity;
@@ -540,7 +550,7 @@ void shape_draw(shape_t *shape, mat3_t transform) {
 		shape_t **a = (shape_t **)shape->children->array;
 		int n = shape->children->length;
 		for (int i=0; i<n; i++) {
-			shape_draw(a[i], transform);
+			shape_draw_recursive(a[i], transform, opacity);
 		}
 	}
 }

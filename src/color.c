@@ -106,6 +106,13 @@ uint32_t color_set_alpha(uint32_t c, uint8_t a) {
 	return c;
 }
 
+uint32_t color_mul_opacity(uint32_t c, float op) {
+	float alpha = (c & 0xFF000000) >> 24;
+	alpha = alpha / 255.0f * op;
+	uint32_t a = (uint32_t)round(alpha * 255.0f);
+	return (c & 0x00FFFFFF) | (a << 24);
+}
+
 uint32_t rgb_to_abgr(uint32_t x) {
 	// Convert color from RGB hex code to ABGR format
 	uint32_t r = (x & 0x00FF0000) >> 16;

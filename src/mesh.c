@@ -45,6 +45,7 @@ mesh_t *mesh_new(int face_count) {
 	mesh->is_visible = true;
 	mesh->line_color = COLOR_ABGR_WHITE;
 	mesh->point_color = COLOR_ABGR_WHITE;
+	mesh->opacity = 1.0f;
 	
 	// Physics
 	mesh->scale = vec3_identity();
@@ -116,13 +117,20 @@ void mesh_update(mesh_t *mesh, double delta_time) {
 	mesh->lifetime += delta_time;
 }
 
-void mesh_draw(mesh_t *mesh, mat4_t transform) {
+void mesh_draw(mesh_t *mesh) {
+	mesh_draw_recursive(mesh, mat4_identity(), 1.0f);
+}
+
+void mesh_draw_recursive(mesh_t *mesh, mat4_t transform, float opacity) {
 	if (!mesh->is_visible) return;
 	
 	// Tranformation matrix
 	transform = mat4_translate(transform, mesh->position);
 	transform = mat4_apply_euler_angles(transform, mesh->rotation);
 	transform = mat4_scale(transform, mesh->scale);
+	
+	// Opacity
+	opacity = opacity * mesh->opacity;
 
 	if (mesh->face_count > 0 && mesh->faces) {
 		vec3_t a3, b3, c3;
@@ -133,8 +141,8 @@ void mesh_draw(mesh_t *mesh, mat4_t transform) {
 		const int point_w = 5;
 		
 		// Color
-		set_line_color_abgr(mesh->line_color);
-		set_fill_color_abgr(mesh->point_color);
+		set_line_color_abgr(color_mul_opacity(mesh->line_color, opacity));
+		set_fill_color_abgr(color_mul_opacity(mesh->point_color, opacity));
 		
 		for (int i = 0; i < mesh->face_count; i++) {
 			mesh_face_t face = mesh->faces[i];
@@ -179,7 +187,7 @@ void mesh_draw(mesh_t *mesh, mat4_t transform) {
 		mesh_t **a = (mesh_t **)mesh->children->array;
 		int n = mesh->children->length;
 		for (int i=0; i<n; i++) {
-			mesh_draw(a[i], transform);
+			mesh_draw_recursive(a[i], transform, opacity);
 		}
 	}
 }

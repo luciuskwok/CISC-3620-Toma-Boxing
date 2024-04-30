@@ -109,6 +109,12 @@ vec2_t vec3_to_vec2(vec3_t a) {
 	return b;
 }
 
+vec3_t vec3_interpolate(vec3_t a, vec3_t b, float x) {
+	vec3_t a1 = vec3_mul(a, 1 - x);
+	vec3_t b1 = vec3_mul(b, x);
+	return vec3_add(a1, b1);
+}
+
 #pragma mark - Products
 
 vec3_t vec3_cross(vec3_t a, vec3_t b) {

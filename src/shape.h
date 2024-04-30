@@ -26,6 +26,7 @@ typedef struct {
 	bool is_visible;
 	uint32_t line_color;
 	uint32_t fill_color;
+	float opacity;
 	
 	// Physics
 	vec2_t scale;
@@ -56,9 +57,10 @@ shape_t *create_microphone_shape(void);
 shape_t *create_toemaniac_shape(void);
 
 shape_t *create_crescent_moon_shape(void);
-shape_t *create_envelope_shape(void);
+shape_t *create_envelope_shape(uint32_t line_color);
 
 void shape_update(shape_t *shape, double delta_time);
-void shape_draw(shape_t *shape, mat3_t transform);
+void shape_draw(shape_t *shape);
+void shape_draw_recursive(shape_t *shape, mat3_t transform, float opacity);
 
 #endif /* shape_h */

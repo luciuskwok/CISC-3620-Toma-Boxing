@@ -136,18 +136,16 @@ void draw_scene(void) {
 void draw_meshes(void) {
 	mesh_t **m = (mesh_t **)mesh_list->array;
 	int mn = mesh_list->length;
-	mat4_t transform = mat4_identity();
 	for (int i = 0; i < mn; i++) {
-		mesh_draw(m[i], transform);
+		mesh_draw(m[i]);
 	}
 }
 
 void draw_shapes(void) {
 	shape_t **s = (shape_t **)shape_list->array;
 	int sn = shape_list->length;
-	mat3_t transform = mat3_identity();
 
 	for (int i = 0; i < sn; i++) {
-		shape_draw(s[i], transform);
+		shape_draw(s[i]);
 	}
 }

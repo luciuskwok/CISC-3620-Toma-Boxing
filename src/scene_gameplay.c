@@ -165,7 +165,7 @@ void gameplay_render(void) {
 
 	// Draw text
 	p.x = scr_w / 2 - 21 * 4;
-	p.y = 12;
+	p.y = 10;
 	move_to(p);
 	set_fill_color_rgba(text_color, 127);
 	atari_draw_text("Toma - All Night Radio", 1);

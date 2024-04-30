@@ -18,6 +18,9 @@
 
 #define SONG_DURATION (205.897)
 #define RADIANF ((float)M_PI * 2.0f)
+#define POSITION_FACTOR (0.010f)
+#define SCALE_FACTOR (0.010f)
+#define ROTATION_FACTOR ((float)M_PI / 180.0f)
 
 // Background color timeline
 typedef struct {
@@ -44,25 +47,45 @@ typedef enum : uint32_t {
 
 	ShowShape, 		// .p0: position (x, y), .p1:  rotation (.x: angle)
 	ShowMesh, 		// .p0: position, .p1: rotation
+	SetShapeOpacity, // .p0.x, .p1.x: opacity
+	SetMeshOpacity, // .p0.x, .p1.x: opacity
 
-	MoveShape, 		// .p0: starting position, .p1: ending position
+	MoveShape, 		// .p0: starting position, .p1: ending position (in percent)
 	MoveMesh, 		// .p0: starting position, .p1: ending position
-	RotateShape, 	// .p0: starting rotation, .p1: ending rotation (in fraction of a circle)
+	RotateShape, 	// .p0: starting rotation, .p1: ending rotation (in degrees)
 	RotateMesh, 	// .p0: starting rotation, .p1: ending rotation
-	ScaleShape,  	// .p0: starting scale, .p1: ending scale
+	ScaleShape,  	// .p0: starting scale, .p1: ending scale (in percent)
 	ScaleMesh, 		// .p0: starting scale, .p1: ending scale
 } event_commands;
 
+typedef enum: uint32_t {
+	EaseLinear,
+	EaseOutElastic,
+	EaseBezier,
+} easing_curve;
+
 typedef enum : uint32_t {
-	Numeral1 = 0,
-	Numeral2,
-	Numeral3,
-	Numeral4,
+	Numeral_1_Mesh = 0,
+	Numeral_2_Mesh,
+	Numeral_3_Mesh,
+	Numeral_4_Mesh,
 } seq_mesh_index;
+
+typedef enum : uint32_t {
+	Studio_Bkgnd_Shape = 0,
+	Moon_Shape,
+	Heart_Shape,
+	Envelope_Shape,
+	Microphone_Shape,
+	Monitor_Shape,
+	CPU_Shape,
+	iPhone_Shape,
+} seq_shape_index;
 
 typedef struct {
 	event_commands cmd;
 	uint32_t target;
+	easing_curve ease;
 	float64_t t0;
 	float64_t t1;
 	vec3_t p0;
@@ -70,15 +93,40 @@ typedef struct {
 } sequence_event;
 
 sequence_event seq_events[] = {
-	{ ShowMesh, Numeral1, .t0 = 0.5, .t1 = 2.5, .p0 = {-3.0, -1.0, 0}, .p1 = {0, 0, 0} },
-	{ ShowMesh, Numeral2, .t0 = 1.0, .t1 = 2.5, .p0 = {-1.0, 0, 0}, .p1 = {0, 0, 0} },
-	{ ShowMesh, Numeral3, .t0 = 1.5, .t1 = 2.5, .p0 = {1.0, 1.0, 0}, .p1 = {0, 0, 0} },
-	{ ShowMesh, Numeral4, .t0 = 2.0, .t1 = 2.5, .p0 = {3.0, 0, 0}, .p1 = {0, 0, 0} },
-	{ RotateMesh, Numeral1, .t0 = 0.5, .t1 = 0.75, .p0 = {0, 0.75, 0}, .p1 = {0, 0, 0} },
-	{ RotateMesh, Numeral2, .t0 = 1.0, .t1 = 1.25, .p0 = {0, 0.75, 0}, .p1 = {0, 0, 0} },
-	{ RotateMesh, Numeral3, .t0 = 1.5, .t1 = 1.75, .p0 = {0, 0.75, 0}, .p1 = {0, 0, 0} },
-	{ RotateMesh, Numeral4, .t0 = 2.0, .t1 = 2.25, .p0 = {0, 0.75, 0}, .p1 = {0, 0, 0} },
-	{ .cmd = EndSequence, }
+	// 1 2 4 2
+	{ ShowMesh, Numeral_1_Mesh, .t0 = 0.5, .t1 = 7.0, .p0 = {-300, -100, 0}, .p1 = {0, 0, 0} },
+	{ ShowMesh, Numeral_2_Mesh, .t0 = 1.0, .t1 = 7.0, .p0 = {-100, 0, 0}, .p1 = {0, 0, 0} },
+	{ ShowMesh, Numeral_3_Mesh, .t0 = 1.5, .t1 = 7.0, .p0 = {100, 100, 0}, .p1 = {0, 0, 0} },
+	{ ShowMesh, Numeral_4_Mesh, .t0 = 2.0, .t1 = 7.0, .p0 = {300, 0, 0}, .p1 = {0, 0, 0} },
+	{ RotateMesh, Numeral_1_Mesh, EaseLinear, .t0 = 0.5, .t1 = 0.75, .p0 = {0, 135, 0}, .p1 = {0, 0, 0} },
+	{ RotateMesh, Numeral_2_Mesh, EaseLinear, .t0 = 1.0, .t1 = 1.25, .p0 = {0, 135, 0}, .p1 = {0, 0, 0} },
+	{ RotateMesh, Numeral_3_Mesh, EaseLinear, .t0 = 1.5, .t1 = 1.75, .p0 = {0, 135, 0}, .p1 = {0, 0, 0} },
+	{ RotateMesh, Numeral_4_Mesh, EaseLinear, .t0 = 2.0, .t1 = 2.25, .p0 = {0, 135, 0}, .p1 = {0, 0, 0} },
+	{ MoveMesh, Numeral_1_Mesh, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {-300, -100, 0}, .p1 = {-300, 400, 0} },
+	{ MoveMesh, Numeral_2_Mesh, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {-100, 0, 0}, .p1 = {-100, 500, 0} },
+	{ MoveMesh, Numeral_3_Mesh, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {100, 100, 0}, .p1 = {100, 600, 0} },
+	{ MoveMesh, Numeral_4_Mesh, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {300, 0, 0}, .p1 = {300, 500, 0} },
+	
+	// 2D Studio
+	{ ShowShape, Studio_Bkgnd_Shape, EaseLinear, .t0 = 2.5, .t1 = 44.0, .p0 = {0,-80,0}, .p1 = {0,0,0} },
+	{ MoveShape, Studio_Bkgnd_Shape, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {0,-80,0}, .p1 = {0,15,0} },
+	
+	// Moon
+	{ ShowShape, Moon_Shape, .t0 = 6.0, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Moon_Shape, EaseOutElastic, .t0 = 6.0, .t1 = 6.5, .p0 = {0,0,0}, .p1 = {50,50,0} },
+	{ ScaleShape, Moon_Shape, EaseBezier, .t0 = 7.5, .t1 = 7.7, .p0 = {50,50,0}, .p1 = {12,12,0} },
+	{ RotateShape, Moon_Shape, EaseBezier, .t0 = 7.8, .t1 = 8.0, .p0 = {0,0,0}, .p1 = {45,0,0} },
+	{ MoveShape, Moon_Shape, EaseBezier, .t0 = 8.1, .t1 = 8.3, .p0 = {0,0,0}, .p1 = {0,18,0} },
+	
+	// Heart
+	{ ShowShape, Heart_Shape, .t0 = 9.0, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Heart_Shape, EaseOutElastic, .t0 = 9.0, .t1 = 9.5, .p0 = {0,0,0}, .p1 = {75,75,0} },
+	{ RotateShape, Heart_Shape, EaseBezier, .t0 = 10.0, .t1 = 10.2, .p0 = {0,0,0}, .p1 = {-20,0,0} },
+	{ ScaleShape, Heart_Shape, EaseBezier, .t0 = 10.3, .t1 = 10.5, .p0 = {75,75,0}, .p1 = {20,20,0} },
+	{ MoveShape, Heart_Shape, EaseBezier, .t0 = 10.6, .t1 = 10.8, .p0 = {0,0,0}, .p1 = {-50,20,0} },
+
+
+	{ .cmd = EndSequence }
 };
 
 #pragma mark - Functions
@@ -93,12 +141,49 @@ void add_numeral_mesh(gameplay_t *scene, char c) {
 void sequencer_init(gameplay_t *scene) {
 	// Create all the objects used by sequence
 	
+	// -- Meshes --
 	// Numerals
-	add_numeral_mesh(scene, '1');
-	add_numeral_mesh(scene, '2');
-	add_numeral_mesh(scene, '4');
-	add_numeral_mesh(scene, '2');
+	add_numeral_mesh(scene, '1');  // Numeral_1_Mesh
+	add_numeral_mesh(scene, '2');  // Numeral_2_Mesh
+	add_numeral_mesh(scene, '4');  // Numeral_3_Mesh
+	add_numeral_mesh(scene, '2');  // Numeral_4_Mesh
 	
+	// -- Shapes --
+	shape_t *s;
+	
+	// Studio_Bkgnd_Shape: combined window and desktop
+	shape_t *window = create_rectangle_shape(0.375f, 0.5f);
+	window->fill_color = rgb_to_abgr(COLOR_RGB_BLUE_1);
+	window->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	shape_t *desktop = create_rectangle_shape(1.5f, 1.0f/32.0f);
+	desktop->fill_color = rgb_to_abgr(COLOR_RGB_SKIN_2);
+	desktop->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	desktop->position = vec2_make(0, -0.4f);
+	shape_add_child(window, desktop);
+	array_list_add(scene->shapes, window);
+
+	// Moon_Shape,
+	s = create_crescent_moon_shape();
+	s->fill_color = rgba_to_abgr(COLOR_RGB_YELLOW_1, 228);
+	s->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	array_list_add(scene->shapes, s);
+
+	// Heart_Shape,
+	s = create_heart_shape();
+	s->fill_color = rgba_to_abgr(COLOR_RGB_RED_1, 127);
+	s->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	array_list_add(scene->shapes, s);
+
+	// Envelope_Shape,
+	s = create_envelope_shape(COLOR_RGB_OUTLINE);
+	s->fill_color = rgba_to_abgr(COLOR_RGB_WHITE_3, 255);
+	array_list_add(scene->shapes, s);
+
+	// Microphone_Shape,
+	// Monitor_Shape,
+	// CPU_Shape,
+	// iPhone_Shape,
+
 }
 
 void sequencer_start(gameplay_t *scene) {
@@ -148,50 +233,93 @@ void seq_event_start(gameplay_t *scene, sequence_event *event, double time) {
 		case ShowMesh:  // show mesh and set its position and rotation
 			mesh = scene->meshes->array[event->target];
 			mesh->is_visible = true;
-			mesh->position = event->p0;
-			mesh->rotation = event->p1;
+			mesh->position = vec3_mul(event->p0, POSITION_FACTOR);
+			mesh->rotation = vec3_mul(event->p1, ROTATION_FACTOR);
 			break;
 		case ShowShape:  // show shape and set its position and rotation
 			shape = scene->shapes->array[event->target];
 			shape->is_visible = true;
-			shape->position = vec3_to_vec2(event->p0);
-			shape->rotation = event->p1.x;
+			shape->position = vec2_mul(vec3_to_vec2(event->p0), POSITION_FACTOR);
+			shape->rotation = event->p1.x * ROTATION_FACTOR;
 			break;
+		case MoveShape:
+		case MoveMesh:
 		case RotateShape:
-			shape = scene->shapes->array[event->target];
-			shape->rotation = event->p0.x * RADIANF;
-			break;
 		case RotateMesh:
-			mesh = scene->meshes->array[event->target];
-			mesh->rotation = vec3_mul(event->p0, RADIANF);
+		case ScaleShape:
+		case ScaleMesh:
+			// Do nothing
 			break;
 		default:
-			fprintf(stderr, "Unknown event command!\n");
+			fprintf(stderr, "Unknown event command, start!\n");
 			break;
 	}
+}
+
+float apply_easing_curve(easing_curve ease, float x) {
+	switch (ease) {
+		case EaseOutElastic:
+			// https://easings.net/#easeOutElastic
+			if (x <= 0.0f) {
+				x = 0.0f;
+			} else if (x >= 1.0f) {
+				x = 1.0f;
+			} else {
+				const float c4 = 2 * (float)M_PI / 3;
+				x = powf(2, -10 * x) * sinf((x * 10 - 0.75f) * c4) + 1;
+			}
+			break;
+		case EaseBezier:
+			x = x * x * (3.0f - 2.0f * x);
+			break;
+		default:
+			// Do nothing
+			break;
+	}
+	
+	return x;
 }
 
 void seq_event_update(gameplay_t *scene, sequence_event *event, double time) {
 	mesh_t *mesh;
 	shape_t *shape;
 	float x = (float)((time - event->t0) / (event->t1 - event->t0));
+	x = x <= 1.0? x : 1.0; // Limit to x <= 1.0
+	if (event->ease != EaseLinear) {
+		x = apply_easing_curve(event->ease, x);
+	}
+	
 	switch (event->cmd) {
-		case ShowMesh: // do nothing
+		case MoveShape:
+			shape = scene->shapes->array[event->target];
+			shape->position = vec2_mul(vec3_to_vec2(vec3_interpolate(event->p0, event->p1, x)), POSITION_FACTOR);
 			break;
-		case ShowShape: // do nothing
+		case MoveMesh:
+			mesh = scene->meshes->array[event->target];
+			mesh->position = vec3_mul(vec3_interpolate(event->p0, event->p1, x), POSITION_FACTOR);
 			break;
 		case RotateShape:
 			shape = scene->shapes->array[event->target];
-			shape->rotation = event->p0.x * (1 - x) + event->p1.x * x * RADIANF;
+			shape->rotation = (event->p0.x * (1 - x) + event->p1.x * x) * ROTATION_FACTOR;
 			break;
 		case RotateMesh:
 			mesh = scene->meshes->array[event->target];
-			vec3_t r0 = vec3_mul(event->p0, 1 - x);
-			vec3_t r1 = vec3_mul(event->p1, x);
-			mesh->rotation = vec3_mul(vec3_add(r0, r1), RADIANF);
+			mesh->rotation = vec3_mul(vec3_interpolate(event->p0, event->p1, x), ROTATION_FACTOR);
+			break;
+		case ScaleShape:
+			shape = scene->shapes->array[event->target];
+			shape->scale = vec2_mul(vec3_to_vec2(vec3_interpolate(event->p0, event->p1, x)), SCALE_FACTOR);
+			break;
+		case ScaleMesh:
+			mesh = scene->meshes->array[event->target];
+			mesh->scale = vec3_mul(vec3_interpolate(event->p0, event->p1, x), SCALE_FACTOR);
+			break;
+		case ShowMesh:
+		case ShowShape:
+			// Do nothing
 			break;
 		default:
-			fprintf(stderr, "Unknown event command!\n");
+			fprintf(stderr, "Unknown event command, in update!\n");
 			break;
 	}
 }
@@ -208,16 +336,16 @@ void seq_event_end(gameplay_t *scene, sequence_event *event, double time) {
 			shape = scene->shapes->array[event->target];
 			shape->is_visible = false;
 			break;
+		case MoveShape:
+		case MoveMesh:
 		case RotateShape:
-			shape = scene->shapes->array[event->target];
-			shape->rotation = event->p1.x * RADIANF;
-			break;
 		case RotateMesh:
-			mesh = scene->meshes->array[event->target];
-			mesh->rotation = vec3_mul(event->p1, RADIANF);
+		case ScaleShape:
+		case ScaleMesh:
+			// Do nothing
 			break;
 		default:
-			fprintf(stderr, "Unknown event command!\n");
+			fprintf(stderr, "Unknown event command, at end!\n");
 			break;
 	}
 }

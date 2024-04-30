@@ -29,7 +29,8 @@ typedef struct {
 	bool is_visible;
 	uint32_t line_color;
 	uint32_t point_color;
-	
+	float opacity;
+
 	// Physics
 	vec3_t scale;
 	vec3_t position; // meters
@@ -48,7 +49,8 @@ bool mesh_add_child(mesh_t *mesh, mesh_t *child);
 void mesh_set_children_color(mesh_t *mesh, uint32_t line, uint32_t point);
 
 void mesh_update(mesh_t *mesh, double delta_time);
-void mesh_draw(mesh_t *mesh, mat4_t transform);
+void mesh_draw(mesh_t *mesh);
+void mesh_draw_recursive(mesh_t *mesh, mat4_t transform, float opacity);
 
 void mesh_reset_momentum(mesh_t *mesh);
 void mesh_add_linear_momentum(mesh_t *mesh, vec3_t momentum);

@@ -52,6 +52,7 @@
 #define COLOR_RGB_WHITE_2 		(0xF7F0F4)
 #define COLOR_RGB_YELLOW_1		(0xFBF573)
 #define COLOR_RGB_YELLOW_2		(0xFAE571)
+#define COLOR_RGB_BLUE_1 		(0x246B87)
 
 /* More colors
 	Light pink bkgnd:	#FAE4E2
@@ -75,6 +76,7 @@ uint32_t blend_color(uint32_t x, uint32_t y);
 uint32_t color_from_hsv(double h, double s, double v, double a);
 
 uint32_t color_set_alpha(uint32_t c, uint8_t a);
+uint32_t color_mul_opacity(uint32_t c, float op);
 
 uint32_t rgb_to_abgr(uint32_t x);
 uint32_t rgba_to_abgr(uint32_t hex, uint8_t alpha);
