@@ -48,10 +48,6 @@ void scene_add_shape(shape_t *shape) {
 	}
 }
 
-SCENE_INDEX get_scene_index(void) {
-	return scene_index;
-}
-
 void set_scene_index(SCENE_INDEX x) {
 	array_list_remove_all(shape_list);
 	array_list_remove_all(mesh_list);
@@ -154,16 +150,4 @@ void draw_shapes(void) {
 	for (int i = 0; i < sn; i++) {
 		shape_draw(s[i], transform);
 	}
-}
-
-double get_scene_lifetime(void) {
-	return scene_lifetime;
-}
-
-void set_scene_paused(bool state) {
-	is_scene_paused = state;
-}
-
-bool get_scene_paused(void) {
-	return is_scene_paused;
 }

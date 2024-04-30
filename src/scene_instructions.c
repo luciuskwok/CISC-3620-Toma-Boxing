@@ -64,7 +64,7 @@ bool instructions_handle_keyboard(SDL_Event event) {
 }
 
 void instructions_update(double delta_time) {
-	double t = get_scene_lifetime();
+	double t = scene_lifetime;
 	
 	// Color cycling
 	int hue = (int)round(t * 60.0) % 360;

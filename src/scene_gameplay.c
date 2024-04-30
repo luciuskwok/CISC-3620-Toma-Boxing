@@ -51,6 +51,7 @@ void gameplay_init(void) {
 void gameplay_start(void) {
 	time_remaining = -1.0;
 	last_music_position = 0.0;
+	scene_lifetime = 0.0;
 	
 	// Add shapes and meshes to list of objects in scene
 	shape_t **s = (shape_t **)g_gameplay->shapes->array;
@@ -69,12 +70,10 @@ void gameplay_start(void) {
 
 	// Start playing music
 	start_music();
-	set_scene_paused(false);
+	is_scene_paused = false;
 }
 
 bool gameplay_handle_keyboard(SDL_Event event) {
-	bool paused = get_scene_paused();
-	
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
 			case SDLK_a:
@@ -86,20 +85,20 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 			case SDLK_ESCAPE:
 			case SDLK_p:
 				// Pause game
-				set_scene_paused(!paused);
-				pause_music(!paused);
+				is_scene_paused = !is_scene_paused;
+				pause_music(is_scene_paused);
 				return true;
 			case SDLK_q:
 				// Quit to title if paused
-				if (paused) set_scene_index(SCENE_TITLE);
+				if (is_scene_paused) set_scene_index(SCENE_TITLE);
 				return true;
 			case SDLK_r:
 				// Restart song if paused
-				if (paused) gameplay_start();
+				if (is_scene_paused) gameplay_start();
 				return true;
 			case SDLK_l:
 				// Skip to results scene if paused
-				if (paused) set_scene_index(SCENE_RESULTS);
+				if (is_scene_paused) set_scene_index(SCENE_RESULTS);
 				return true;
 		}
 	}
@@ -109,7 +108,7 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 
 void gameplay_update(double delta_time) {
 	// Do not update if paused
-	if (get_scene_paused()) return;
+	if (is_scene_paused) return;
 
 	// Update song progress bar
 	double fraction = 0.0;
@@ -148,7 +147,9 @@ void gameplay_render(void) {
 	draw_progress_bar();
 	
 	// Draw remaining time text
-	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
+	uint8_t br = color_brightness(g_gameplay->bg_color);
+	uint32_t text_color = (br > 127 || scene_lifetime < 1.0)? COLOR_RGB_BLACK : COLOR_RGB_WHITE;
+	set_fill_color_rgba(text_color, 127);
 	if (time_remaining >= 0.0) {
 		int seconds = (int)ceil(time_remaining);
 		int minutes = seconds / 60;
@@ -165,7 +166,7 @@ void gameplay_render(void) {
 	p.x = scr_w / 2 - 21 * 4;
 	p.y = 12;
 	move_to(p);
-	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
+	set_fill_color_rgba(text_color, 127);
 	atari_draw_text("Toma - All Night Radio", 1);
 
 //	p.x = scr_w - 9 * 8 - 4;
@@ -181,7 +182,7 @@ void gameplay_render(void) {
 //	atari_draw_text(":Punch", 1);
 	
 	// Draw pause menu
-	if (get_scene_paused()) {
+	if (is_scene_paused) {
 		
 		rectangle_t text_rect;
 		text_rect.w = 15 * 8;

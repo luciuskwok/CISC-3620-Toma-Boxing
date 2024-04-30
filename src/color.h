@@ -77,6 +77,8 @@ uint32_t color_from_hsv(double h, double s, double v, double a);
 uint32_t color_set_alpha(uint32_t c, uint8_t a);
 
 uint32_t rgb_to_abgr(uint32_t x);
-uint32_t rgba_to_abgr(uint32_t hex, uint32_t alpha);
+uint32_t rgba_to_abgr(uint32_t hex, uint8_t alpha);
+
+uint8_t color_brightness(uint32_t abgr);
 
 #endif /* color_h */

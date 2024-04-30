@@ -89,7 +89,7 @@ void title_render(void) {
 	draw_shapes();
 
 	// Half-second flasher
-	double t = fmod(get_scene_lifetime(), 1.0);
+	double t = fmod(scene_lifetime, 1.0);
 
 	// Draw text
 	

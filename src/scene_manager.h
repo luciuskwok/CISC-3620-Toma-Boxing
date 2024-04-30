@@ -24,21 +24,19 @@ typedef enum {
 	SCENE_RESULTS		/**< Results scene */
 } SCENE_INDEX;
 
+extern double scene_lifetime;
+extern bool is_scene_paused;
+extern SCENE_INDEX scene_index;
+
 void scene_manager_init(void);
 void scene_add_mesh(mesh_t *mesh);
 void scene_add_shape(shape_t *shape);
 
-SCENE_INDEX get_scene_index(void);
 void set_scene_index(SCENE_INDEX x);
 
 void update_scene(double delta_time);
 void draw_scene(void);
 void draw_meshes(void);
 void draw_shapes(void);
-
-double get_scene_lifetime(void);
-
-void set_scene_paused(bool state);
-bool get_scene_paused(void);
 
 #endif /* scene_manager_h */

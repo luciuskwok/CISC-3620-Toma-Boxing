@@ -13,9 +13,27 @@
 
 #pragma mark - Data
 
-#define END_TIME (205.0)
-#define START_FADE_TIME (0.5)
-#define END_FADE_TIME (1.0)
+#define SONG_DURATION (205.0)
+
+// Background color timeline
+typedef struct {
+	double t;
+	uint32_t rgb;
+} bg_color_keyframe_t;
+
+const int bg_color_timeline_len = 8;
+bg_color_keyframe_t bg_color_timeline[bg_color_timeline_len] = {
+	{ .t = 0, .rgb = COLOR_RGB_BLACK },
+	{ .t = 0.5, .rgb = COLOR_RGB_YELLOW_2 },
+	{ .t = 42.75, .rgb = COLOR_RGB_YELLOW_2 },
+	{ .t = 43.0, .rgb = COLOR_RGB_WHITE },
+	{ .t = 43.5, .rgb = COLOR_RGB_WHITE },
+	{ .t = 44.5, .rgb = COLOR_RGB_BLACK },
+	{ .t = SONG_DURATION - 1.0, .rgb = COLOR_RGB_YELLOW_2 },
+	{ .t = SONG_DURATION, .rgb = COLOR_RGB_BLACK },
+};
+
+// Sequencer operations
 
 typedef enum : uint32_t {
 	MoveShape, 		MoveMesh,
@@ -58,18 +76,30 @@ void sequencer_start(gameplay_t *scene) {
 
 }
 
+void sequencer_update_bgcolor(gameplay_t *scene, double current_time) {
+	const int n = bg_color_timeline_len;
+	if (current_time <= 0.0) {
+		scene->bg_color = rgb_to_abgr(bg_color_timeline[0].rgb);
+	} else if (current_time >= SONG_DURATION) {
+		scene->bg_color = rgb_to_abgr(bg_color_timeline[n - 1].rgb);
+	} else {
+		for (int i=1; i<n; i++) {
+			if (bg_color_timeline[i].t >= current_time) {
+				double t0 = bg_color_timeline[i - 1].t;
+				double t1 = bg_color_timeline[i].t;
+				double x = round((current_time - t0) / (t1 - t0) * 255);
+				uint32_t c0 = rgb_to_abgr(bg_color_timeline[i - 1].rgb);
+				uint32_t c1 = rgba_to_abgr(bg_color_timeline[i].rgb, (uint8_t)x);
+				scene->bg_color = blend_color(c0, c1);
+				return;
+			}
+		}
+	}
+}
+
 void sequencer_update(gameplay_t *scene, double previous_time, double current_time) {
-	// Fade in at start of song
-	if (current_time <= START_FADE_TIME) {
-		double x = round(current_time / START_FADE_TIME * 255.0);
-		scene->bg_color = blend_color(COLOR_ABGR_BLACK, rgba_to_abgr(COLOR_RGB_YELLOW_2, (uint32_t)x));
-	}
+	sequencer_update_bgcolor(scene, current_time);
 	
-	// Fade out at end of song
-	if (current_time >= END_TIME - END_FADE_TIME) {
-		double x = round((END_TIME - current_time) / END_FADE_TIME * 255.0);
-		scene->bg_color = blend_color(COLOR_ABGR_BLACK, rgba_to_abgr(COLOR_RGB_YELLOW_2, (uint32_t)x));
-	}
 
 	
 }

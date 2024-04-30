@@ -114,11 +114,19 @@ uint32_t rgb_to_abgr(uint32_t x) {
 	return 0xFF000000 | b | g | r;
 }
 
-uint32_t rgba_to_abgr(uint32_t hex, uint32_t alpha) {
+uint32_t rgba_to_abgr(uint32_t hex, uint8_t alpha) {
 	// Convert color from RGB hex code to ABGR format
 	uint32_t r = (hex & 0x00FF0000) >> 16;
 	uint32_t g = (hex & 0x0000FF00);
 	uint32_t b = (hex & 0x000000FF) << 16;
-	uint32_t a = alpha << 24;
+	uint32_t a = (uint32_t)alpha << 24;
 	return a | b | g | r;
+}
+
+uint8_t color_brightness(uint32_t abgr) {
+	// Returns the overall brightness of color c
+	uint32_t b = (abgr & 0x00FF0000) >> 16;
+	uint32_t g = (abgr & 0x0000FF00) >> 8;
+	uint32_t r = (abgr & 0x000000FF);
+	return (uint8_t)((b + g + r) / 3);
 }

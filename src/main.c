@@ -52,7 +52,7 @@ void process_keyboard_input(void) {
 	SDL_PollEvent(&event);
 	bool handled = false;
 	
-	switch (get_scene_index()) {
+	switch (scene_index) {
 		case SCENE_TITLE:
 			handled = title_handle_keyboard(event);
 			break;
