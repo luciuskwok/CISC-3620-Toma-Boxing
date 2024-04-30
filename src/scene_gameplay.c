@@ -148,7 +148,7 @@ void gameplay_render(void) {
 	draw_progress_bar();
 	
 	// Draw remaining time text
-	set_fill_color_rgba(COLOR_RGB_WHITE, 127);
+	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
 	if (time_remaining >= 0.0) {
 		int seconds = (int)ceil(time_remaining);
 		int minutes = seconds / 60;
@@ -165,23 +165,19 @@ void gameplay_render(void) {
 	p.x = scr_w / 2 - 21 * 4;
 	p.y = 12;
 	move_to(p);
-	set_fill_color_rgba(COLOR_RGB_PINK_1, 255);
-	atari_draw_text("Toma", 1);
-	set_fill_color_rgba(COLOR_RGB_LIGHT_GRAY, 255);
-	atari_draw_text(" - ", 1);
-	set_fill_color_rgba(COLOR_RGB_GREEN_1, 255);
-	atari_draw_text("All Night Radio", 1);
+	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
+	atari_draw_text("Toma - All Night Radio", 1);
 
 	p.x = scr_w - 9 * 8 - 4;
 	p.y = scr_h - 10;
 	move_to(p);
-	set_fill_color_rgba(COLOR_RGB_RED, 255);
+	set_fill_color_rgba(COLOR_RGB_RED, 127);
 	atari_draw_text("A", 1);
-	set_fill_color_rgba(COLOR_RGB_WHITE, 255);
+	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
 	atari_draw_text("/", 1);
-	set_fill_color_rgba(COLOR_RGB_RED, 255);
+	set_fill_color_rgba(COLOR_RGB_RED, 127);
 	atari_draw_text("D", 1);
-	set_fill_color_rgba(COLOR_RGB_WHITE, 255);
+	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
 	atari_draw_text(":Punch", 1);
 	
 	// Draw pause menu

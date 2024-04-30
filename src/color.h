@@ -50,6 +50,8 @@
 #define COLOR_RGB_GREEN_4 		(0x65A97C)
 #define COLOR_RGB_WHITE_3 		(0xBBC5E1)
 #define COLOR_RGB_WHITE_2 		(0xF7F0F4)
+#define COLOR_RGB_YELLOW_1		(0xFBF573)
+#define COLOR_RGB_YELLOW_2		(0xFAE571)
 
 /* More colors
 	Light pink bkgnd:	#FAE4E2

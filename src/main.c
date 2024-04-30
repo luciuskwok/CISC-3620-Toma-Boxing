@@ -106,23 +106,19 @@ void update_state(uint64_t delta_time) {
 
 void draw_volume_overlay(void) {
 	// Draw volume overlay in bottom left of screen
-	vec2_t p;
-	// int scr_w = get_screen_width();
-	int scr_h = get_screen_height();
+	int y = get_screen_height() - 10;
 	
 	// Draw text
-	set_fill_color_rgba(COLOR_RGB_DARK_GRAY, 255);
-	p.x = 2;
-	p.y = scr_h - 10;
-	move_to(p);
-	
+	set_fill_color_rgba(COLOR_RGB_BLACK, 127);
+	move_to(vec2_make(2, y));
+	atari_draw_text(is_music_muted()? "\x02": "\x01", 1);
+
 	char s[4];
-	if (is_music_muted()) {
-		sprintf(s, "\x02");
-	} else {
-		sprintf(s, "\x01%d", get_music_volume());
+	if (!is_music_muted()) {
+		sprintf(s, "%d", get_music_volume());
+		move_to(vec2_make(12, y));
+		atari_draw_text(s, 1);
 	}
-	atari_draw_text(s, 1);
 }
 
 void run_render_pipeline(void) {
