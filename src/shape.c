@@ -22,25 +22,23 @@ const int projected_points_capacity = 256;
 vec2_t projected_points[projected_points_capacity];
 
 
-shape_t *shape_new(int point_count) {
+shape_t *shape_new(int initial_capacity) {
 	shape_t *shape = malloc(sizeof(shape_t));
 	if (!shape) {
 		fprintf(stderr, "Unable to allocate shape!\n");
 		return NULL;
 	}
-	if (point_count > 0) {
-		vec2_t *points = malloc(sizeof(vec2_t) * (size_t)point_count);
-		if (!points) {
+	if (initial_capacity > 0) {
+		shape->points = point_list_new(initial_capacity);
+		if (!shape->points) {
 			fprintf(stderr, "Unable to allocate shape points!\n");
 			free(shape);
 			return NULL;
 		}
-		shape->points = points;
 	} else {
 		shape->points = NULL;
 	}
 	
-	shape->point_count = point_count;
 	shape->is_closed = true;
 	shape->children = NULL;
 	
@@ -70,8 +68,28 @@ void shape_destroy(shape_t *shape) {
 		array_list_destroy(shape->children);
 	}
 	
-	if (shape->points) free(shape->points);
+	if (shape->points) {
+		point_list_destroy(shape->points);
+	}
 	free(shape);
+}
+
+bool shape_add_point(shape_t *shape, vec2_t point) {
+	if (!shape->points) {
+		shape->points = point_list_new(4);
+		if (!shape->points) {
+			fprintf(stderr, "Unable to allocate shape points!\n");
+			return false;
+		}
+	}
+	return point_list_add(shape->points, point);
+}
+
+bool shape_add_points(shape_t *shape, point_list_t *points) {
+	for (int i = 0; i < points->length; i++) {
+		if (!shape_add_point(shape, points->array[i])) return false;
+	}
+	return true;
 }
 
 bool shape_add_child(shape_t *shape, shape_t *child) {
@@ -84,19 +102,35 @@ bool shape_add_child(shape_t *shape, shape_t *child) {
 
 #pragma mark -
 
+point_list_t *create_circle_arc_points(vec2_t center, float radius, float start_angle, float end_angle, int n) {
+	point_list_t *pl = point_list_new(n);
+	if (pl) {
+		float angle_range = end_angle - start_angle;
+		for (int i = 1; i < n; i++) {
+			float angle = (float)i / (float)n * angle_range + start_angle;
+			vec2_t pt;
+			pt.x = center.x + cosf(angle) * radius;
+			pt.y = center.y - sinf(angle) * radius;
+			point_list_add(pl, pt);
+		}
+	}
+	return pl;
+}
+
+#pragma mark -
+
 shape_t *create_rectangle_shape(float w, float h) {
 	shape_t *s = shape_new(4);
 	if (s) {
 		s->is_closed = true;
-		vec2_t *p = s->points;
 		float x1 = -w / 2.0f;
 		float x2 = w / 2.0f;
 		float y1 = -h / 2.0f;
 		float y2 = h / 2.0f;
-		p[0].x = x1;	p[0].y = y1;
-		p[1].x = x2;	p[1].y = y1;
-		p[2].x = x2;	p[2].y = y2;
-		p[3].x = x1;	p[3].y = y2;
+		shape_add_point(s, vec2_make(x1, y1));
+		shape_add_point(s, vec2_make(x2, y1));
+		shape_add_point(s, vec2_make(x2, y2));
+		shape_add_point(s, vec2_make(x1, y2));
 	}
 	return s;
 }
@@ -108,11 +142,9 @@ shape_t *create_polygon_shape(int sides, float radius) {
 	shape_t *s = shape_new(sides);
 	if (!s) return NULL;
 	s->is_closed = true;
-	vec2_t *p = s->points;
 	for (int i = 0; i < sides; i++) {
-		float angle = (float)(M_PI * 2.0) * i / sides;
-		p[i].x = cosf(angle) * radius;
-		p[i].y = sinf(angle) * radius;
+		float angle = RADIANF * i / sides;
+		shape_add_point(s, vec2_make(cosf(angle) * radius, sinf(angle) * radius));
 	}
 	return s;
 }
@@ -122,15 +154,84 @@ shape_t *create_star_shape(int points, float radius, float indent) {
 	shape_t *s = shape_new(n);
 	if (!s) return NULL;
 	s->is_closed = true;
-	vec2_t *p = s->points;
 	for (int i = 0; i < n; i++) {
-		float a = (float)(M_PI * 2.0) * i / n;
+		float a = RADIANF * i / n;
 		float d = radius * (i % 2 == 0? 1.0f : indent);
-		p[i].x = cosf(a) * d;
-		p[i].y = sinf(a) * d;
+		shape_add_point(s, vec2_make(cosf(a) * d, sinf(a) * d));
 	}
 	return s;
 }
+
+shape_t *create_heart_shape(void) {
+	const int sides = 32;
+	shape_t *s = shape_new(sides);
+	if (!s) return NULL;
+	s->is_closed = true;
+	
+	// Make bottom point
+	shape_add_point(s, vec2_make(0.0f, 0.75f));
+	
+	// Make symmetrical arcs of circles
+	vec2_t center = { .x = 0.325f, .y = -0.125f };
+	float start_angle = RADIANF * -0.125f;
+	float end_angle = RADIANF * 0.5f;
+	point_list_t *arc = create_circle_arc_points(center, 0.333f, start_angle, end_angle, 15);
+	
+	// Add non-mirrored arc
+	shape_add_points(s, arc);
+	
+	// Add mirrored arc
+	mat3_t mirror = mat3_scale(mat3_identity(), vec2_make(-1.0f, 1.0f));
+	for (int i = arc->length - 1; i >= 0; i--) {
+		shape_add_point(s, vec2_mat3_multiply(arc->array[i], mirror));
+	}
+	
+	// Dispose of arc
+	point_list_destroy(arc);
+
+	return s;
+}
+
+shape_t *create_rounded_rect_shape(float w, float h, float radius) {
+	shape_t *s = shape_new(32);
+	if (!s) return NULL;
+	s->is_closed = true;
+	
+	point_list_t *arc;
+	vec2_t center;
+	
+	// Top left corner
+	center.x = -w / 2 + radius;
+	center.y = -h / 2 + radius;
+	arc = create_circle_arc_points(center, radius, 0.25f * RADIANF, 0.5f * RADIANF, 8);
+	shape_add_points(s, arc);
+	point_list_destroy(arc);
+	
+	// Bottom left corner
+	center.x = -w / 2 + radius;
+	center.y = h / 2 - radius;
+	arc = create_circle_arc_points(center, radius, 0.5f * RADIANF, 0.75f * RADIANF, 8);
+	shape_add_points(s, arc);
+	point_list_destroy(arc);
+	
+	// Bottom right corner
+	center.x = w / 2 - radius;
+	center.y = h / 2 - radius;
+	arc = create_circle_arc_points(center, radius, 0.75f * RADIANF, 1.0f * RADIANF, 8);
+	shape_add_points(s, arc);
+	point_list_destroy(arc);
+	
+	// Top right corner
+	center.x = w / 2 - radius;
+	center.y = -h / 2 + radius;
+	arc = create_circle_arc_points(center, radius, 0.0f * RADIANF, 0.25f * RADIANF, 8);
+	shape_add_points(s, arc);
+	point_list_destroy(arc);
+
+	return s;
+}
+
+#pragma mark -
 
 shape_t *create_tomato_top_shape(void) {
 	// Tomato body
@@ -206,7 +307,7 @@ shape_t *create_tomato_side_shape(void) {
 		leaves->line_color = rgb_to_abgr(COLOR_RGB_GREEN_3);
 		leaves->fill_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
 		for (int i=0; i<tomato_leaves_points_len; i++) {
-			leaves->points[i] = vec2_mat3_multiply(tomato_leaves_points[i], tr);
+			shape_add_point(leaves, vec2_mat3_multiply(tomato_leaves_points[i], tr));
 		}
 		shape_add_child(body, leaves);
 	}
@@ -218,7 +319,7 @@ shape_t *create_tomato_side_shape(void) {
 		stem->fill_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
 		stem->is_closed = false;
 		for (int i=0; i<tomato_stem_points_len; i++) {
-			stem->points[i] = vec2_mat3_multiply(tomato_stem_points[i], tr);
+			shape_add_point(stem, vec2_mat3_multiply(tomato_stem_points[i], tr));
 		}
 		shape_add_child(body, stem);
 	}
@@ -265,19 +366,23 @@ shape_t *create_microphone_shape(void) {
 	tr = mat3_scale(tr, vec2_make(0.01f, 0.01f));
 	tr = mat3_translate(tr, vec2_make(-50, -60));
 	
-	mat3_t mirror = mat3_identity();
-	mirror = mat3_scale(mirror, vec2_make(-1.0f, 1.0f));
+	mat3_t mirror = mat3_scale(mat3_identity(), vec2_make(-1.0f, 1.0f));
 
 	// Microphone shape
 	shape_t *mic = shape_new(microphone_points_len * 2);
 	if (mic) {
 		mic->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
 		mic->fill_color = rgb_to_abgr(COLOR_RGB_PINK_1);
-		int n = microphone_points_len * 2;
-		for (int i=0; i<microphone_points_len; i++) {
+		// Add non-mirrored points
+		int n = microphone_points_len;
+		for (int i=0; i<n; i++) {
 			vec2_t pt = vec2_mat3_multiply(microphone_points[i], tr);
-			mic->points[i] = pt;
-			mic->points[n - i - 1] = vec2_mat3_multiply(pt, mirror);
+			shape_add_point(mic, pt);
+		}
+		// Add mirrored points
+		vec2_t *p = mic->points->array;
+		for (int i=0; i<n; i++) {
+			shape_add_point(mic, vec2_mat3_multiply(p[n - i - 1], mirror));
 		}
 		shape_add_child(base, mic);
 	}
@@ -289,7 +394,7 @@ shape_t *create_microphone_shape(void) {
 		upper_line->fill_color = 0;
 		upper_line->is_closed = false;
 		for (int i=0; i<microphone_upper_line_points_len; i++) {
-			upper_line->points[i] = vec2_mat3_multiply(microphone_upper_line_points[i], tr);
+			shape_add_point(upper_line, vec2_mat3_multiply(microphone_upper_line_points[i], tr));
 		}
 		shape_add_child(base, upper_line);
 	}
@@ -299,11 +404,16 @@ shape_t *create_microphone_shape(void) {
 	if (lower_band) {
 		lower_band->line_color = rgb_to_abgr(COLOR_RGB_GREEN_3);
 		lower_band->fill_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
-		int n = microphone_lower_band_points_len * 2;
-		for (int i=0; i<microphone_lower_band_points_len; i++) {
+		int n = microphone_lower_band_points_len;
+		// Add non-mirrored points
+		for (int i=0; i<n; i++) {
 			vec2_t pt = vec2_mat3_multiply(microphone_lower_band_points[i], tr);
-			lower_band->points[i] = pt;
-			lower_band->points[n - i - 1] = vec2_mat3_multiply(pt, mirror);
+			shape_add_point(lower_band, pt);
+		}
+		// Add mirrored points
+		vec2_t *p = lower_band->points->array;
+		for (int i=0; i<n; i++) {
+			shape_add_point(lower_band, vec2_mat3_multiply(p[n - i - 1], mirror));
 		}
 		shape_add_child(base, lower_band);
 	}
@@ -312,56 +422,26 @@ shape_t *create_microphone_shape(void) {
 }
 
 shape_t *create_toemaniac_shape(void) {
-	// TODO: implement create_microphone_shape
+	// TODO: implement create_toemaniac_shape
 	return NULL;
 }
 
-shape_t *create_heart_shape(void) {
-	const int sides = 32;
-	shape_t *s = shape_new(sides);
-	if (!s) return NULL;
-	s->is_closed = true;
-	vec2_t *p = s->points;
-	
-	// Make pinch points
-	p[0] = vec2_make(0.0f, 1.0f);
-	p[sides/2] = vec2_make(0.0f, 0.0f);
-	
-	// Make symmetrical arcs of circles
-	const float x0 = 0.325f;
-	const float y0 = 0.125f;
-	const float len = 0.333f;
-	int n = sides / 2;
-	for (int i = 1; i < n; i++) {
-		float angle = RADIANF * ((float)i / (float)n * 0.625f - 0.125f);
-		float x1 = x0 + cosf(angle) * len;
-		float y1 = y0 - sinf(angle) * len;
-		
-		p[i] = vec2_make(x1, y1);
-		p[sides - i] = vec2_make(-x1, y1);
-	}
-	
-	return s;
-}
-
-shape_t *create_envelope_shape(uint32_t line_color, uint32_t fill_color) {
+shape_t *create_envelope_shape(void) {
 	shape_t *s = create_rectangle_shape(1.0f, 0.6f);
 	if (!s) return NULL;
-	s->line_color = line_color;
-	s->fill_color = fill_color;
 	
 	// Add line for flap
 	shape_t *flap = shape_new(3);
-	flap->is_closed = false;
-	flap->line_color = line_color;
-	flap->fill_color = 0;
-	vec2_t *p = flap->points;
-	p[0] = vec2_make(-0.5f, -0.3f);
-	p[1] = vec2_make(0.0f, 0.0f);
-	p[2] = vec2_make(0.5f, -0.3f);
+	if (flap) {
+		flap->is_closed = false;
+		flap->fill_color = 0;
+		shape_add_point(flap, vec2_make(-0.5f, -0.3f));
+		shape_add_point(flap, vec2_make(0.0f, 0.0f));
+		shape_add_point(flap, vec2_make(0.5f, -0.3f));
+	}
 	shape_add_child(s, flap);
 	
-	// Add tomato sticker
+	// TODO: Add tomato sticker
 	
 	return s;
 }
@@ -371,7 +451,6 @@ shape_t *create_crescent_moon_shape(void) {
 	shape_t *s = shape_new(sides);
 	if (!s) return NULL;
 	s->is_closed = true;
-	vec2_t *p = s->points;
 	
 	// Trace two circles through 3/4 of a circle
 	const float inner_offset = 0.25f;
@@ -379,17 +458,18 @@ shape_t *create_crescent_moon_shape(void) {
 	int n = sides / 2;
 	for (int i = 0; i < n; i++) {
 		float angle = RADIANF * ((float)i / (float)(n - 1) * 0.75f + 0.125f);
-		
-		p[i].x = cosf(angle);
-		p[i].y = -sinf(angle);
-		
-		int j = sides - i - 1;
-		p[j].x = cosf(angle) * inner_radius + inner_offset;
-		p[j].y = -sinf(angle) * inner_radius;
+		shape_add_point(s, vec2_make(cosf(angle), -sinf(angle)));
 	}
-	
+
+	for (int i = 0; i < n; i++) {
+		float angle = RADIANF * ((float)i / (float)(n - 1) * 0.75f + 0.125f);
+		vec2_t p;
+		p.x = cosf(angle) * inner_radius + inner_offset;
+		p.y = sinf(angle) * inner_radius;
+		shape_add_point(s, p);
+	}
+
 	return s;
-	return NULL;
 }
 
 
@@ -424,31 +504,33 @@ void shape_draw(shape_t *shape, mat3_t transform) {
 	transform = mat3_rotate(transform, shape->rotation);
 	transform = mat3_scale(transform, shape->scale);
 
-	if (shape->point_count >= 2 && shape->points) {
-		set_line_color_abgr(shape->line_color);
-		set_fill_color_abgr(shape->fill_color);
-		
-		// Apply transforms
-		int n = shape->point_count < projected_points_capacity? shape->point_count : projected_points_capacity;
-		vec2_t *pp = projected_points;
-		for (int i = 0; i < n; i++) {
-			vec2_t pt = vec2_mat3_multiply(shape->points[i], transform);
-			pp[i] = vec2_mat3_multiply(pt, view_transform_2d);
-		}
-		
-		// Fill
-		if (shape->fill_color != 0 && n >= 3) {
-			fill_polygon(pp, n);
-		}
-		
-		// Stroke
-		if (shape->line_color != 0) {
-			move_to(pp[0]);
-			for (int i = 1; i < n; i++) {
-				line_to(pp[i]);
+	if (shape->points) {
+		if (shape->points->length >= 2) {
+			set_line_color_abgr(shape->line_color);
+			set_fill_color_abgr(shape->fill_color);
+			
+			// Apply transforms
+			int n = shape->points->length < projected_points_capacity? shape->points->length : projected_points_capacity;
+			vec2_t *pp = projected_points;
+			for (int i = 0; i < n; i++) {
+				vec2_t pt = vec2_mat3_multiply(shape->points->array[i], transform);
+				pp[i] = vec2_mat3_multiply(pt, view_transform_2d);
 			}
-			if (shape->is_closed) {
-				line_to(pp[0]);
+			
+			// Fill
+			if (shape->fill_color != 0 && n >= 3) {
+				fill_polygon(pp, n);
+			}
+			
+			// Stroke
+			if (shape->line_color != 0) {
+				move_to(pp[0]);
+				for (int i = 1; i < n; i++) {
+					line_to(pp[i]);
+				}
+				if (shape->is_closed) {
+					line_to(pp[0]);
+				}
 			}
 		}
 	}

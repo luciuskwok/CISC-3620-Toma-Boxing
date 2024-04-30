@@ -43,10 +43,13 @@ void title_init(void) {
 	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, 1.0f * grid), 1.25f, 9.0f));
 	
 	// Testing: create shapes being tested
-//	shape_t *test2 = create_microphone_shape();
-//	test2->scale = vec2_make(0.25f, 0.25f);
-//	test2->angular_momentum = 5.0f * RAD_DEG;
-//	array_list_add(title_shapes, test2);
+	//shape_t *test = create_heart_shape();
+	shape_t *test = create_rounded_rect_shape(3.2f, 2.0f, 0.25f);
+	//shape_t *test = create_microphone_shape();
+	test->fill_color = rgba_to_abgr(COLOR_RGB_RED_1, 63);
+	test->scale = vec2_make(0.25f, 0.25f);
+	test->angular_momentum = 5.0f * RAD_DEG;
+	array_list_add(title_shapes, test);
 }
 
 void title_start(void) {
