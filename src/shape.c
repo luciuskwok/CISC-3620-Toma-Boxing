@@ -16,7 +16,7 @@
 
 
 
-const int projected_points_capacity = 256;
+#define projected_points_capacity (256)
 vec2_t projected_points[projected_points_capacity];
 
 

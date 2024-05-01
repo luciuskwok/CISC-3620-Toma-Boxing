@@ -201,7 +201,7 @@ shape_t *create_tomato_top_shape(void) {
 	return body;
 }
 
-const int tomato_leaves_points_len = 19;
+#define tomato_leaves_points_len (19)
 vec2_t tomato_leaves_points[tomato_leaves_points_len] = {
 	{50, 16},
 	{62, 16},
@@ -225,7 +225,7 @@ vec2_t tomato_leaves_points[tomato_leaves_points_len] = {
 	{46, 16}
 };
 
-const int tomato_stem_points_len = 4;
+#define tomato_stem_points_len (4)
 vec2_t tomato_stem_points[tomato_stem_points_len] = {
 	{47, 18},
 	{41, 6},
@@ -271,7 +271,7 @@ shape_t *create_tomato_side_shape(void) {
 	return body;
 }
 
-const int microphone_points_len = 7;
+#define microphone_points_len (7)
 vec2_t microphone_points[microphone_points_len] = {
 	{50, 97},
 	{61, 84},
@@ -282,7 +282,7 @@ vec2_t microphone_points[microphone_points_len] = {
 	{55, 280}
 };
 
-const int microphone_upper_line_points_len = 5;
+#define microphone_upper_line_points_len (5)
 vec2_t microphone_upper_line_points[microphone_upper_line_points_len] = {
 	{22, 104},
 	{40, 104},
@@ -291,7 +291,7 @@ vec2_t microphone_upper_line_points[microphone_upper_line_points_len] = {
 	{78, 104}
 };
 
-const int microphone_lower_band_points_len = 6;
+#define microphone_lower_band_points_len (6)
 vec2_t microphone_lower_band_points[microphone_lower_band_points_len] = {
 	{50, 250},
 	{62, 256},
@@ -370,7 +370,7 @@ shape_t *create_microphone_shape(void) {
 	return group;
 }
 
-const int stand_pts_len = 5;
+#define stand_pts_len (5)
 vec2_t stand_pts[stand_pts_len] = {
 	{59, 0},
 	{59, 100},
@@ -496,7 +496,7 @@ shape_t *create_cpu_shape(void) {
 	return group;
 }
 
-const int lightning_bolt_pts_len = 11;
+#define lightning_bolt_pts_len (11)
 vec2_t lightning_bolt_pts[lightning_bolt_pts_len] = {
 	{48, 21},
 	{45, 30},

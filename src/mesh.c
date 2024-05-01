@@ -55,6 +55,7 @@ mesh_t *mesh_new(int face_count) {
 	mesh->linear_momentum = vec3_zero(); // meters/second
 	mesh->rotation = vec3_zero(); // radians
 	mesh->angular_momentum = vec3_zero(); // radians/second
+	mesh->gravity = false;
 	mesh->lifetime = 0.0;
 	return mesh;
 }

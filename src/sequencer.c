@@ -115,8 +115,8 @@ typedef struct {
 	event_commands cmd;
 	uint32_t target;
 	easing_curve ease;
-	float64_t t0;
-	float64_t t1;
+	double t0;
+	double t1;
 	vec3_t p0;
 	vec3_t p1;
 } sequence_event;
@@ -482,7 +482,7 @@ void sequencer_init(gameplay_t *scene) {
 	// Ball_Mesh
 	m = mesh_create_sphere(3);
 	m->line_color = rgb_to_abgr(COLOR_RGB_WHITE);
-	mesh_set_angular_momentum_degrees(m, vec3_make(0, 0.5, 0));
+	mesh_set_angular_momentum_degrees(m, vec3_make(0, -0.25, 0));
 	array_list_add(scene->meshes, m);
 	
 	// Cone_1_Mesh: nested inside another mesh for rotations
