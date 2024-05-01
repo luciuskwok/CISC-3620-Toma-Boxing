@@ -58,6 +58,9 @@ shape_t *create_microphone_shape(void);
 shape_t *create_stand_shape(void);
 shape_t *create_microphone_with_stand_shape(void);
 
+shape_t *create_monitor_shape(void);
+shape_t *create_cpu_shape(void);
+
 shape_t *create_toemaniac_shape(void);
 
 shape_t *create_envelope_shape(uint32_t line_color);

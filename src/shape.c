@@ -507,6 +507,80 @@ shape_t *create_microphone_with_stand_shape(void) {
 
 #pragma mark -
 
+shape_t *create_monitor_shape(void) {
+	shape_t *group = shape_new(0);
+	if (!group) return NULL;
+	
+	// Using pixel art as reference:
+	// Center: 50, 45
+	shape_t *stand = create_rectangle_shape(0.06f, 0.09f);
+	if (!stand) return NULL;
+	stand->position = vec2_make(0, -0.29f); // 50, 74
+	stand->line_color = 0;
+	stand->fill_color = rgb_to_abgr(COLOR_RGB_GRAY_40);
+	shape_add_child(group, stand);
+	
+	shape_t *base = create_rectangle_shape(0.30f, 0.02f);
+	if (!base) return NULL;
+	base->position = vec2_make(0, -0.34f); // 0, 78
+	base->line_color = 0;
+	base->fill_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	shape_add_child(group, base);
+	
+	shape_t *bezel = create_rectangle_shape(0.82f, 0.52f);
+	if (!bezel) return NULL;
+	bezel->line_color = rgb_to_abgr(COLOR_RGB_WHITE_3);
+	bezel->fill_color = rgb_to_abgr(COLOR_RGB_WHITE_2);
+	shape_add_child(group, bezel);
+	
+	shape_t *screen = create_rectangle_shape(0.80f, 0.45f);
+	if (!screen) return NULL;
+	screen->position = vec2_make(0, 0.025f);
+	screen->line_color = rgb_to_abgr(COLOR_RGB_GRAY_10);
+	screen->fill_color = rgb_to_abgr(COLOR_RGB_GRAY_40);
+	shape_add_child(group, screen);
+		
+	return group;
+}
+
+shape_t *create_cpu_shape(void) {
+	shape_t *group = shape_new(0);
+	if (!group) return NULL;
+	
+	// Using pixel art as reference:
+	// Center: 50, 48
+	shape_t *side = create_rectangle_shape(0.06f, 0.60f);
+	if (!side) return NULL;
+	side->position = vec2_make(0.15f, -0.02f);
+	side->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	side->fill_color = rgb_to_abgr(COLOR_RGB_WHITE_3);
+	shape_add_child(group, side);
+
+	shape_t *base = create_rectangle_shape(0.26f, 0.64f);
+	if (!base) return NULL;
+	base->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	base->fill_color = rgb_to_abgr(COLOR_RGB_WHITE_2);
+	shape_add_child(group, base);
+
+	shape_t *cdrom = create_rectangle_shape(0.16f, 0.01f);
+	if (!cdrom) return NULL;
+	cdrom->position = vec2_make(0, 0.27f);
+	cdrom->line_color = 0;
+	cdrom->fill_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	shape_add_child(group, cdrom);
+
+	shape_t *floppy = create_rectangle_shape(0.08f, 0.01f);
+	if (!floppy) return NULL;
+	floppy->position = vec2_make(0, 0.17f);
+	floppy->line_color = 0;
+	floppy->fill_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	shape_add_child(group, floppy);
+	
+	return group;
+}
+
+#pragma mark -
+
 shape_t *create_toemaniac_shape(void) {
 	// TODO: implement create_toemaniac_shape
 	return NULL;

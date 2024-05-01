@@ -77,10 +77,10 @@ typedef enum : uint32_t {
 	Heart_Shape,
 	Star_Shape,
 	Envelope_Shape,
-	Microphone_Shape,
 	Monitor_Shape,
 	CPU_Shape,
-	iPhone_Shape,
+	Microphone_Shape,
+
 } seq_shape_index;
 
 typedef struct {
@@ -115,31 +115,44 @@ sequence_event seq_events[] = {
 	// Moon
 	{ ShowShape, Moon_Shape, .t0 = 4.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
 	{ ScaleShape, Moon_Shape, EaseOutElastic, .t0 = 4.6, .t1 = 5.6, .p0 = {0,0,0}, .p1 = {33,33,0} },
-	{ RotateShape, Moon_Shape, EaseBezier, .t0 = 5.6, .t1 = 6.6, .p0 = {0,0,0}, .p1 = {45,0,0} },
-	{ MoveShape, Moon_Shape, EaseBezier, .t0 = 6.6, .t1 = 7.6, .p0 = {0,0,0}, .p1 = {0,18,0} },
-	{ ScaleShape, Moon_Shape, EaseBezier, .t0 = 7.6, .t1 = 8.6, .p0 = {33,33,0}, .p1 = {12,12,0} },
+	{ RotateShape, Moon_Shape, EaseBezier, .t0 = 5.6, .t1 = 8.6, .p0 = {0,0,0}, .p1 = {405,0,0} },
+	{ ScaleShape, Moon_Shape, EaseBezier, .t0 = 6.6, .t1 = 8.6, .p0 = {33,33,0}, .p1 = {12,12,0} },
+	{ MoveShape, Moon_Shape, EaseBezier, .t0 = 7.6, .t1 = 8.6, .p0 = {0,0,0}, .p1 = {0,18,0} },
 
 	// Heart
 	{ ShowShape, Heart_Shape, .t0 = 8.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
 	{ ScaleShape, Heart_Shape, EaseOutElastic, .t0 = 8.6, .t1 = 9.6, .p0 = {0,0,0}, .p1 = {50,50,0} },
 	{ RotateShape, Heart_Shape, EaseBezier, .t0 = 9.6, .t1 = 12.6, .p0 = {0,0,0}, .p1 = {340,0,0} },
-	{ MoveShape, Heart_Shape, EaseBezier, .t0 = 10.6, .t1 = 11.6, .p0 = {0,0,0}, .p1 = {-50,20,0} },
+	{ MoveShape, Heart_Shape, EaseBezier, .t0 = 10.6, .t1 = 12.6, .p0 = {0,0,0}, .p1 = {-50,20,0} },
 	{ ScaleShape, Heart_Shape, EaseBezier, .t0 = 11.6, .t1 = 12.6, .p0 = {50,50,0}, .p1 = {18,18,0} },
 
 	// Star
 	{ ShowShape, Star_Shape, .t0 = 12.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Star_Shape, EaseOutElastic, .t0 = 12.6, .t1 = 13.6, .p0 = {0,0,0}, .p1 = {30,30,0} },
+	{ ScaleShape, Star_Shape, EaseOutElastic, .t0 = 12.6, .t1 = 13.6, .p0 = {0,0,0}, .p1 = {35,35,0} },
 	{ RotateShape, Star_Shape, EaseBezier, .t0 = 13.6, .t1 = 16.6, .p0 = {0,0,0}, .p1 = {542,0,0} },
-	{ MoveShape, Star_Shape, EaseBezier,   .t0 = 14.6, .t1 = 15.6, .p0 = {0,0,0}, .p1 = {50,20,0} },
-	{ ScaleShape, Star_Shape, EaseBezier,  .t0 = 15.6, .t1 = 16.6, .p0 = {30,30,0}, .p1 = {10,10,0} },
+	{ MoveShape, Star_Shape, EaseBezier,   .t0 = 14.6, .t1 = 16.6, .p0 = {0,0,0}, .p1 = {50,20,0} },
+	{ ScaleShape, Star_Shape, EaseBezier,  .t0 = 15.6, .t1 = 16.6, .p0 = {35,35,0}, .p1 = {10,10,0} },
 
 	// Microphone with stand
 	{ ShowShape, Microphone_Shape, .t0 = 16.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Microphone_Shape, EaseOutElastic, .t0 = 16.6, .t1 = 17.6, .p0 = {0,0,0}, .p1 = {40,40,0} },
-	{ RotateShape, Microphone_Shape, EaseBezier, .t0 = 17.6, .t1 = 18.6, .p0 = {0,0,0}, .p1 = {360,0,0} },
-	{ MoveShape, Microphone_Shape, EaseBezier,   .t0 = 18.8, .t1 = 19.6, .p0 = {0,0,0}, .p1 = {12,-23,0} },
-	{ ScaleShape, Microphone_Shape, EaseBezier,  .t0 = 19.6, .t1 = 20.6, .p0 = {40,40,0}, .p1 = {18,18,0} },
+	{ ScaleShape, Microphone_Shape, EaseOutElastic, .t0 = 16.6, .t1 = 17.6, .p0 = {0,0,0}, .p1 = {35,35,0} },
+	{ RotateShape, Microphone_Shape, EaseBezier, .t0 = 17.6, .t1 = 20.6, .p0 = {0,0,0}, .p1 = {360,0,0} },
+	{ ScaleShape, Microphone_Shape, EaseBezier,  .t0 = 18.6, .t1 = 20.6, .p0 = {35,35,0}, .p1 = {18,18,0} },
+	{ MoveShape, Microphone_Shape, EaseBezier,   .t0 = 19.8, .t1 = 20.6, .p0 = {0,0,0}, .p1 = {15,-23.5,0} },
 
+	// Monitor
+	{ ShowShape, Monitor_Shape, .t0 = 20.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Monitor_Shape, EaseOutElastic, .t0 = 20.6, .t1 = 21.6, .p0 = {0,0,0}, .p1 = {100,100,0} },
+	{ RotateShape, Monitor_Shape, EaseBezier, .t0 = 21.6, .t1 = 24.6, .p0 = {0,0,0}, .p1 = {360,0,0} },
+	{ ScaleShape, Monitor_Shape, EaseBezier,  .t0 = 22.6, .t1 = 24.6, .p0 = {100,100,0}, .p1 = {80,80,0} },
+	{ MoveShape, Monitor_Shape, EaseBezier,   .t0 = 23.8, .t1 = 24.6, .p0 = {0,0,0}, .p1 = {-30,-17,0} },
+
+	// CPU
+	{ ShowShape, CPU_Shape, .t0 = 24.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, CPU_Shape, EaseOutElastic, .t0 = 24.6, .t1 = 25.6, .p0 = {0,0,0}, .p1 = {100,100,0} },
+	{ RotateShape, CPU_Shape, EaseBezier, .t0 = 25.6, .t1 = 28.6, .p0 = {0,0,0}, .p1 = {360,0,0} },
+	{ ScaleShape, CPU_Shape, EaseBezier,  .t0 = 26.6, .t1 = 28.6, .p0 = {100,100,0}, .p1 = {80,80,0} },
+	{ MoveShape, CPU_Shape, EaseBezier,   .t0 = 27.8, .t1 = 28.6, .p0 = {0,0,0}, .p1 = {50,-19.5,0} },
 
 	{ .cmd = EndSequence }
 };
@@ -199,14 +212,18 @@ void sequencer_init(gameplay_t *scene) {
 	s = create_envelope_shape(COLOR_RGB_OUTLINE);
 	s->fill_color = rgba_to_abgr(COLOR_RGB_WHITE_3, 255);
 	array_list_add(scene->shapes, s);
+	
+	// Monitor_Shape,
+	s = create_monitor_shape();
+	array_list_add(scene->shapes, s);
+
+	// CPU_Shape,
+	s = create_cpu_shape();
+	array_list_add(scene->shapes, s);
 
 	// Microphone_Shape,
 	s = create_microphone_with_stand_shape();
 	array_list_add(scene->shapes, s);
-	
-	// Monitor_Shape,
-	// CPU_Shape,
-	// iPhone_Shape,
 
 }
 
