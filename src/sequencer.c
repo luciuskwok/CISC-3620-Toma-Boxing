@@ -293,32 +293,32 @@ sequence_event seq_events[] = {
 #define T0 (54.1)
 	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {200,100,100}, .p1 = {0,0,0} },
 	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M1, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (56.1)
 	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {-350,80,200}, .p1 = {0,0,0} },
 	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M2, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (58.1)
 	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {350,104,150}, .p1 = {0,0,0} },
 	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M1, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (58.5)
 	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {-200,80,120}, .p1 = {0,0,0} },
 	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M2, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (59.0)
 	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {0,100,120}, .p1 = {0,0,0} },
 	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M1, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (59.5)
 	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {200,120,120}, .p1 = {0,0,0} },
 	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M2, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 
 #undef S0
