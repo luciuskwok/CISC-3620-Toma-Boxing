@@ -67,6 +67,7 @@ typedef enum: uint32_t {
 	EaseOutQuad,
 	EaseInCubic,
 	EaseOutCubic,
+	EaseOutBounce,
 	EaseOutElastic,
 	EaseBezier,
 } easing_curve;
@@ -76,6 +77,15 @@ typedef enum : uint32_t {
 	Numeral_2_Mesh,
 	Numeral_3_Mesh,
 	Numeral_4_Mesh,
+	Grid_Mesh,
+	Mtn_1_Mesh,
+	Mtn_2_Mesh,
+	Mtn_3_Mesh,
+	Mtn_4_Mesh,
+	Mtn_5_Mesh,
+	Radio_Tower_Mesh,
+	Radio_Waves_1_Mesh,
+	Radio_Waves_2_Mesh,
 } seq_mesh_index;
 
 typedef enum : uint32_t {
@@ -215,7 +225,106 @@ sequence_event seq_events[] = {
 	// Explosion
 	{ ShowShape, Explosion_Shape, 				.t0 = 41.6, .t1 = 42.1, .p0 = {50,-19,0}, .p1 = {0,0,0} },
 	{ ScaleShape, Explosion_Shape, EaseOutQuad, .t0 = 41.6, .t1 = 42.1, .p0 = {0,0,0}, .p1 = {200, 200,0} },
+	
+	// -- 3D; Chorus --
+	// Grid
+#define T0 (43.1)
+	{ ShowMesh, Grid_Mesh, 				.t0 = T0, .t1 = 73.6, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, Grid_Mesh, 			.t0 = T0, .t1 = T0, .p0 = {400,400,400}, .p1 = {400,400,400} },
+	{ SetMeshOpacity, Grid_Mesh, EaseBezier, .t0 = T0, .t1 = T0+1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ RotateMesh, Grid_Mesh, EaseOutBounce, .t0 = T0+1, .t1 = T0+5, .p0 = {0,0,0}, .p1 = {90,0,0} },
+	{ MoveMesh, Grid_Mesh, EaseOutBounce, .t0 = T0+1, .t1 = T0+5, .p0 = {0,0,0}, .p1 = {0,-100,100} },
+	
+	// Mtn 1
+#undef T0
+#define T0 (47.1)
+	{ ShowMesh, Mtn_1_Mesh, 				.t0 = T0, .t1 = 73.6, .p0 = {75,-100,650}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Mtn_1_Mesh, EaseBezier, .t0 = T0, .t1 = T0+1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ ScaleMesh, Mtn_1_Mesh, 				.t0 = T0, .t1 = T0, .p0 = {200,1,100}, .p1 = {200,1,100} },
+	{ ScaleMesh, Mtn_1_Mesh, EaseOutElastic, .t0 = T0+0.5, .t1 = T0+2, .p0 = {200,1,100}, .p1 = {200,200,100} },
+	
+	// Mtn 2
+#undef T0
+#define T0 (48.1)
+	{ ShowMesh, Mtn_2_Mesh, 				.t0 = T0, .t1 = 73.6, .p0 = {-300,-100,650}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Mtn_2_Mesh, EaseBezier, .t0 = T0, .t1 = T0+1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ ScaleMesh, Mtn_2_Mesh, 				.t0 = T0, .t1 = T0, .p0 = {200,1,100}, .p1 = {200,1,100} },
+	{ ScaleMesh, Mtn_2_Mesh, EaseOutElastic, .t0 = T0+0.5, .t1 = T0+2, .p0 = {200,1,100}, .p1 = {200,125,100} },
+	
+	// Mtn 3
+#undef T0
+#define T0 (49.1)
+	{ ShowMesh, Mtn_3_Mesh, 				.t0 = T0, .t1 = 73.6, .p0 = {350,-100,650}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Mtn_3_Mesh, EaseBezier, .t0 = T0, .t1 = T0+1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ ScaleMesh, Mtn_3_Mesh, 				.t0 = T0, .t1 = T0, .p0 = {100,1,100}, .p1 = {100,1,100} },
+	{ ScaleMesh, Mtn_3_Mesh, EaseOutElastic, .t0 = T0+0.5, .t1 = T0+2, .p0 = {100,1,100}, .p1 = {100,75,100} },
+	
+	// Mtn 4
+#undef T0
+#define T0 (50.1)
+	{ ShowMesh, Mtn_4_Mesh, 				.t0 = T0, .t1 = 73.6, .p0 = {550,-100,400}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Mtn_4_Mesh, EaseBezier, .t0 = T0, .t1 = T0+1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ ScaleMesh, Mtn_4_Mesh, 				.t0 = T0, .t1 = T0, .p0 = {100,1,200}, .p1 = {100,1,200} },
+	{ ScaleMesh, Mtn_4_Mesh, EaseOutElastic, .t0 = T0+0.5, .t1 = T0+2, .p0 = {100,1,200}, .p1 = {100,75,200} },
+	
+	// Mtn 5
+#undef T0
+#define T0 (51.1)
+	{ ShowMesh, Mtn_5_Mesh, 				.t0 = T0, .t1 = 73.6, .p0 = {-550,-100,350}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Mtn_5_Mesh, EaseBezier, .t0 = T0, .t1 = T0+1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ ScaleMesh, Mtn_5_Mesh, 				.t0 = T0, .t1 = T0, .p0 = {100,1,300}, .p1 = {100,1,300} },
+	{ ScaleMesh, Mtn_5_Mesh, EaseOutElastic, .t0 = T0+0.5, .t1 = T0+2, .p0 = {100,1,300}, .p1 = {100,75,300} },
+	
+	// Radio Tower
+#undef T0
+#define T0 (52.1)
+	{ ShowMesh, Radio_Tower_Mesh, 				.t0 = T0, .t1 = 73.6, .p0 = {-200,-100,100}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Radio_Tower_Mesh, EaseBezier, .t0 = T0, .t1 = T0+1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ ScaleMesh, Radio_Tower_Mesh, 				.t0 = T0, .t1 = T0, .p0 = {12,1,12}, .p1 = {12,1,12} },
+	{ ScaleMesh, Radio_Tower_Mesh, EaseOutElastic, .t0 = T0+0.5, .t1 = T0+2, .p0 = {12,1,12}, .p1 = {12,200,12} },
+	
+	// Radio Waves
+#undef T0
+#define S0 (2)
+#define S1 (200)
+#define M1 Radio_Waves_1_Mesh
+#define M2 Radio_Waves_2_Mesh
 
+#define T0 (54.1)
+	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {200,100,100}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M1, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+#undef T0
+#define T0 (56.1)
+	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {-350,80,200}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M2, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+#undef T0
+#define T0 (58.1)
+	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {350,104,150}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M1, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+#undef T0
+#define T0 (58.5)
+	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {-200,80,120}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M2, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+#undef T0
+#define T0 (59.0)
+	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {0,100,120}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M1, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+#undef T0
+#define T0 (59.5)
+	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {200,120,120}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M2, EaseOutQuad, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+#undef T0
+
+#undef S0
+#undef S1
+#undef M1
+#undef M2
 	{ .cmd = EndSequence }
 };
 
@@ -232,11 +341,40 @@ void sequencer_init(gameplay_t *scene) {
 	// Create all the objects used by sequence
 	
 	// -- Meshes --
+	mesh_t *m;
+	
 	// Numerals
 	add_numeral_mesh(scene, '1');  // Numeral_1_Mesh
 	add_numeral_mesh(scene, '2');  // Numeral_2_Mesh
 	add_numeral_mesh(scene, '4');  // Numeral_3_Mesh
 	add_numeral_mesh(scene, '2');  // Numeral_4_Mesh
+	
+	// Grid_Mesh
+	m = mesh_create_grid(16);
+	m->line_color = rgb_to_abgr(COLOR_RGB_RED_2);
+	array_list_add(scene->meshes, m);
+	
+	// Mtn_#_Mesh
+	for (int i=0; i<5; i++) {
+		m = mesh_create_pyramid();
+		m->line_color = rgb_to_abgr(COLOR_RGB_RED_3);
+		array_list_add(scene->meshes, m);
+	}
+	
+	// Radio_Tower_Mesh
+	m = mesh_create_pyramid();
+	m->line_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
+	array_list_add(scene->meshes, m);
+
+	// Radio_Waves_#_Mesh
+	for (int i=0; i<2; i++) {
+		m = mesh_create_sphere(3);
+		m->use_backface_culling = false;
+		m->point_color = rgba_to_abgr(COLOR_RGB_GREEN_2, 127);
+		m->line_color = 0;
+		array_list_add(scene->meshes, m);
+	}
+
 	
 	// -- Shapes --
 	shape_t *s;
@@ -341,6 +479,66 @@ void sequencer_update_bgcolor(gameplay_t *scene, double current_time) {
 	}
 }
 
+float apply_easing_curve(easing_curve ease, float x) {
+	// https://easings.net/
+	const float c4 = 2 * (float)M_PI / 3;
+	const float v = 6.0f;
+	const float n1 = 7.5625f;
+	const float d1 = 2.75f;
+
+	switch (ease) {
+		case EaseInQuad:
+			x = x * x;
+			break;
+		case EaseOutQuad:
+			x = (1.0f - x);
+			x = 1.0f - x * x;
+			break;
+		case EaseInCubic:
+			x = x * x * x;
+			break;
+		case EaseOutCubic:
+			x = (1.0f - x);
+			x = 1.0f - x * x * x;
+			break;
+		case EaseOutElastic:
+			if (x <= 0.0f) {
+				x = 0.0f;
+			} else if (x >= 1.0f) {
+				x = 1.0f;
+			} else {
+				x = powf(2, -v * x) * sinf((x * v - 0.75f) * c4) + 1;
+			}
+			break;
+		case EaseOutBounce:
+			if (x < 1.0f / d1) {
+				x = n1 * x * x;
+			} else if (x < 2.0f / d1) {
+				x -= 1.5f / d1;
+				x = n1 * x * x + 0.75f;
+			} else if (x < 2.5f / d1) {
+				x -= 2.25f / d1;
+				x = n1 * x * x + 0.9375f;
+			} else {
+				x -= 2.625f / d1;
+				x = n1 * x * x + 0.984375f;
+			}
+			break;
+		case EaseBezier:
+			x = x * x * (3.0f - 2.0f * x);
+			break;
+		default:
+			// Do nothing
+			break;
+	}
+	
+	return x;
+}
+
+float interpolate_float(float a, float b, float x) {
+	return a * (1 - x) + b * x;
+}
+
 void seq_event_start(gameplay_t *scene, sequence_event *event, double time) {
 	mesh_t *mesh;
 	shape_t *shape;
@@ -364,51 +562,14 @@ void seq_event_start(gameplay_t *scene, sequence_event *event, double time) {
 		case RotateMesh:
 		case ScaleShape:
 		case ScaleMesh:
+		case SetShapeOpacity:
+		case SetMeshOpacity:
 			// Do nothing
 			break;
 		default:
 			fprintf(stderr, "Unknown event command, start!\n");
 			break;
 	}
-}
-
-float apply_easing_curve(easing_curve ease, float x) {
-	switch (ease) {
-		case EaseInQuad:
-			x = x * x;
-			break;
-		case EaseOutQuad:
-			x = (1.0f - x);
-			x = 1.0f - x * x;
-			break;
-		case EaseInCubic:
-			x = x * x * x;
-			break;
-		case EaseOutCubic:
-			x = (1.0f - x);
-			x = 1.0f - x * x * x;
-			break;
-		case EaseOutElastic:
-			// https://easings.net/#easeOutElastic
-			if (x <= 0.0f) {
-				x = 0.0f;
-			} else if (x >= 1.0f) {
-				x = 1.0f;
-			} else {
-				const float c4 = 2 * (float)M_PI / 3;
-				const float v = 6.0f;
-				x = powf(2, -v * x) * sinf((x * v - 0.75f) * c4) + 1;
-			}
-			break;
-		case EaseBezier:
-			x = x * x * (3.0f - 2.0f * x);
-			break;
-		default:
-			// Do nothing
-			break;
-	}
-	
-	return x;
 }
 
 void seq_event_update(gameplay_t *scene, sequence_event *event, double time) {
@@ -431,7 +592,7 @@ void seq_event_update(gameplay_t *scene, sequence_event *event, double time) {
 			break;
 		case RotateShape:
 			shape = scene->shapes->array[event->target];
-			shape->rotation = (event->p0.x * (1 - x) + event->p1.x * x) * ROTATION_FACTOR;
+			shape->rotation = interpolate_float(event->p0.x, event->p1.x, x) * ROTATION_FACTOR;
 			break;
 		case RotateMesh:
 			mesh = scene->meshes->array[event->target];
@@ -444,6 +605,14 @@ void seq_event_update(gameplay_t *scene, sequence_event *event, double time) {
 		case ScaleMesh:
 			mesh = scene->meshes->array[event->target];
 			mesh->scale = vec3_mul(vec3_interpolate(event->p0, event->p1, x), SCALE_FACTOR);
+			break;
+		case SetShapeOpacity:
+			shape = scene->shapes->array[event->target];
+			shape->opacity = interpolate_float(event->p0.x, event->p1.x, x);
+			break;
+		case SetMeshOpacity:
+			mesh = scene->meshes->array[event->target];
+			mesh->opacity = interpolate_float(event->p0.x, event->p1.x, x);
 			break;
 		case ShowMesh:
 		case ShowShape:
@@ -473,6 +642,8 @@ void seq_event_end(gameplay_t *scene, sequence_event *event, double time) {
 		case RotateMesh:
 		case ScaleShape:
 		case ScaleMesh:
+		case SetShapeOpacity:
+		case SetMeshOpacity:
 			// Do nothing
 			break;
 		default:

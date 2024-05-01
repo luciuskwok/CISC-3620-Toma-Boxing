@@ -46,7 +46,7 @@ mesh_t *mesh_new(int face_count) {
 	mesh->is_visible = true;
 	mesh->use_backface_culling = true;
 	mesh->line_color = COLOR_ABGR_WHITE;
-	mesh->point_color = COLOR_ABGR_WHITE;
+	mesh->point_color = 0;
 	mesh->opacity = 1.0f;
 	
 	// Physics
@@ -140,7 +140,7 @@ void mesh_draw_recursive(mesh_t *mesh, mat4_t transform, float opacity) {
 		vec3_t vab, vac, normal, camera_ray;
 		float dot_normal_camera;
 		const vec3_t camera_pos = get_camera_position();
-		const int point_w = 5;
+		const int point_w = 3;
 		
 		// Color
 		set_line_color_abgr(color_mul_opacity(mesh->line_color, opacity));
