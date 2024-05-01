@@ -22,11 +22,13 @@ mesh_t *mesh2 = NULL;
 
 
 void instructions_init(void) {
-	//mesh1 = mesh_create_diamond(4, 1.0f, 1.0f);
 	
-	// Testing: mesh character
+	// Testing
+	//mesh1 = mesh_create_grid(8);
+	//mesh1 = mesh_create_diamond(4, 1.0f, 1.0f);
 	mesh1 = mesh_create_3d_character('a');
 
+	//mesh2 = mesh_create_pyramid();
 	mesh2 = mesh_create_sphere(2);
 	//mesh2 = mesh_create_cube();
 }

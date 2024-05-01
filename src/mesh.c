@@ -39,10 +39,12 @@ mesh_t *mesh_new(int face_count) {
 	}
 	
 	mesh->face_count = face_count;
+	mesh->faces_are_lines = false;
 	mesh->children = NULL;
 	
 	// Visuals
 	mesh->is_visible = true;
+	mesh->use_backface_culling = true;
 	mesh->line_color = COLOR_ABGR_WHITE;
 	mesh->point_color = COLOR_ABGR_WHITE;
 	mesh->opacity = 1.0f;
@@ -151,32 +153,51 @@ void mesh_draw_recursive(mesh_t *mesh, mat4_t transform, float opacity) {
 			b3 = vec3_mat4_multiply(face.b, transform);
 			c3 = vec3_mat4_multiply(face.c, transform);
 			
-			// Backface culling
-			vab = vec3_sub(b3, a3);
-			vac = vec3_sub(c3, a3);
-			normal = vec3_cross(vab, vac);
-			camera_ray = vec3_sub(a3, camera_pos);
-			dot_normal_camera = vec3_dot(camera_ray, normal);
+			bool should_draw = true;
 			
-			if (dot_normal_camera > 0.0) {
+			if (mesh->use_backface_culling && !mesh->faces_are_lines) {
+				// Backface culling
+				vab = vec3_sub(b3, a3);
+				vac = vec3_sub(c3, a3);
+				normal = vec3_cross(vab, vac);
+				camera_ray = vec3_sub(a3, camera_pos);
+				dot_normal_camera = vec3_dot(camera_ray, normal);
+				should_draw = dot_normal_camera > 0.0;
+			}
+			
+			if (should_draw) {
 				// Project to 2D
 				a2 = perspective_project_point(a3);
 				b2 = perspective_project_point(b3);
 				c2 = perspective_project_point(c3);
 				
-				// Lines
-				if (mesh->line_color != 0) {
-					move_to(a2);
-					line_to(b2);
-					line_to(c2);
-					line_to(a2);
-				}
-				
-				// Points
-				if (mesh->point_color != 0) {
-					fill_centered_rect((int)a2.x, (int)a2.y, point_w, point_w);
-					fill_centered_rect((int)b2.x, (int)b2.y, point_w, point_w);
-					fill_centered_rect((int)c2.x, (int)c2.y, point_w, point_w);
+				if (mesh->faces_are_lines) {
+					// Lines
+					if (mesh->line_color != 0) {
+						move_to(a2);
+						line_to(b2);
+					}
+					
+					// Points
+					if (mesh->point_color != 0) {
+						fill_centered_rect((int)a2.x, (int)a2.y, point_w, point_w);
+						fill_centered_rect((int)b2.x, (int)b2.y, point_w, point_w);
+					}
+				} else {
+					// Lines
+					if (mesh->line_color != 0) {
+						move_to(a2);
+						line_to(b2);
+						line_to(c2);
+						line_to(a2);
+					}
+					
+					// Points
+					if (mesh->point_color != 0) {
+						fill_centered_rect((int)a2.x, (int)a2.y, point_w, point_w);
+						fill_centered_rect((int)b2.x, (int)b2.y, point_w, point_w);
+						fill_centered_rect((int)c2.x, (int)c2.y, point_w, point_w);
+					}
 				}
 			}
 		}

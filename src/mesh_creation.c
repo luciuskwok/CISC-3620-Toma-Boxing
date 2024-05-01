@@ -48,6 +48,7 @@ const vec3_t cube_vertices[8] = {
     { -1, -1,  1 }
 };
 
+// Faces use right-hand rule and should be counter-clockwise.
 const mesh_face_index_t cube_faces[CUBE_FACE_COUNT] = {
     // front
     { 0, 2, 1 },
@@ -244,6 +245,51 @@ mesh_t *mesh_create_sphere(int subdivisions) {
 	
 	return mesh;
 }
+
+#pragma mark -
+
+mesh_t *mesh_create_grid(int subdivisions) {
+	mesh_t *m = mesh_new(2 * (subdivisions + 1));
+	if (!m) return NULL;
+	m->faces_are_lines = true;
+	m->use_backface_culling = false;
+	
+	mesh_face_t *f = m->faces;
+	for (int i=0; i<=subdivisions; i++) {
+		float x = (float)i / (float)subdivisions * 2.0f - 1.0f;
+		f[i*2].a = vec3_make(-1, x, 0);
+		f[i*2].b = vec3_make(1, x, 0);
+		f[i*2].c = vec3_zero();
+		
+		f[i*2+1].a = vec3_make(x, -1, 0);
+		f[i*2+1].b = vec3_make(x, 1, 0);
+		f[i*2+1].c = vec3_zero();
+	}
+	
+	return m;
+}
+
+mesh_t *mesh_create_pyramid(void) {
+	mesh_t *m = mesh_new(6);
+	if (!m) return NULL;
+
+	vec3_t a = {0, 1, 0};
+	vec3_t b = {-1, 0, 1};
+	vec3_t c = {1, 0, 1};
+	vec3_t d = {1, 0, -1};
+	vec3_t e = {-1, 0, -1};
+	mesh_face_t *f = m->faces;
+	
+	f[0] = mesh_face_make(a, c, b);
+	f[1] = mesh_face_make(a, d, c);
+	f[2] = mesh_face_make(a, e, d);
+	f[3] = mesh_face_make(a, b, e);
+	f[4] = mesh_face_make(b, c, e);
+	f[5] = mesh_face_make(d, e, c);
+	
+	return m;
+}
+
 
 #pragma mark -
 

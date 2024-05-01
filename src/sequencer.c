@@ -65,6 +65,8 @@ typedef enum: uint32_t {
 	EaseLinear,
 	EaseInQuad,
 	EaseOutQuad,
+	EaseInCubic,
+	EaseOutCubic,
 	EaseOutElastic,
 	EaseBezier,
 } easing_curve;
@@ -376,7 +378,15 @@ float apply_easing_curve(easing_curve ease, float x) {
 			x = x * x;
 			break;
 		case EaseOutQuad:
-			x = 1.0f - (1.0f - x) * (1.0f - x);
+			x = (1.0f - x);
+			x = 1.0f - x * x;
+			break;
+		case EaseInCubic:
+			x = x * x * x;
+			break;
+		case EaseOutCubic:
+			x = (1.0f - x);
+			x = 1.0f - x * x * x;
 			break;
 		case EaseOutElastic:
 			// https://easings.net/#easeOutElastic

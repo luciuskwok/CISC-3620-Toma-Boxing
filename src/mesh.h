@@ -23,10 +23,12 @@ typedef struct {
 	// Geometry
 	int face_count;
 	mesh_face_t *faces;
+	bool faces_are_lines;
 	array_list_t *children;
 	
 	// Visuals
 	bool is_visible;
+	bool use_backface_culling;
 	uint32_t line_color;
 	uint32_t point_color;
 	float opacity;
