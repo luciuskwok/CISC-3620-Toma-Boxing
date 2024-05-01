@@ -96,6 +96,17 @@ void mesh_set_children_color(mesh_t *mesh, uint32_t line, uint32_t point) {
 
 #pragma mark -
 
+void mesh_reset_momentum(mesh_t *mesh) {
+	mesh->linear_momentum = vec3_zero();
+	mesh->angular_momentum = vec3_zero();
+}
+
+void mesh_set_angular_momentum_degrees(mesh_t *mesh, vec3_t deg) {
+	mesh->angular_momentum = vec3_mul(deg, (float)M_PI / 180.0f);
+}
+
+#pragma mark -
+
 void mesh_update(mesh_t *mesh, double delta_time) {
 	// Update children
 	if (mesh->children) {
@@ -212,11 +223,3 @@ void mesh_draw_recursive(mesh_t *mesh, mat4_t transform, float opacity) {
 		}
 	}
 }
-
-#pragma mark -
-
-void mesh_reset_momentum(mesh_t *mesh) {
-	mesh->linear_momentum = vec3_zero();
-	mesh->angular_momentum = vec3_zero();
-}
-

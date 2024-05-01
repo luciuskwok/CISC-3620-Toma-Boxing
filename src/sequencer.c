@@ -84,8 +84,10 @@ typedef enum : uint32_t {
 	Mtn_4_Mesh,
 	Mtn_5_Mesh,
 	Radio_Tower_Mesh,
-	Radio_Waves_1_Mesh,
-	Radio_Waves_2_Mesh,
+	Fireworks_1_Mesh,
+	Fireworks_2_Mesh,
+	UFO_Mesh,
+	Ball_Mesh,
 } seq_mesh_index;
 
 typedef enum : uint32_t {
@@ -283,48 +285,69 @@ sequence_event seq_events[] = {
 	{ ScaleMesh, Radio_Tower_Mesh, 				.t0 = T0, .t1 = T0, .p0 = {12,1,12}, .p1 = {12,1,12} },
 	{ ScaleMesh, Radio_Tower_Mesh, EaseOutElastic, .t0 = T0+0.5, .t1 = T0+2, .p0 = {12,1,12}, .p1 = {12,200,12} },
 	
-	// Radio Waves
+	// Fireworks
 #undef T0
 #define S0 (2)
 #define S1 (200)
-#define M1 Radio_Waves_1_Mesh
-#define M2 Radio_Waves_2_Mesh
+#define M1 Fireworks_1_Mesh
+#define M2 Fireworks_2_Mesh
 
 #define T0 (54.1)
 	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {200,100,100}, .p1 = {0,0,0} },
-	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+2, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+2, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (56.1)
 	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {-350,80,200}, .p1 = {0,0,0} },
-	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+2, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+2, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (58.1)
 	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {350,104,150}, .p1 = {0,0,0} },
-	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+2, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+2, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (58.5)
 	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {-200,80,120}, .p1 = {0,0,0} },
-	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+2, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+2, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (59.0)
 	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {0,100,120}, .p1 = {0,0,0} },
-	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ SetMeshOpacity, M1, 	.t0 = T0, .t1 = T0+2, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M1, EaseOutCubic, .t0 = T0, .t1 = T0+2, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 #define T0 (59.5)
 	{ ShowMesh, M2, 		.t0 = T0, .t1 = 73.6, .p0 = {200,120,120}, .p1 = {0,0,0} },
-	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+4, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
-	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+4, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
+	{ SetMeshOpacity, M2, 	.t0 = T0, .t1 = T0+2, .p0 = {0.5,0,0}, .p1 = {0,0,0} },
+	{ ScaleMesh, M2, EaseOutCubic, .t0 = T0, .t1 = T0+2, .p0 = {S0,S0,S0}, .p1 = {S1,S1,S1} },
 #undef T0
 
 #undef S0
 #undef S1
 #undef M1
 #undef M2
+	// End Fireworks
+	
+	// UFO
+#define M1 UFO_Mesh
+#define T0 (59.0)
+	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {600,200,200}, .p1 = {0,0,30} },
+	{ MoveMesh, M1, EaseBezier, .t0 = T0, .t1 = T0+4, .p0 = {600,200,200}, .p1 = {-200,200,100} },
+	{ RotateMesh, M1, EaseBezier, .t0 = T0, .t1 = T0+4, .p0 = {0,0,30}, .p1 = {0,0,-30} },
+	{ MoveMesh, M1, EaseBezier, .t0 = T0+4, .t1 = T0+6, .p0 = {-200,200,100}, .p1 = {-200,125,100} },
+	{ RotateMesh, M1, EaseBezier, .t0 = T0+4, .t1 = T0+6, .p0 = {0,0,-30}, .p1 = {0,0,0} },
+	{ MoveMesh, M1, EaseBezier, .t0 = T0+6, .t1 = T0+8, .p0 = {-200,125,100}, .p1 = {-100,225,25} },
+	{ RotateMesh, M1, EaseBezier, .t0 = T0+6, .t1 = T0+8, .p0 = {0,0,0}, .p1 = {-60,0,0} },
+	{ MoveMesh, M1, EaseBezier, .t0 = T0+8, .t1 = T0+10, .p0 = {-100,225,25}, .p1 = {0,25,4} },
+	{ RotateMesh, M1, EaseBezier, .t0 = T0+8, .t1 = T0+10, .p0 = {-60,0,0}, .p1 = {0,0,0} },
+	{ MoveMesh, M1, EaseBezier, .t0 = T0+11, .t1 = 73.6, .p0 = {0,25,4}, .p1 = {0,0,0.5} },
+	{ RotateMesh, M1, EaseBezier, .t0 = T0+11, .t1 = 73.6, .p0 = {0,0,0}, .p1 = {-90,0,0} },
+
+#undef T0
+#undef M1
+	// End UFO
+	
 	{ .cmd = EndSequence }
 };
 
@@ -366,7 +389,7 @@ void sequencer_init(gameplay_t *scene) {
 	m->line_color = rgb_to_abgr(COLOR_RGB_GREEN_1);
 	array_list_add(scene->meshes, m);
 
-	// Radio_Waves_#_Mesh
+	// Fireworks_#_Mesh
 	for (int i=0; i<2; i++) {
 		m = mesh_create_sphere(3);
 		m->use_backface_culling = false;
@@ -374,7 +397,15 @@ void sequencer_init(gameplay_t *scene) {
 		m->line_color = 0;
 		array_list_add(scene->meshes, m);
 	}
+	
+	// UFO_Mesh
+	array_list_add(scene->meshes, mesh_create_ufo());
 
+	// Ball_Mesh
+	m = mesh_create_sphere(3);
+	m->line_color = rgb_to_abgr(COLOR_RGB_GRAY_70);
+	mesh_set_angular_momentum_degrees(m, vec3_make(0, 5, 0));
+	array_list_add(scene->meshes, m);
 	
 	// -- Shapes --
 	shape_t *s;

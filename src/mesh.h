@@ -50,15 +50,11 @@ void mesh_destroy(mesh_t *mesh);
 bool mesh_add_child(mesh_t *mesh, mesh_t *child);
 void mesh_set_children_color(mesh_t *mesh, uint32_t line, uint32_t point);
 
+void mesh_reset_momentum(mesh_t *mesh);
+void mesh_set_angular_momentum_degrees(mesh_t *mesh, vec3_t deg);
+
 void mesh_update(mesh_t *mesh, double delta_time);
 void mesh_draw(mesh_t *mesh);
 void mesh_draw_recursive(mesh_t *mesh, mat4_t transform, float opacity);
-
-void mesh_reset_momentum(mesh_t *mesh);
-void mesh_add_linear_momentum(mesh_t *mesh, vec3_t momentum);
-void mesh_add_pitch(mesh_t *mesh, float x);
-void mesh_add_roll(mesh_t *mesh, float x);
-void mesh_add_yaw(mesh_t *mesh, float x);
-
 
 #endif /* mesh_h */

@@ -290,6 +290,18 @@ mesh_t *mesh_create_pyramid(void) {
 	return m;
 }
 
+mesh_t *mesh_create_ufo(void) {
+	mesh_t *group = mesh_new(0);
+	if (!group) return NULL;
+	
+	mesh_t *m = mesh_create_diamond(12, 0.125f, 0.125f);
+	m->point_color = 0;
+	m->line_color = rgb_to_abgr(COLOR_RGB_BLUE_1);
+	mesh_set_angular_momentum_degrees(m, vec3_make(0, 1, 0));
+	mesh_add_child(group, m);
+	
+	return group;
+}
 
 #pragma mark -
 
