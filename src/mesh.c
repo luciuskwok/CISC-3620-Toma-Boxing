@@ -101,6 +101,10 @@ void mesh_reset_momentum(mesh_t *mesh) {
 	mesh->angular_momentum = vec3_zero();
 }
 
+void mesh_set_rotation_degrees(mesh_t *mesh, vec3_t deg) {
+	mesh->rotation = vec3_mul(deg, (float)M_PI / 180.0f);
+}
+
 void mesh_set_angular_momentum_degrees(mesh_t *mesh, vec3_t deg) {
 	mesh->angular_momentum = vec3_mul(deg, (float)M_PI / 180.0f);
 }

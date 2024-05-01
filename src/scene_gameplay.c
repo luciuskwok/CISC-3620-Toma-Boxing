@@ -150,8 +150,8 @@ void gameplay_render(void) {
 	fill_screen();
 	
 	// Draw meshes and shapes
-	draw_meshes();
 	draw_shapes();
+	draw_meshes();
 
 	// Draw song progress bar
 	draw_progress_bar();

@@ -20,6 +20,7 @@ mesh_t *mesh_create_sphere(int subdivisions);
 mesh_t *mesh_create_grid(int subdivisions);
 mesh_t *mesh_create_pyramid(void);
 mesh_t *mesh_create_ufo(void);
+mesh_t *mesh_create_traffic_cone(void);
 
 // 3D Text
 mesh_t *mesh_create_3d_character(char c);

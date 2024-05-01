@@ -88,6 +88,8 @@ typedef enum : uint32_t {
 	Fireworks_2_Mesh,
 	UFO_Mesh,
 	Ball_Mesh,
+	Cone_1_Mesh,
+	Cone_2_Mesh,
 } seq_mesh_index;
 
 typedef enum : uint32_t {
@@ -134,68 +136,87 @@ sequence_event seq_events[] = {
 	{ MoveMesh, Numeral_3_Mesh, EaseBezier, .t0 = 2.5, .t1 = 4.5, .p0 = {100, 100, 0}, .p1 = {100, 600, 0} },
 	{ MoveMesh, Numeral_4_Mesh, EaseBezier, .t0 = 2.5, .t1 = 4.5, .p0 = {300, 0, 0}, .p1 = {300, 500, 0} },
 	
+#define T_END (42.1)
 	// 2D Studio
-	{ ShowShape, Studio_Bkgnd_Shape, EaseBezier, .t0 = 2.5, .t1 = 42.1, .p0 = {0,-80,0}, .p1 = {0,0,0} },
-	{ MoveShape, Studio_Bkgnd_Shape, EaseBezier, .t0 = 2.5, .t1 = 4.6, .p0 = {0,-80,0}, .p1 = {0,15,0} },
+#define T0 (2.5)
+	{ ShowShape, Studio_Bkgnd_Shape, .t0 = T0, .t1 = T_END, .p0 = {0,-80,0}, .p1 = {0,0,0} },
+	{ MoveShape, Studio_Bkgnd_Shape, EaseBezier, .t0 = T0, .t1 = T0+4.2, .p0 = {0,-80,0}, .p1 = {0,15,0} },
+#undef T0
 	
 	// Moon
-	{ ShowShape, Moon_Shape, .t0 = 4.6, .t1 = 42.1, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Moon_Shape, EaseOutElastic, .t0 = 4.6, .t1 = 5.6, .p0 = {0,0,0}, .p1 = {33,33,0} },
-	{ RotateShape, Moon_Shape, EaseBezier, .t0 = 6.1, .t1 = 8.1, .p0 = {0,0,0}, .p1 = {405,0,0} },
-	{ ScaleShape, Moon_Shape, EaseBezier, .t0 = 6.6, .t1 = 8.1, .p0 = {33,33,0}, .p1 = {12,12,0} },
-	{ MoveShape, Moon_Shape, EaseBezier, .t0 = 7.6, .t1 = 8.1, .p0 = {0,0,0}, .p1 = {0,18,0} },
-
+#define T0 (6.6)
+	{ ShowShape, Moon_Shape, .t0 = T0-2, .t1 = T_END, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Moon_Shape, EaseOutElastic, .t0 = T0-2, .t1 = T0+1.25, .p0 = {0,0,0}, .p1 = {33,33,0} },
+	{ RotateShape, Moon_Shape, EaseBezier, .t0 = T0+1, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {405,0,0} },
+	{ ScaleShape, Moon_Shape, EaseBezier, .t0 = T0+2, .t1 = T0+4, .p0 = {33,33,0}, .p1 = {12,12,0} },
+	{ MoveShape, Moon_Shape, EaseBezier, .t0 = T0+3, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {0,18,0} },
+#undef T0
+	
 	// Heart
-	{ ShowShape, Heart_Shape, .t0 = 8.6, .t1 = 42.1, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Heart_Shape, EaseOutElastic, .t0 = 8.6, .t1 = 9.6, .p0 = {0,0,0}, .p1 = {50,50,0} },
-	{ RotateShape, Heart_Shape, EaseBezier, .t0 = 10.1, .t1 = 12.1, .p0 = {0,0,0}, .p1 = {-380,0,0} },
-	{ MoveShape, Heart_Shape, EaseBezier, .t0 = 10.6, .t1 = 12.1, .p0 = {0,0,0}, .p1 = {-50,20,0} },
-	{ ScaleShape, Heart_Shape, EaseBezier, .t0 = 11.6, .t1 = 12.1, .p0 = {50,50,0}, .p1 = {18,18,0} },
+#define T0 (10.6)
+	{ ShowShape, Heart_Shape, .t0 = T0, .t1 = T_END, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Heart_Shape, EaseOutElastic, .t0 = T0, .t1 = T0+1.25, .p0 = {0,0,0}, .p1 = {50,50,0} },
+	{ RotateShape, Heart_Shape, EaseBezier, .t0 = T0+1, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {-380,0,0} },
+	{ ScaleShape, Heart_Shape, EaseBezier, .t0 = T0+2, .t1 = T0+4, .p0 = {50,50,0}, .p1 = {18,18,0} },
+	{ MoveShape, Heart_Shape, EaseBezier, .t0 = T0+3, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {-50,20,0} },
+#undef T0
 
 	// Star
-	{ ShowShape, Star_Shape, .t0 = 12.6, .t1 = 42.1, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Star_Shape, EaseOutElastic, .t0 = 12.6, .t1 = 13.6, .p0 = {0,0,0}, .p1 = {35,35,0} },
-	{ RotateShape, Star_Shape, EaseBezier, .t0 = 14.1, .t1 = 16.1, .p0 = {0,0,0}, .p1 = {542,0,0} },
-	{ MoveShape, Star_Shape, EaseBezier,   .t0 = 14.6, .t1 = 16.1, .p0 = {0,0,0}, .p1 = {50,20,0} },
-	{ ScaleShape, Star_Shape, EaseBezier,  .t0 = 15.6, .t1 = 16.1, .p0 = {35,35,0}, .p1 = {10,10,0} },
+#define T0 (14.6)
+	{ ShowShape, Star_Shape, .t0 = T0, .t1 = T_END, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Star_Shape, EaseOutElastic, .t0 = T0, .t1 = T0+1.25, .p0 = {0,0,0}, .p1 = {35,35,0} },
+	{ RotateShape, Star_Shape, EaseBezier, .t0 = T0+1, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {542,0,0} },
+	{ ScaleShape, Star_Shape, EaseBezier,  .t0 = T0+2, .t1 = T0+4, .p0 = {35,35,0}, .p1 = {10,10,0} },
+	{ MoveShape, Star_Shape, EaseBezier,   .t0 = T0+3, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {50,20,0} },
+#undef T0
 
 	// Microphone with stand
-	{ ShowShape, Microphone_Shape, .t0 = 16.6, .t1 = 42.1, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Microphone_Shape, EaseOutElastic, .t0 = 16.6, .t1 = 17.6, .p0 = {0,0,0}, .p1 = {35,35,0} },
-	{ RotateShape, Microphone_Shape, EaseBezier, .t0 = 18.1, .t1 = 20.1, .p0 = {0,0,0}, .p1 = {-360,0,0} },
-	{ ScaleShape, Microphone_Shape, EaseBezier,  .t0 = 18.6, .t1 = 20.1, .p0 = {35,35,0}, .p1 = {18,18,0} },
-	{ MoveShape, Microphone_Shape, EaseBezier,   .t0 = 19.8, .t1 = 20.1, .p0 = {0,0,0}, .p1 = {15,-23.5,0} },
-
+#define T0 (18.6)
+	{ ShowShape, Microphone_Shape, .t0 = T0, .t1 = T_END, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Microphone_Shape, EaseOutElastic, .t0 = T0, .t1 = T0+1.25, .p0 = {0,0,0}, .p1 = {35,35,0} },
+	{ RotateShape, Microphone_Shape, EaseBezier, .t0 = T0+1, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {-360,0,0} },
+	{ ScaleShape, Microphone_Shape, EaseBezier,  .t0 = T0+2, .t1 = T0+4, .p0 = {35,35,0}, .p1 = {18,18,0} },
+	{ MoveShape, Microphone_Shape, EaseBezier,   .t0 = T0+3, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {15,-23.5,0} },
+#undef T0
 	// Monitor
-	{ ShowShape, Monitor_Shape, .t0 = 20.6, .t1 = 42.1, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Monitor_Shape, EaseOutElastic, .t0 = 20.6, .t1 = 21.6, .p0 = {0,0,0}, .p1 = {100,100,0} },
-	{ RotateShape, Monitor_Shape, EaseBezier, .t0 = 22.1, .t1 = 24.1, .p0 = {0,0,0}, .p1 = {360,0,0} },
-	{ ScaleShape, Monitor_Shape, EaseBezier,  .t0 = 22.6, .t1 = 24.1, .p0 = {100,100,0}, .p1 = {80,80,0} },
-	{ MoveShape, Monitor_Shape, EaseBezier,   .t0 = 22.8, .t1 = 24.1, .p0 = {0,0,0}, .p1 = {-30,-17,0} },
-
+#define T0 (22.6)
+	{ ShowShape, Monitor_Shape, .t0 = T0, .t1 = T_END, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Monitor_Shape, EaseOutElastic, .t0 = T0, .t1 = T0+1.25, .p0 = {0,0,0}, .p1 = {100,100,0} },
+	{ RotateShape, Monitor_Shape, EaseBezier, .t0 = T0+1, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {360,0,0} },
+	{ ScaleShape, Monitor_Shape, EaseBezier,  .t0 = T0+2, .t1 = T0+4, .p0 = {100,100,0}, .p1 = {80,80,0} },
+	{ MoveShape, Monitor_Shape, EaseBezier,   .t0 = T0+3, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {-30,-17,0} },
+#undef T0
+	
 	// CPU
-	{ ShowShape, CPU_Shape, .t0 = 24.6, .t1 = 42.1, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, CPU_Shape, EaseOutElastic, .t0 = 24.6, .t1 = 25.6, .p0 = {0,0,0}, .p1 = {100,100,0} },
-	{ RotateShape, CPU_Shape, EaseBezier, .t0 = 26.1, .t1 = 28.1, .p0 = {0,0,0}, .p1 = {-360,0,0} },
-	{ ScaleShape, CPU_Shape, EaseBezier,  .t0 = 26.6, .t1 = 28.1, .p0 = {100,100,0}, .p1 = {80,80,0} },
-	{ MoveShape, CPU_Shape, EaseBezier,   .t0 = 26.6, .t1 = 28.1, .p0 = {0,0,0}, .p1 = {50,-19.5,0} },
+#define T0 (26.6)
+	{ ShowShape, CPU_Shape, .t0 = T0, .t1 = T_END, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, CPU_Shape, EaseOutElastic, .t0 = T0, .t1 = T0+1.25, .p0 = {0,0,0}, .p1 = {100,100,0} },
+	{ RotateShape, CPU_Shape, EaseBezier, .t0 = T0+1, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {-360,0,0} },
+	{ ScaleShape, CPU_Shape, EaseBezier,  .t0 = T0+2, .t1 = T0+4, .p0 = {100,100,0}, .p1 = {80,80,0} },
+	{ MoveShape, CPU_Shape, EaseBezier,   .t0 = T0+3, .t1 = T0+4, .p0 = {0,0,0}, .p1 = {50,-19.5,0} },
+#undef T0
 	
 	// Zap
-	{ ShowShape, Zap_1_Shape, .t0 = 28.6, .t1 = 29.1, .p0 = {-30,-17,0}, .p1 = {0,0,0} },
-	{ ShowShape, Zap_1_Shape, .t0 = 29.6, .t1 = 30.1, .p0 = {-20,-12,0}, .p1 = {-22,0,0} },
-	{ ShowShape, Zap_1_Shape, .t0 = 30.6, .t1 = 31.1, .p0 = {-40,-15,0}, .p1 = {25,0,0} },
-	{ ShowShape, Zap_2_Shape, .t0 = 31.0, .t1 = 31.7, .p0 = {45,7,0}, .p1 = {22,0,0} },
-	{ ShowShape, Zap_1_Shape, .t0 = 31.6, .t1 = 32.1, .p0 = {-30,-17,0}, .p1 = {-45,0,0} },
-	{ ShowShape, Zap_2_Shape, .t0 = 32.0, .t1 = 32.7, .p0 = {55,12,0}, .p1 = {-22,0,0} },
-	{ ShowShape, Zap_1_Shape, .t0 = 32.6, .t1 = 33.1, .p0 = {-30,-17,0}, .p1 = {0,0,0} },
-	{ ShowShape, Zap_1_Shape, .t0 = 33.6, .t1 = 34.1, .p0 = {-20,-12,0}, .p1 = {-22,0,0} },
-	{ ShowShape, Zap_1_Shape, .t0 = 34.6, .t1 = 35.1, .p0 = {-30,-17,0}, .p1 = {0,0,0} },
-	{ ShowShape, Zap_1_Shape, .t0 = 35.6, .t1 = 36.1, .p0 = {-40,-12,0}, .p1 = {22,0,0} },
+#define T0 (30.6)
+	{ ShowShape, Zap_1_Shape, .t0 = T0, .t1 = T0+0.5, .p0 = {-30,-17,0}, .p1 = {0,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+1, .t1 = T0+1.5, .p0 = {-20,-12,0}, .p1 = {-22,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+2, .t1 = T0+2.5, .p0 = {-40,-15,0}, .p1 = {25,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+3, .t1 = T0+3.5, .p0 = {-30,-17,0}, .p1 = {-45,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+4, .t1 = T0+4.5, .p0 = {-30,-17,0}, .p1 = {0,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+5, .t1 = T0+5.5, .p0 = {-20,-12,0}, .p1 = {-22,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+6, .t1 = T0+6.5, .p0 = {-30,-17,0}, .p1 = {0,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+7, .t1 = T0+7.5, .p0 = {-40,-12,0}, .p1 = {22,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+8, .t1 = T0+8.5, .p0 = {-30,-17,0}, .p1 = {-22,0,0} },
+	{ ShowShape, Zap_1_Shape, .t0 = T0+9, .t1 = T0+9.5, .p0 = {-40,-12,0}, .p1 = {45,0,0} },
+
+	{ ShowShape, Zap_2_Shape, .t0 = T0+0.75, .t1 = T0+1.25, .p0 = {45,7,0}, .p1 = {22,0,0} },
+	{ ShowShape, Zap_2_Shape, .t0 = T0+1.75, .t1 = T0+2.25, .p0 = {55,12,0}, .p1 = {-22,0,0} },
+#undef T0
 
 	// Smoke
-	{ ShowShape, Smoke_1_Shape, 			.t0 = 31.6, .t1 = 42.1, .p0 = {50,-25,0}, .p1 = {0,0,0} },
-	{ ShowShape, Smoke_2_Shape, 			.t0 = 32.6, .t1 = 42.1, .p0 = {45,-25,0}, .p1 = {10,0,0} },
-	{ ShowShape, Smoke_3_Shape, 			.t0 = 33.6, .t1 = 42.1, .p0 = {55,-25,0}, .p1 = {-10,0,0} },
+	{ ShowShape, Smoke_1_Shape, 			.t0 = 31.6, .t1 = T_END, .p0 = {50,-25,0}, .p1 = {0,0,0} },
+	{ ShowShape, Smoke_2_Shape, 			.t0 = 32.6, .t1 = T_END, .p0 = {45,-25,0}, .p1 = {10,0,0} },
+	{ ShowShape, Smoke_3_Shape, 			.t0 = 33.6, .t1 = T_END, .p0 = {55,-25,0}, .p1 = {-10,0,0} },
 
 	{ MoveShape, Smoke_1_Shape, EaseInQuad, .t0 = 31.6, .t1 = 33.6, .p0 = {50,-25,0}, .p1 = {50,55,0} },
 	{ ScaleShape, Smoke_1_Shape, EaseOutQuad, .t0 = 31.6, .t1 = 33.6, .p0 = {80,80,0}, .p1 = {160,160,0} },
@@ -204,7 +225,7 @@ sequence_event seq_events[] = {
 	{ MoveShape, Smoke_3_Shape, EaseInQuad, .t0 = 33.6, .t1 = 35.6, .p0 = {55,-25,0}, .p1 = {60,55,0} },
 	{ ScaleShape, Smoke_3_Shape, EaseOutQuad, .t0 = 33.6, .t1 = 35.6, .p0 = {80,80,0}, .p1 = {160,160,0} },
 
-	{ ShowShape, Smoke_4_Shape, 			.t0 = 35.6, .t1 = 42.1, .p0 = {50,-15,0}, .p1 = {0,0,0} },
+	{ ShowShape, Smoke_4_Shape, 			.t0 = 35.6, .t1 = T_END, .p0 = {50,-15,0}, .p1 = {0,0,0} },
 
 	{ MoveShape, Smoke_1_Shape, EaseInQuad, .t0 = 34.1, .t1 = 36.0, .p0 = {50,-15,0}, .p1 = {50,50,0} },
 	{ ScaleShape, Smoke_1_Shape, EaseOutQuad, .t0 = 34.1, .t1 = 36.0, .p0 = {120,120,0}, .p1 = {240,240,0} },
@@ -215,18 +236,19 @@ sequence_event seq_events[] = {
 	{ MoveShape, Smoke_4_Shape, EaseInQuad, .t0 = 35.6, .t1 = 37.5, .p0 = {50,-15,0}, .p1 = {40,50,0} },
 	{ ScaleShape, Smoke_4_Shape, EaseOutQuad, .t0 = 35.6, .t1 = 37.5, .p0 = {120,120,0}, .p1 = {240,240,0} },
 
-	{ MoveShape, Smoke_1_Shape, EaseInQuad, .t0 = 36.1, .t1 = 42.1, .p0 = {40,-15,0}, .p1 = {50,50,0} },
-	{ ScaleShape, Smoke_1_Shape, EaseOutQuad, .t0 = 36.1, .t1 = 42.1, .p0 = {160,160,0}, .p1 = {320,320,0} },
-	{ MoveShape, Smoke_2_Shape, EaseInQuad, .t0 = 36.6, .t1 = 42.1, .p0 = {30,-15,0}, .p1 = {20,50,0} },
-	{ ScaleShape, Smoke_2_Shape, EaseOutQuad, .t0 = 36.6, .t1 = 42.1, .p0 = {160,160,0}, .p1 = {320,320,0} },
-	{ MoveShape, Smoke_3_Shape, EaseInQuad, .t0 = 37.1, .t1 = 42.1, .p0 = {50,-15,0}, .p1 = {80,50,0} },
-	{ ScaleShape, Smoke_3_Shape, EaseOutQuad, .t0 = 37.1, .t1 = 42.1, .p0 = {160,160,0}, .p1 = {320,320,0} },
-	{ MoveShape, Smoke_4_Shape, EaseInQuad, .t0 = 37.6, .t1 = 42.1, .p0 = {0,-15,0}, .p1 = {-20,50,0} },
-	{ ScaleShape, Smoke_4_Shape, EaseOutQuad, .t0 = 37.6, .t1 = 42.1, .p0 = {160,160,0}, .p1 = {320,320,0} },
+	{ MoveShape, Smoke_1_Shape, EaseInQuad, .t0 = 36.1, .t1 = T_END, .p0 = {40,-15,0}, .p1 = {50,50,0} },
+	{ ScaleShape, Smoke_1_Shape, EaseOutQuad, .t0 = 36.1, .t1 = T_END, .p0 = {160,160,0}, .p1 = {320,320,0} },
+	{ MoveShape, Smoke_2_Shape, EaseInQuad, .t0 = 36.6, .t1 = T_END, .p0 = {30,-15,0}, .p1 = {20,50,0} },
+	{ ScaleShape, Smoke_2_Shape, EaseOutQuad, .t0 = 36.6, .t1 = T_END, .p0 = {160,160,0}, .p1 = {320,320,0} },
+	{ MoveShape, Smoke_3_Shape, EaseInQuad, .t0 = 37.1, .t1 = T_END, .p0 = {50,-15,0}, .p1 = {80,50,0} },
+	{ ScaleShape, Smoke_3_Shape, EaseOutQuad, .t0 = 37.1, .t1 = T_END, .p0 = {160,160,0}, .p1 = {320,320,0} },
+	{ MoveShape, Smoke_4_Shape, EaseInQuad, .t0 = 37.6, .t1 = T_END, .p0 = {0,-15,0}, .p1 = {-20,50,0} },
+	{ ScaleShape, Smoke_4_Shape, EaseOutQuad, .t0 = 37.6, .t1 = T_END, .p0 = {160,160,0}, .p1 = {320,320,0} },
 
 	// Explosion
-	{ ShowShape, Explosion_Shape, 				.t0 = 41.6, .t1 = 42.1, .p0 = {50,-19,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Explosion_Shape, EaseOutQuad, .t0 = 41.6, .t1 = 42.1, .p0 = {0,0,0}, .p1 = {200, 200,0} },
+	{ ShowShape, Explosion_Shape, 				.t0 = T_END-0.5, .t1 = T_END, .p0 = {50,-19,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Explosion_Shape, EaseOutQuad, .t0 = T_END-0.5, .t1 = T_END, .p0 = {0,0,0}, .p1 = {200, 200,0} },
+#undef T_END
 	
 	// -- 3D; Chorus --
 	// Grid
@@ -333,6 +355,7 @@ sequence_event seq_events[] = {
 #define M1 UFO_Mesh
 #define T0 (59.0)
 	{ ShowMesh, M1, 		.t0 = T0, .t1 = 73.6, .p0 = {600,200,200}, .p1 = {0,0,30} },
+	{ ScaleMesh, M1, EaseBezier, .t0 = T0, .t1 = T0, .p0 = {100,100,100}, .p1 = {100,100,100} },
 	{ MoveMesh, M1, EaseBezier, .t0 = T0, .t1 = T0+4, .p0 = {600,200,200}, .p1 = {-200,200,100} },
 	{ RotateMesh, M1, EaseBezier, .t0 = T0, .t1 = T0+4, .p0 = {0,0,30}, .p1 = {0,0,-30} },
 	{ MoveMesh, M1, EaseBezier, .t0 = T0+4, .t1 = T0+6, .p0 = {-200,200,100}, .p1 = {-200,125,100} },
@@ -341,7 +364,7 @@ sequence_event seq_events[] = {
 	{ RotateMesh, M1, EaseBezier, .t0 = T0+6, .t1 = T0+8, .p0 = {0,0,0}, .p1 = {-60,0,0} },
 	{ MoveMesh, M1, EaseBezier, .t0 = T0+8, .t1 = T0+10, .p0 = {-100,225,25}, .p1 = {0,25,4} },
 	{ RotateMesh, M1, EaseBezier, .t0 = T0+8, .t1 = T0+10, .p0 = {-60,0,0}, .p1 = {0,0,0} },
-	{ MoveMesh, M1, EaseBezier, .t0 = T0+11, .t1 = 73.6, .p0 = {0,25,4}, .p1 = {0,0,0.5} },
+	{ MoveMesh, M1, EaseBezier, .t0 = T0+11, .t1 = 73.6, .p0 = {0,25,4}, .p1 = {0,0,-200} },
 	{ RotateMesh, M1, EaseBezier, .t0 = T0+11, .t1 = 73.6, .p0 = {0,0,0}, .p1 = {-90,0,0} },
 	{ ScaleMesh, M1, EaseBezier, .t0 = T0+8, .t1 = 73.6, .p0 = {100,100,100}, .p1 = {200,200,200} },
 
@@ -349,6 +372,59 @@ sequence_event seq_events[] = {
 #undef M1
 	// End UFO
 	
+	// -- 2D; Verse --
+	// SONG_DURATION
+	
+	// Restore part of previous verse scene
+#define T0 (74.1)
+#define T1 (T0+1)
+#define T_END (SONG_DURATION)
+	{ ShowShape, Studio_Bkgnd_Shape, .t0 = T0, .t1 = T_END, .p0 = {0,15,0}, .p1 = {0,0,0} },
+	{ ShowShape, Moon_Shape, .t0 = T0, .t1 = T_END, .p0 = {0,18,0}, .p1 = {0,0,0} },
+	{ ShowShape, Heart_Shape, .t0 = T0, .t1 = T_END, .p0 = {-50,20,0}, .p1 = {0,0,0} },
+	{ ShowShape, Star_Shape, .t0 = T0, .t1 = T_END, .p0 = {50,20,0}, .p1 = {0,0,0} },
+	// Fade In
+	{ SetShapeOpacity, Studio_Bkgnd_Shape, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ SetShapeOpacity, Moon_Shape, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ SetShapeOpacity, Heart_Shape, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+	{ SetShapeOpacity, Star_Shape, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {0,0,0}, .p1 = {1,0,0} },
+
+#undef T0
+#undef T1
+
+	// Drop a 3D ball
+#define T0 (75.1)
+	{ ShowMesh, Ball_Mesh, .t0 = T0, .t1 = T_END, .p0 = {0,400,-100}, .p1 = {0,0,0} },
+	{ MoveMesh, Ball_Mesh, EaseOutBounce, .t0 = T0, .t1 = T0+4, .p0 = {0,400,-100}, .p1 = {0,50,-150} },
+#undef T0
+
+	// Drop traffic cone 1
+#define T0 (77.1)
+	{ ShowMesh, Cone_1_Mesh, .t0 = T0, .t1 = T_END, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ MoveMesh, Cone_1_Mesh, EaseOutBounce, .t0 = T0, .t1 = T0+4, .p0 = {-300,400,150}, .p1 = {-300,-200,150} },
+#undef T0
+
+	// Drop traffic cone 2
+#define T0 (78.1)
+	{ ShowMesh, Cone_2_Mesh, .t0 = T0, .t1 = T_END, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ MoveMesh, Cone_2_Mesh, EaseOutBounce, .t0 = T0, .t1 = T0+4, .p0 = {300,400,150}, .p1 = {300,-200,150} },
+#undef T0
+
+	// Fade Out
+#define T0 (SONG_DURATION - 1.0)
+#define T1 (SONG_DURATION)
+	{ SetShapeOpacity, Studio_Bkgnd_Shape, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {1,0,0}, .p1 = {1,0,0} },
+	{ SetShapeOpacity, Moon_Shape, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {1,0,0}, .p1 = {0,0,0} },
+	{ SetShapeOpacity, Heart_Shape, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {1,0,0}, .p1 = {0,0,0} },
+	{ SetShapeOpacity, Star_Shape, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {1,0,0}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Ball_Mesh, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {1,0,0}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Cone_1_Mesh, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {1,0,0}, .p1 = {0,0,0} },
+	{ SetMeshOpacity, Cone_2_Mesh, EaseBezier, .t0 = T0, .t1 = T1, .p0 = {1,0,0}, .p1 = {0,0,0} },
+
+#undef T0
+#undef T1
+#undef T_END
+
 	{ .cmd = EndSequence }
 };
 
@@ -396,6 +472,7 @@ void sequencer_init(gameplay_t *scene) {
 		m->use_backface_culling = false;
 		m->point_color = rgba_to_abgr(COLOR_RGB_GREEN_2, 127);
 		m->line_color = 0;
+		mesh_set_angular_momentum_degrees(m, vec3_make(0.1f, 0.5f, 0));
 		array_list_add(scene->meshes, m);
 	}
 	
@@ -404,10 +481,34 @@ void sequencer_init(gameplay_t *scene) {
 
 	// Ball_Mesh
 	m = mesh_create_sphere(3);
-	m->line_color = rgb_to_abgr(COLOR_RGB_GRAY_70);
-	mesh_set_angular_momentum_degrees(m, vec3_make(0, 5, 0));
+	m->line_color = rgb_to_abgr(COLOR_RGB_WHITE);
+	mesh_set_angular_momentum_degrees(m, vec3_make(0, 0.5, 0));
 	array_list_add(scene->meshes, m);
 	
+	// Cone_1_Mesh: nested inside another mesh for rotations
+	m = mesh_new(0);
+	if (m) {
+		mesh_set_angular_momentum_degrees(m, vec3_make(0, 0.5f, 0));
+		mesh_t *cone = mesh_create_traffic_cone();
+		if (cone) {
+			mesh_set_rotation_degrees(cone, vec3_make(15, 15, 0));
+			mesh_add_child(m, cone);
+		}
+		array_list_add(scene->meshes, m);
+	}
+	
+	// Cone_2_Mesh
+	m = mesh_new(0);
+	if (m) {
+		mesh_set_angular_momentum_degrees(m, vec3_make(0, -0.75f, 0));
+		mesh_t *cone = mesh_create_traffic_cone();
+		if (cone) {
+			mesh_set_rotation_degrees(cone, vec3_make(5, -30, 0));
+			mesh_add_child(m, cone);
+		}
+		array_list_add(scene->meshes, m);
+	}
+
 	// -- Shapes --
 	shape_t *s;
 	
@@ -480,16 +581,18 @@ void sequencer_start(gameplay_t *scene) {
 	// Start sequence by setting background to black
 	scene->bg_color = COLOR_ABGR_BLACK;
 
-	// Hide all objects in scene
+	// Hide all objects in scene; reset opacity
 	shape_t **s = (shape_t **)scene->shapes->array;
 	int sn = scene->shapes->length;
 	for (int i=0; i<sn; i++) {
 		s[i]->is_visible = false;
+		s[i]->opacity = 1.0f;
 	}
 	mesh_t **m = (mesh_t **)scene->meshes->array;
 	int mn = scene->meshes->length;
 	for (int i=0; i<mn; i++) {
 		m[i]->is_visible = false;
+		m[i]->opacity = 1.0f;
 	}
 
 }

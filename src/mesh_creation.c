@@ -295,9 +295,31 @@ mesh_t *mesh_create_ufo(void) {
 	if (!group) return NULL;
 	
 	mesh_t *m = mesh_create_diamond(12, 0.125f, 0.125f);
+	if (!m) return NULL;
 	m->point_color = 0;
 	m->line_color = rgb_to_abgr(COLOR_RGB_BLUE_1);
 	mesh_set_angular_momentum_degrees(m, vec3_make(0, 1, 0));
+	mesh_add_child(group, m);
+	
+	return group;
+}
+
+mesh_t *mesh_create_traffic_cone(void) {
+	mesh_t *group = mesh_new(0);
+	if (!group) return NULL;
+	
+	mesh_t *m = mesh_create_diamond(12, 3.0f, 0);
+	if (!m) return NULL;
+	m->point_color = 0;
+	m->scale = vec3_make(0.8f, 1, 0.8f);
+	m->line_color = rgb_to_abgr(COLOR_RGB_RED_1);
+	mesh_add_child(group, m);
+	
+	m = mesh_create_cube();
+	m->point_color = 0;
+	m->line_color = rgb_to_abgr(COLOR_RGB_RED_1);
+	m->scale = vec3_make(1, 1.0f/16.0f, 1);
+	m->position = vec3_make(0, -1.0f/32.0f, 0);
 	mesh_add_child(group, m);
 	
 	return group;
