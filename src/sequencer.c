@@ -343,6 +343,7 @@ sequence_event seq_events[] = {
 	{ RotateMesh, M1, EaseBezier, .t0 = T0+8, .t1 = T0+10, .p0 = {-60,0,0}, .p1 = {0,0,0} },
 	{ MoveMesh, M1, EaseBezier, .t0 = T0+11, .t1 = 73.6, .p0 = {0,25,4}, .p1 = {0,0,0.5} },
 	{ RotateMesh, M1, EaseBezier, .t0 = T0+11, .t1 = 73.6, .p0 = {0,0,0}, .p1 = {-90,0,0} },
+	{ ScaleMesh, M1, EaseBezier, .t0 = T0+8, .t1 = 73.6, .p0 = {100,100,100}, .p1 = {200,200,200} },
 
 #undef T0
 #undef M1
@@ -686,6 +687,13 @@ void seq_event_end(gameplay_t *scene, sequence_event *event, double time) {
 void sequencer_update(gameplay_t *scene, double previous_time, double current_time) {
 	sequencer_update_bgcolor(scene, current_time);
 	
+	// Color cycling for UFO
+	int hue = (int)round(current_time * 60.0) % 360;
+	uint32_t line_color = color_from_hsv(hue, 1.0, 0.5, 1.0);
+	uint32_t point_color = color_from_hsv((hue + 90) % 360, 1.0, 1.0, 0.5);
+	mesh_t *ufo = scene->meshes->array[UFO_Mesh];
+	mesh_set_children_color(ufo, line_color, point_color);
+
 	// Events starting within time period
 	for (int i = 0; seq_events[i].cmd != EndSequence; i++) {
 		double t0 = seq_events[i].t0;
