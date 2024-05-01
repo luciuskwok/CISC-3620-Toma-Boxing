@@ -45,7 +45,7 @@ bool init_audio(void) {
 	}
 	
 	// Load the audio file
-	song = Mix_LoadMUS("assets/Toma - All Night Radio.ogg");
+	song = Mix_LoadMUS("assets/song_90s.ogg");
 	if (song == NULL) {
 		fprintf(stderr, "Mix_LoadMUS() failed: %s\n", SDL_GetError());
 		return false;

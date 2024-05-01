@@ -16,7 +16,7 @@
 
 #pragma mark - Data
 
-#define SONG_DURATION (205.897)
+#define SONG_DURATION (92.2371)
 #define RADIANF ((float)M_PI * 2.0f)
 #define POSITION_FACTOR (0.010f)
 #define SCALE_FACTOR (0.010f)
