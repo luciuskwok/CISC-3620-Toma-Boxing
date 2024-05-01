@@ -75,6 +75,7 @@ typedef enum : uint32_t {
 	Studio_Bkgnd_Shape = 0,
 	Moon_Shape,
 	Heart_Shape,
+	Star_Shape,
 	Envelope_Shape,
 	Microphone_Shape,
 	Monitor_Shape,
@@ -102,28 +103,42 @@ sequence_event seq_events[] = {
 	{ RotateMesh, Numeral_2_Mesh, EaseLinear, .t0 = 1.0, .t1 = 1.25, .p0 = {0, 135, 0}, .p1 = {0, 0, 0} },
 	{ RotateMesh, Numeral_3_Mesh, EaseLinear, .t0 = 1.5, .t1 = 1.75, .p0 = {0, 135, 0}, .p1 = {0, 0, 0} },
 	{ RotateMesh, Numeral_4_Mesh, EaseLinear, .t0 = 2.0, .t1 = 2.25, .p0 = {0, 135, 0}, .p1 = {0, 0, 0} },
-	{ MoveMesh, Numeral_1_Mesh, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {-300, -100, 0}, .p1 = {-300, 400, 0} },
-	{ MoveMesh, Numeral_2_Mesh, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {-100, 0, 0}, .p1 = {-100, 500, 0} },
-	{ MoveMesh, Numeral_3_Mesh, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {100, 100, 0}, .p1 = {100, 600, 0} },
-	{ MoveMesh, Numeral_4_Mesh, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {300, 0, 0}, .p1 = {300, 500, 0} },
+	{ MoveMesh, Numeral_1_Mesh, EaseBezier, .t0 = 2.5, .t1 = 4.5, .p0 = {-300, -100, 0}, .p1 = {-300, 400, 0} },
+	{ MoveMesh, Numeral_2_Mesh, EaseBezier, .t0 = 2.5, .t1 = 4.5, .p0 = {-100, 0, 0}, .p1 = {-100, 500, 0} },
+	{ MoveMesh, Numeral_3_Mesh, EaseBezier, .t0 = 2.5, .t1 = 4.5, .p0 = {100, 100, 0}, .p1 = {100, 600, 0} },
+	{ MoveMesh, Numeral_4_Mesh, EaseBezier, .t0 = 2.5, .t1 = 4.5, .p0 = {300, 0, 0}, .p1 = {300, 500, 0} },
 	
 	// 2D Studio
-	{ ShowShape, Studio_Bkgnd_Shape, EaseLinear, .t0 = 2.5, .t1 = 44.0, .p0 = {0,-80,0}, .p1 = {0,0,0} },
-	{ MoveShape, Studio_Bkgnd_Shape, EaseLinear, .t0 = 2.5, .t1 = 6.0, .p0 = {0,-80,0}, .p1 = {0,15,0} },
+	{ ShowShape, Studio_Bkgnd_Shape, EaseBezier, .t0 = 2.5, .t1 = 44.0, .p0 = {0,-80,0}, .p1 = {0,0,0} },
+	{ MoveShape, Studio_Bkgnd_Shape, EaseBezier, .t0 = 2.5, .t1 = 4.6, .p0 = {0,-80,0}, .p1 = {0,15,0} },
 	
 	// Moon
-	{ ShowShape, Moon_Shape, .t0 = 6.0, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Moon_Shape, EaseOutElastic, .t0 = 6.0, .t1 = 6.5, .p0 = {0,0,0}, .p1 = {50,50,0} },
-	{ ScaleShape, Moon_Shape, EaseBezier, .t0 = 7.5, .t1 = 7.7, .p0 = {50,50,0}, .p1 = {12,12,0} },
-	{ RotateShape, Moon_Shape, EaseBezier, .t0 = 7.8, .t1 = 8.0, .p0 = {0,0,0}, .p1 = {45,0,0} },
-	{ MoveShape, Moon_Shape, EaseBezier, .t0 = 8.1, .t1 = 8.3, .p0 = {0,0,0}, .p1 = {0,18,0} },
-	
+	{ ShowShape, Moon_Shape, .t0 = 4.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Moon_Shape, EaseOutElastic, .t0 = 4.6, .t1 = 5.6, .p0 = {0,0,0}, .p1 = {33,33,0} },
+	{ RotateShape, Moon_Shape, EaseBezier, .t0 = 5.6, .t1 = 6.6, .p0 = {0,0,0}, .p1 = {45,0,0} },
+	{ MoveShape, Moon_Shape, EaseBezier, .t0 = 6.6, .t1 = 7.6, .p0 = {0,0,0}, .p1 = {0,18,0} },
+	{ ScaleShape, Moon_Shape, EaseBezier, .t0 = 7.6, .t1 = 8.6, .p0 = {33,33,0}, .p1 = {12,12,0} },
+
 	// Heart
-	{ ShowShape, Heart_Shape, .t0 = 9.0, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Heart_Shape, EaseOutElastic, .t0 = 9.0, .t1 = 9.5, .p0 = {0,0,0}, .p1 = {75,75,0} },
-	{ RotateShape, Heart_Shape, EaseBezier, .t0 = 10.0, .t1 = 10.2, .p0 = {0,0,0}, .p1 = {-20,0,0} },
-	{ ScaleShape, Heart_Shape, EaseBezier, .t0 = 10.3, .t1 = 10.5, .p0 = {75,75,0}, .p1 = {20,20,0} },
-	{ MoveShape, Heart_Shape, EaseBezier, .t0 = 10.6, .t1 = 10.8, .p0 = {0,0,0}, .p1 = {-50,20,0} },
+	{ ShowShape, Heart_Shape, .t0 = 8.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Heart_Shape, EaseOutElastic, .t0 = 8.6, .t1 = 9.6, .p0 = {0,0,0}, .p1 = {50,50,0} },
+	{ RotateShape, Heart_Shape, EaseBezier, .t0 = 9.6, .t1 = 12.6, .p0 = {0,0,0}, .p1 = {340,0,0} },
+	{ MoveShape, Heart_Shape, EaseBezier, .t0 = 10.6, .t1 = 11.6, .p0 = {0,0,0}, .p1 = {-50,20,0} },
+	{ ScaleShape, Heart_Shape, EaseBezier, .t0 = 11.6, .t1 = 12.6, .p0 = {50,50,0}, .p1 = {18,18,0} },
+
+	// Star
+	{ ShowShape, Star_Shape, .t0 = 12.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Star_Shape, EaseOutElastic, .t0 = 12.6, .t1 = 13.6, .p0 = {0,0,0}, .p1 = {30,30,0} },
+	{ RotateShape, Star_Shape, EaseBezier, .t0 = 13.6, .t1 = 16.6, .p0 = {0,0,0}, .p1 = {542,0,0} },
+	{ MoveShape, Star_Shape, EaseBezier,   .t0 = 14.6, .t1 = 15.6, .p0 = {0,0,0}, .p1 = {50,20,0} },
+	{ ScaleShape, Star_Shape, EaseBezier,  .t0 = 15.6, .t1 = 16.6, .p0 = {30,30,0}, .p1 = {10,10,0} },
+
+	// Microphone with stand
+	{ ShowShape, Microphone_Shape, .t0 = 16.6, .t1 = 44.0, .p0 = {0,0,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Microphone_Shape, EaseOutElastic, .t0 = 16.6, .t1 = 17.6, .p0 = {0,0,0}, .p1 = {40,40,0} },
+	{ RotateShape, Microphone_Shape, EaseBezier, .t0 = 17.6, .t1 = 18.6, .p0 = {0,0,0}, .p1 = {360,0,0} },
+	{ MoveShape, Microphone_Shape, EaseBezier,   .t0 = 18.8, .t1 = 19.6, .p0 = {0,0,0}, .p1 = {12,-23,0} },
+	{ ScaleShape, Microphone_Shape, EaseBezier,  .t0 = 19.6, .t1 = 20.6, .p0 = {40,40,0}, .p1 = {18,18,0} },
 
 
 	{ .cmd = EndSequence }
@@ -153,25 +168,31 @@ void sequencer_init(gameplay_t *scene) {
 	
 	// Studio_Bkgnd_Shape: combined window and desktop
 	shape_t *window = create_rectangle_shape(0.375f, 0.5f);
-	window->fill_color = rgb_to_abgr(COLOR_RGB_BLUE_1);
 	window->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
-	shape_t *desktop = create_rectangle_shape(1.5f, 1.0f/32.0f);
-	desktop->fill_color = rgb_to_abgr(COLOR_RGB_SKIN_2);
+	window->fill_color = rgb_to_abgr(COLOR_RGB_BLUE_1);
+	shape_t *desktop = create_rectangle_shape(1.375f, 1.0f/32.0f);
 	desktop->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
-	desktop->position = vec2_make(0, -0.4f);
+	desktop->fill_color = rgb_to_abgr(COLOR_RGB_SKIN_2);
+	desktop->position = vec2_make(0, -0.62f);
 	shape_add_child(window, desktop);
 	array_list_add(scene->shapes, window);
 
 	// Moon_Shape,
 	s = create_crescent_moon_shape();
-	s->fill_color = rgba_to_abgr(COLOR_RGB_YELLOW_1, 228);
 	s->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	s->fill_color = rgba_to_abgr(COLOR_RGB_YELLOW_1, 228);
 	array_list_add(scene->shapes, s);
 
 	// Heart_Shape,
 	s = create_heart_shape();
-	s->fill_color = rgba_to_abgr(COLOR_RGB_RED_1, 127);
 	s->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	s->fill_color = rgba_to_abgr(COLOR_RGB_RED_1, 127);
+	array_list_add(scene->shapes, s);
+
+	// Star_Shape,
+	s = create_star_shape(5, 1, 0.5f);
+	s->line_color = rgb_to_abgr(COLOR_RGB_GREEN_3);
+	s->fill_color = rgba_to_abgr(COLOR_RGB_GREEN_1, 127);
 	array_list_add(scene->shapes, s);
 
 	// Envelope_Shape,
@@ -180,6 +201,9 @@ void sequencer_init(gameplay_t *scene) {
 	array_list_add(scene->shapes, s);
 
 	// Microphone_Shape,
+	s = create_microphone_with_stand_shape();
+	array_list_add(scene->shapes, s);
+	
 	// Monitor_Shape,
 	// CPU_Shape,
 	// iPhone_Shape,
@@ -266,7 +290,8 @@ float apply_easing_curve(easing_curve ease, float x) {
 				x = 1.0f;
 			} else {
 				const float c4 = 2 * (float)M_PI / 3;
-				x = powf(2, -10 * x) * sinf((x * 10 - 0.75f) * c4) + 1;
+				const float v = 6.0f;
+				x = powf(2, -v * x) * sinf((x * v - 0.75f) * c4) + 1;
 			}
 			break;
 		case EaseBezier:

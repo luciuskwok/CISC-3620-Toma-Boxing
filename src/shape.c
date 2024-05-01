@@ -136,6 +136,45 @@ shape_t *create_rectangle_shape(float w, float h) {
 	return s;
 }
 
+shape_t *create_rounded_rect_shape(float w, float h, float radius) {
+	shape_t *s = shape_new(32);
+	if (!s) return NULL;
+	s->is_closed = true;
+	
+	point_list_t *arc;
+	vec2_t center;
+	
+	// Top left corner
+	center.x = -w / 2 + radius;
+	center.y = -h / 2 + radius;
+	arc = create_circle_arc_points(center, radius, 0.25f * RADIANF, 0.5f * RADIANF, 8);
+	shape_add_points(s, arc);
+	point_list_destroy(arc);
+	
+	// Bottom left corner
+	center.x = -w / 2 + radius;
+	center.y = h / 2 - radius;
+	arc = create_circle_arc_points(center, radius, 0.5f * RADIANF, 0.75f * RADIANF, 8);
+	shape_add_points(s, arc);
+	point_list_destroy(arc);
+	
+	// Bottom right corner
+	center.x = w / 2 - radius;
+	center.y = h / 2 - radius;
+	arc = create_circle_arc_points(center, radius, 0.75f * RADIANF, 1.0f * RADIANF, 8);
+	shape_add_points(s, arc);
+	point_list_destroy(arc);
+	
+	// Top right corner
+	center.x = w / 2 - radius;
+	center.y = -h / 2 + radius;
+	arc = create_circle_arc_points(center, radius, 0.0f * RADIANF, 0.25f * RADIANF, 8);
+	shape_add_points(s, arc);
+	point_list_destroy(arc);
+
+	return s;
+}
+
 shape_t *create_polygon_shape(int sides, float radius) {
 	/* Creates a n-sided polygon starting from (1, 0) and going clockwise,
 	   assuming a coordinate system with positive y is down.
@@ -193,41 +232,28 @@ shape_t *create_heart_shape(void) {
 	return s;
 }
 
-shape_t *create_rounded_rect_shape(float w, float h, float radius) {
-	shape_t *s = shape_new(32);
+shape_t *create_crescent_moon_shape(void) {
+	const int sides = 32;
+	shape_t *s = shape_new(sides);
 	if (!s) return NULL;
 	s->is_closed = true;
 	
-	point_list_t *arc;
-	vec2_t center;
-	
-	// Top left corner
-	center.x = -w / 2 + radius;
-	center.y = -h / 2 + radius;
-	arc = create_circle_arc_points(center, radius, 0.25f * RADIANF, 0.5f * RADIANF, 8);
-	shape_add_points(s, arc);
-	point_list_destroy(arc);
-	
-	// Bottom left corner
-	center.x = -w / 2 + radius;
-	center.y = h / 2 - radius;
-	arc = create_circle_arc_points(center, radius, 0.5f * RADIANF, 0.75f * RADIANF, 8);
-	shape_add_points(s, arc);
-	point_list_destroy(arc);
-	
-	// Bottom right corner
-	center.x = w / 2 - radius;
-	center.y = h / 2 - radius;
-	arc = create_circle_arc_points(center, radius, 0.75f * RADIANF, 1.0f * RADIANF, 8);
-	shape_add_points(s, arc);
-	point_list_destroy(arc);
-	
-	// Top right corner
-	center.x = w / 2 - radius;
-	center.y = -h / 2 + radius;
-	arc = create_circle_arc_points(center, radius, 0.0f * RADIANF, 0.25f * RADIANF, 8);
-	shape_add_points(s, arc);
-	point_list_destroy(arc);
+	// Trace two circles through 3/4 of a circle
+	const float inner_offset = 0.25f;
+	const float inner_radius = 0.775f;
+	int n = sides / 2;
+	for (int i = 0; i < n; i++) {
+		float angle = RADIANF * ((float)i / (float)(n - 1) * 0.75f + 0.125f);
+		shape_add_point(s, vec2_make(cosf(angle), -sinf(angle)));
+	}
+
+	for (int i = 0; i < n; i++) {
+		float angle = RADIANF * ((float)i / (float)(n - 1) * 0.75f + 0.125f);
+		vec2_t p;
+		p.x = cosf(angle) * inner_radius + inner_offset;
+		p.y = sinf(angle) * inner_radius;
+		shape_add_point(s, p);
+	}
 
 	return s;
 }
@@ -299,7 +325,7 @@ shape_t *create_tomato_side_shape(void) {
 	
 	// Transform for leaves and stem
 	mat3_t tr = mat3_identity();
-	tr = mat3_scale(tr, vec2_make(0.01f, 0.01f));
+	tr = mat3_scale(tr, vec2_make(0.01f, -0.01f));
 	tr = mat3_translate(tr, vec2_make(-50, -60));
 	
 	// Leaves
@@ -359,13 +385,18 @@ vec2_t microphone_lower_band_points[microphone_lower_band_points_len] = {
 };
 
 shape_t *create_microphone_shape(void) {
-	shape_t *base = create_tomato_side_shape();
-	if (!base) return NULL;
+	shape_t *group = shape_new(0);
+	if (!group) return NULL;
+	
+	shape_t *tomato = create_tomato_side_shape();
+	if (!tomato) return NULL;
+	tomato->position = vec2_make(0, 0.8f);
+	shape_add_child(group, tomato);
 	
 	// Transform for points
 	mat3_t tr = mat3_identity();
-	tr = mat3_scale(tr, vec2_make(0.01f, 0.01f));
-	tr = mat3_translate(tr, vec2_make(-50, -60));
+	tr = mat3_scale(tr, vec2_make(0.01f, -0.01f));
+	tr = mat3_translate(tr, vec2_make(-50, -140));
 	
 	mat3_t mirror = mat3_scale(mat3_identity(), vec2_make(-1.0f, 1.0f));
 
@@ -385,7 +416,7 @@ shape_t *create_microphone_shape(void) {
 		for (int i=0; i<n; i++) {
 			shape_add_point(mic, vec2_mat3_multiply(p[n - i - 1], mirror));
 		}
-		shape_add_child(base, mic);
+		shape_add_child(group, mic);
 	}
 	
 	// Microphone upper line
@@ -397,7 +428,7 @@ shape_t *create_microphone_shape(void) {
 		for (int i=0; i<microphone_upper_line_points_len; i++) {
 			shape_add_point(upper_line, vec2_mat3_multiply(microphone_upper_line_points[i], tr));
 		}
-		shape_add_child(base, upper_line);
+		shape_add_child(group, upper_line);
 	}
 	
 	// Microphone lower band
@@ -416,11 +447,65 @@ shape_t *create_microphone_shape(void) {
 		for (int i=0; i<n; i++) {
 			shape_add_point(lower_band, vec2_mat3_multiply(p[n - i - 1], mirror));
 		}
-		shape_add_child(base, lower_band);
+		shape_add_child(group, lower_band);
 	}
 	
-	return base;
+	return group;
 }
+
+const int stand_pts_len = 5;
+vec2_t stand_pts[stand_pts_len] = {
+	{59, 0},
+	{59, 100},
+	{86, 104},
+	{99, 106},
+	{99, 120},
+};
+
+shape_t *create_stand_shape(void) {
+	shape_t *s = shape_new(stand_pts_len * 2);
+	if (!s) return NULL;
+	
+	// Transforms for points
+	mat3_t tr = mat3_identity();
+	tr = mat3_scale(tr, vec2_make(0.01f, -0.01f));
+	tr = mat3_translate(tr, vec2_make(-50, 0));
+	mat3_t mirror = mat3_scale(mat3_identity(), vec2_make(-1.0f, 1.0f));
+
+	// Add non-mirrored points
+	int n = stand_pts_len;
+	for (int i=0; i<n; i++) {
+		vec2_t pt = vec2_mat3_multiply(stand_pts[i], tr);
+		shape_add_point(s, pt);
+	}
+	// Add mirrored points
+	vec2_t *p = s->points->array;
+	for (int i=0; i<n; i++) {
+		shape_add_point(s, vec2_mat3_multiply(p[n - i - 1], mirror));
+	}
+	
+	return s;
+}
+
+shape_t *create_microphone_with_stand_shape(void) {
+	shape_t *group = shape_new(0);
+	if (!group) return NULL;
+	
+	shape_t *stand = create_stand_shape();
+	stand->line_color = rgb_to_abgr(COLOR_RGB_OUTLINE);
+	stand->fill_color = rgb_to_abgr(COLOR_RGB_GRAY_60);
+	shape_add_child(group, stand);
+
+	shape_t *mic = create_microphone_shape();
+	if (!mic) return NULL;
+	mic->position = vec2_make(0, 0.2f);
+	mic->rotation = RADIANF / 8.0f;
+	shape_add_child(group, mic);
+
+	return group;
+}
+
+#pragma mark -
 
 shape_t *create_toemaniac_shape(void) {
 	// TODO: implement create_toemaniac_shape
@@ -446,32 +531,6 @@ shape_t *create_envelope_shape(uint32_t line_color) {
 	
 	// TODO: Add tomato sticker
 	
-	return s;
-}
-
-shape_t *create_crescent_moon_shape(void) {
-	const int sides = 32;
-	shape_t *s = shape_new(sides);
-	if (!s) return NULL;
-	s->is_closed = true;
-	
-	// Trace two circles through 3/4 of a circle
-	const float inner_offset = 0.25f;
-	const float inner_radius = 0.775f;
-	int n = sides / 2;
-	for (int i = 0; i < n; i++) {
-		float angle = RADIANF * ((float)i / (float)(n - 1) * 0.75f + 0.125f);
-		shape_add_point(s, vec2_make(cosf(angle), -sinf(angle)));
-	}
-
-	for (int i = 0; i < n; i++) {
-		float angle = RADIANF * ((float)i / (float)(n - 1) * 0.75f + 0.125f);
-		vec2_t p;
-		p.x = cosf(angle) * inner_radius + inner_offset;
-		p.y = sinf(angle) * inner_radius;
-		shape_add_point(s, p);
-	}
-
 	return s;
 }
 
