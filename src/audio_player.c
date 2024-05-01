@@ -125,3 +125,10 @@ double get_music_duration(void) {
 double get_music_position(void) {
 	return Mix_GetMusicPosition(song);
 }
+
+void set_music_position(double x) {
+	if (x < 0.0) x = 0.0;
+	double max = get_music_duration();
+	if (x > max) x = max;
+	Mix_SetMusicPosition(x);
+}

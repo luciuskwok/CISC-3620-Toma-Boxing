@@ -15,7 +15,6 @@
 
 // Globals for SDL
 SDL_Window* sdl_window;
-SDL_Rect window_rect;
 SDL_Renderer* sdl_renderer;
 SDL_Texture* sdl_texture;
 uint32_t* screen_pixels;
@@ -68,12 +67,13 @@ bool init_screen(int width, int height, int scale) {
 	screen_w = width;
 	screen_h = height;
 	screen_pitch = (size_t)width * sizeof(uint32_t);
+	SDL_Rect window_rect;
 	window_rect.x = window_rect.y = 0;
 	window_rect.w = width * scale;
 	window_rect.h = height * scale;
 
 	// Window & Renderer
-	if (SDL_CreateWindowAndRenderer(window_rect.w, window_rect.h, 0, &sdl_window, &sdl_renderer) != 0) {
+	if (SDL_CreateWindowAndRenderer(window_rect.w, window_rect.h, SDL_WINDOW_RESIZABLE, &sdl_window, &sdl_renderer) != 0) {
 		fprintf(stderr, "SDL_CreateWindowAndRenderer() failed: %s\n", SDL_GetError());
 		return false;
 	}
@@ -119,9 +119,21 @@ void destroy_screen(void) {
 }
 
 void render_to_screen(void) {
-	// Render frame buffer
+	// Render frame buffer centered in window
+	int window_w, window_h;
+	SDL_GetWindowSize(sdl_window, &window_w, &window_h);
+	
+	int scale_w = window_w / screen_w;
+	int scale_h = window_h / screen_h;
+	int scale = scale_w < scale_h? scale_w : scale_h;
+	SDL_Rect r;
+	r.w = screen_w * scale;
+	r.h = screen_h * scale;
+	r.x = (window_w - r.w) / 2;
+	r.y = (window_h - r.h) / 2;
+	
 	SDL_UpdateTexture(sdl_texture, NULL, screen_pixels, (int)screen_pitch);
-	SDL_RenderCopy(sdl_renderer, sdl_texture, NULL, &window_rect);
+	SDL_RenderCopy(sdl_renderer, sdl_texture, NULL, &r);
 	SDL_RenderPresent(sdl_renderer);
 }
 

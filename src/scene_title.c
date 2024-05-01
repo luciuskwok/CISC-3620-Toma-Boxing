@@ -15,6 +15,7 @@
 #include "mesh.h"
 #include "mesh_creation.h"
 #include "shape.h"
+#include "shape_creation.h"
 
 
 // Globals
@@ -44,10 +45,10 @@ void title_init(void) {
 	array_list_add(title_shapes, title_tomato(vec2_make(3.75f * grid, -1.0f * grid), 1.25f, 9.0f));
 	
 	// Testing: create shapes being tested
-//	shape_t *cpu = create_cpu_shape();
-//	cpu->scale = vec2_make(0.8f, 0.8f);
-//	cpu->position = vec2_make(0.50f, -0.18f);
-//	array_list_add(title_shapes, cpu);
+//	shape_t *s = create_smoke_circle_shape();
+	//s->scale = vec2_make(0.8f, 0.8f);
+	//s->position = vec2_make(0.50f, -0.18f);
+//	array_list_add(title_shapes, s);
 //
 //	shape_t *mon = create_monitor_shape();
 //	mon->scale = vec2_make(0.8f, 0.8f);

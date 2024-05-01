@@ -10,6 +10,8 @@
 
 #include <stdbool.h>
 
+#define SONG_DURATION (92.2371)
+
 bool init_audio(void);
 void start_music(void);
 void pause_music(bool state);
@@ -23,5 +25,6 @@ bool is_music_muted(void);
 void set_music_muted(bool state);
 double get_music_duration(void);
 double get_music_position(void);
+void set_music_position(double x);
 
 #endif /* audio_player_h */

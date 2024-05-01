@@ -97,9 +97,18 @@ bool gameplay_handle_keyboard(SDL_Event event) {
 				// Restart song if paused
 				if (is_scene_paused) gameplay_start();
 				return true;
-			case SDLK_l:
+			case SDLK_x:
 				// Skip to results scene if paused
 				if (is_scene_paused) set_scene_index(SCENE_RESULTS);
+				return true;
+			case SDLK_j:
+				// Skip back 10 seconds
+				set_music_position(get_music_position() - 10.0);
+				last_music_position = -1.0; // reset sequencer from beginning
+				return true;
+			case SDLK_l:
+				// Skip forward 10 seconds
+				set_music_position(get_music_position() + 10.0);
 				return true;
 		}
 	}
