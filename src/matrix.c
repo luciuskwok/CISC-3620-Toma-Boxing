@@ -11,10 +11,11 @@
 #pragma mark - 2D Matrix
 
 mat3_t mat3_identity(void) {
-	mat3_t m;
-	m.m[0][0] = 1; m.m[0][1] = 0; m.m[0][2] = 0;
-	m.m[1][0] = 0; m.m[1][1] = 1; m.m[1][2] = 0;
-	m.m[2][0] = 0; m.m[2][1] = 0; m.m[2][2] = 1;
+	mat3_t m = {
+		1, 0, 0,
+		0, 1, 0,
+		0, 0, 1
+	};
 	return m;
 }
 
@@ -70,11 +71,12 @@ vec2_t vec2_mat3_multiply(const vec2_t v, const mat3_t m) {
 #pragma mark - 3D Matrix
 
 mat4_t mat4_identity(void) {
-	mat4_t m;
-	m.m[0][0] = 1; m.m[0][1] = 0; m.m[0][2] = 0; m.m[0][3] = 0;
-	m.m[1][0] = 0; m.m[1][1] = 1; m.m[1][2] = 0; m.m[1][3] = 0;
-	m.m[2][0] = 0; m.m[2][1] = 0; m.m[2][2] = 1; m.m[2][3] = 0;
-	m.m[3][0] = 0; m.m[3][1] = 0; m.m[3][2] = 1; m.m[3][3] = 1;
+	mat4_t m = {
+		1, 0, 0, 0,
+		0, 1, 0, 0,
+		0, 0, 1, 0,
+		0, 0, 0, 1
+	};
 	return m;
 }
 
