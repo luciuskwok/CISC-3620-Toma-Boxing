@@ -33,11 +33,30 @@ mat4_t camera_transform_3d;
 
 #pragma mark - Rectangle
 
+rectangle_t rectangle_zero(void) {
+	const static rectangle_t r = { 0, 0, 0, 0 };
+	return r;
+}
+
 rectangle_t inset_rect(rectangle_t r, int x, int y) {
 	r.w -= x * 2;
 	r.h -= y * 2;
 	r.x += x;
 	r.y += y;
+	return r;
+}
+
+rectangle_t intersect_rect(rectangle_t a, rectangle_t b) {
+	// Check for empty rects
+	if (a.x + a.w <= b.x || b.x + b.w <= a.x) return rectangle_zero();
+	if (a.y + a.h <= b.y || b.y + b.h <= a.y) return rectangle_zero();
+
+	float x0 = a.x > b.x? a.x : b.x;
+	float x1 = a.x + a.w < b.x + b.w? a.x + a.w : b.x + b.w;
+	float y0 = a.y > b.y? a.y : b.y;
+	float y1 = a.y + a.h < b.y + b.h? a.y + a.h : b.y + b.h;
+	
+	rectangle_t r = { .x = x0, .y = y0, .w = x1 - x0, .h = y1 - y0 };
 	return r;
 }
 
@@ -329,22 +348,22 @@ void fill_polygon(vec2_t *points, int n) {
 	// Fill polygon by scanline by counting the number of edge crossings
 	// https://stackoverflow.com/questions/65573101/draw-a-filled-polygon-using-scanline-loop
 	if (n < 3) return;
-	if (n == 3) {
-		fill_triangle(points[0], points[1], points[2]);
-	} else {
-		rectangle_t b = bounding_rect(points, n);
-		for (float y = floorf(b.y); y <= ceilf(b.y + b.h); y++) {
-			int crossings = 0;
-			for (float x = floorf(b.x); x <= ceilf(b.x + b.w); x++) {
-				float left = x - 0.5f;
-				float right = x + 0.5f;
-				crossings += edge_crossings(left, right, y + 0.5f, points, n);
-				if (crossings % 2 == 1) {
-					set_pixel((int)x, (int)y, fill_color);
-				}
+	rectangle_t bounds = bounding_rect(points, n);
+	rectangle_t screen = { .x = 0, .y = 0, .w = screen_w, .h = screen_h };
+	rectangle_t draw = intersect_rect(bounds, screen);
+	for (float y = floorf(draw.y); y <= ceilf(draw.y + draw.h); y++) {
+		int crossings = 0;
+		if (bounds.x < floorf(draw.x) - 0.5f) {
+			crossings = edge_crossings(bounds.x, floorf(draw.x) - 0.5f, y + 0.5f, points, n);
+		}
+		for (float x = floorf(draw.x); x <= ceilf(draw.x + draw.w); x++) {
+			float left = x - 0.5f;
+			float right = x + 0.5f;
+			crossings += edge_crossings(left, right, y + 0.5f, points, n);
+			if (crossings % 2 == 1) {
+				set_pixel((int)x, (int)y, fill_color);
 			}
 		}
-
 	}
 }
 

@@ -246,8 +246,8 @@ sequence_event seq_events[] = {
 	{ ScaleShape, Smoke_4_Shape, EaseOutQuad, .t0 = 37.6, .t1 = T_END, .p0 = {160,160,0}, .p1 = {320,320,0} },
 
 	// Explosion
-	{ ShowShape, Explosion_Shape, 				.t0 = T_END-0.5, .t1 = T_END, .p0 = {50,-19,0}, .p1 = {0,0,0} },
-	{ ScaleShape, Explosion_Shape, EaseOutQuad, .t0 = T_END-0.5, .t1 = T_END, .p0 = {0,0,0}, .p1 = {200, 200,0} },
+	{ ShowShape, Explosion_Shape, 				.t0 = T_END-0.5, .t1 = T_END+0.25, .p0 = {50,-19,0}, .p1 = {0,0,0} },
+	{ ScaleShape, Explosion_Shape, EaseOutQuad, .t0 = T_END-0.5, .t1 = T_END, .p0 = {1,1,1}, .p1 = {200, 200,0} },
 #undef T_END
 	
 	// -- 3D; Chorus --

@@ -21,7 +21,9 @@ typedef struct {
 	float x, y;
 	float w, h;
 } rectangle_t;
+
 rectangle_t inset_rect(rectangle_t r, int x, int y);
+rectangle_t intersect_rect(rectangle_t a, rectangle_t b);
 
 // SDL Interface
 bool init_screen(int width, int height, int scale);
