@@ -29,7 +29,7 @@
 #define FRAME_TARGET_TIME (1000 / 60)
 #define PIXELS_WIDTH (320)
 #define PIXELS_HEIGHT (200)
-#define PIXELS_SCALE (3)
+#define PIXELS_SCALE (2)
 
 
 // Globals
